@@ -1,91 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Giới thiệu về tôi</title>
+<title>Giới thiệu bản thân</title>
 
 <style>
 
 body{
     font-family: Arial;
-    background:#f0f2f5;
+    background:#f4f4f4;
+    margin:0;
     text-align:center;
 }
 
-header{
-    background:#0077ff;
+/* phần đầu */
+.header{
+    background:#333;
     color:white;
-    padding:20px;
+    padding:40px;
 }
 
-section{
+.header img{
+    width:150px;
+    border-radius:50%;
+}
+
+/* nội dung */
+.section{
+    padding:30px;
+}
+
+/* khung sở thích */
+.hobby{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.box{
     background:white;
-    margin:20px;
     padding:20px;
+    width:150px;
     border-radius:10px;
-}
-
-img{
-    width:200px;
-    border-radius:10px;
-    margin:10px;
-}
-
-footer{
-    background:#222;
-    color:white;
-    padding:10px;
+    box-shadow:0 0 5px gray;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<header>
-<h1>Website Giới Thiệu Bản Thân</h1>
-</header>
-
-<section>
-<h2>👤 Giới thiệu bản thân</h2>
-<p>Tôi tên là Phụng. Tôi đang học lập trình và thích khám phá công nghệ.</p>
+<div class="header">
 
 <img src="https://picsum.photos/200">
-</section>
 
-<section>
-<h2>👨‍👩‍👧 Gia đình</h2>
-<p>Gia đình tôi gồm có ba mẹ và anh chị em. Gia đình luôn là động lực để tôi cố gắng.</p>
+<h1>Xin chào, tôi là Phụng</h1>
 
-<img src="https://picsum.photos/201">
-</section>
+<p>Sinh viên Công Nghệ Thông Tin</p>
 
-<section>
-<h2>❤️ Bạn gái</h2>
-<p>Tôi có một người bạn gái rất dễ thương. Cô ấy luôn ủng hộ tôi trong cuộc sống.</p>
+</div>
 
-<img src="https://picsum.photos/202">
-</section>
+<div class="section">
 
-<section>
-<h2>🎯 Sở thích</h2>
-<p>Tôi thích lập trình, nghe nhạc, chơi game và đi du lịch.</p>
+<h2>Giới thiệu</h2>
 
-<img src="https://picsum.photos/203">
-</section>
+<p>Tôi là sinh viên IT, tôi thích lập trình và thiết kế website.</p>
 
-<section>
-<h2>🖼️ Ảnh của tôi</h2>
+</div>
 
-<img src="https://picsum.photos/204">
-<img src="https://picsum.photos/205">
-<img src="https://picsum.photos/206">
+<div class="section">
 
-</section>
+<h2>Sở thích</h2>
 
-<footer>
-<p>Website của Dangvanphungdz</p>
-</footer>
+<div class="hobby">
+
+<div class="box">
+🎮
+<p>Chơi game</p>
+</div>
+
+<div class="box">
+💻
+<p>Lập trình</p>
+</div>
+
+<div class="box">
+🎵
+<p>Nghe nhạc</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Liên hệ</h2>
+
+<p>Email: example@gmail.com</p>
+
+</div>
 
 </body>
 </html>
