@@ -2,62 +2,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Portfolio</title>
+<title>Giới thiệu về tôi</title>
 
 <style>
 
 body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(90deg,#3b2a1a,#6b4b2a);
-color:white;
+    font-family: Arial;
+    background:#f0f2f5;
+    text-align:center;
 }
 
-.container{
-display:flex;
-justify-content:space-around;
-align-items:center;
-height:80vh;
+header{
+    background:#0077ff;
+    color:white;
+    padding:20px;
 }
 
-.text{
-width:40%;
+section{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:10px;
 }
 
-.text h1{
-font-size:40px;
+img{
+    width:200px;
+    border-radius:10px;
+    margin:10px;
 }
 
-.text p{
-color:#ddd;
-}
-
-.btn{
-padding:10px 20px;
-border:none;
-margin:10px;
-border-radius:20px;
-background:#e6c7a1;
-cursor:pointer;
-}
-
-.image img{
-width:250px;
-border-radius:20px;
-}
-
-.skills{
-text-align:center;
-padding:30px;
-}
-
-.skill{
-display:inline-block;
-background:#e6c7a1;
-color:black;
-padding:8px 15px;
-margin:5px;
-border-radius:20px;
+footer{
+    background:#222;
+    color:white;
+    padding:10px;
 }
 
 </style>
@@ -65,41 +42,50 @@ border-radius:20px;
 
 <body>
 
-<div class="container">
+<header>
+<h1>Website Giới Thiệu Bản Thân</h1>
+</header>
 
-<div class="text">
-<h1>Hi, I'm Phung</h1>
+<section>
+<h2>👤 Giới thiệu bản thân</h2>
+<p>Tôi tên là Phụng. Tôi đang học lập trình và thích khám phá công nghệ.</p>
 
-<h3>Information Technology Student</h3>
+<img src="https://picsum.photos/200">
+</section>
 
-<p>
-I love programming and web development.
-My goal is to become a professional software developer.
-</p>
+<section>
+<h2>👨‍👩‍👧 Gia đình</h2>
+<p>Gia đình tôi gồm có ba mẹ và anh chị em. Gia đình luôn là động lực để tôi cố gắng.</p>
 
-<button class="btn">Contact Me</button>
-<button class="btn">Download CV</button>
+<img src="https://picsum.photos/201">
+</section>
 
-</div>
+<section>
+<h2>❤️ Bạn gái</h2>
+<p>Tôi có một người bạn gái rất dễ thương. Cô ấy luôn ủng hộ tôi trong cuộc sống.</p>
 
-<div class="image">
-<img src="https://i.imgur.com/1X6aK7C.png">
-</div>
+<img src="https://picsum.photos/202">
+</section>
 
-</div>
+<section>
+<h2>🎯 Sở thích</h2>
+<p>Tôi thích lập trình, nghe nhạc, chơi game và đi du lịch.</p>
 
-<div class="skills">
+<img src="https://picsum.photos/203">
+</section>
 
-<h2>Programming Languages</h2>
+<section>
+<h2>🖼️ Ảnh của tôi</h2>
 
-<span class="skill">JavaScript</span>
-<span class="skill">Java</span>
-<span class="skill">C</span>
-<span class="skill">Python</span>
-<span class="skill">HTML</span>
-<span class="skill">CSS</span>
+<img src="https://picsum.photos/204">
+<img src="https://picsum.photos/205">
+<img src="https://picsum.photos/206">
 
-</div>
+</section>
+
+<footer>
+<p>Website của Dangvanphungdz</p>
+</footer>
 
 </body>
 </html>
