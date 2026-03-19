@@ -16,7 +16,7 @@ body{
     color:white;
 }
 
-/* phần đầu */
+/* ===== HEADER ===== */
 .header{
     background:#111;
     padding:40px;
@@ -29,9 +29,9 @@ body{
     box-shadow:0 0 20px #00bfff;
 }
 
-/* nội dung */
+/* ===== SECTION ===== */
 .section{
-    padding:40px;
+    padding:40px 20px;
 }
 
 /* ===== THÔNG TIN CÁ NHÂN ===== */
@@ -40,20 +40,20 @@ body{
     padding:25px;
     border-radius:15px;
     width:60%;
-    margin:20px auto;
+    margin:30px auto;
     text-align:left;
 
     border:1px solid #00bfff;
     box-shadow: 
         0 0 10px #00bfff,
         0 0 25px #00bfff,
-        0 0 50px rgba(0,191,255,0.5);
+        0 0 50px rgba(0,191,255,0.4);
 
     transition:0.3s;
 }
 
 .info-box:hover{
-    transform:scale(1.02);
+    transform:translateY(-5px);
     box-shadow: 
         0 0 20px #00bfff,
         0 0 50px #00bfff,
@@ -65,16 +65,16 @@ body{
 }
 
 .info-item{
-    margin:8px 0;
+    margin:10px 0;
     font-size:16px;
 }
 
 .info-item i{
     color:#00bfff;
-    margin-right:8px;
+    margin-right:10px;
 }
 
-/* sở thích */
+/* ===== SỞ THÍCH ===== */
 .hobby{
     display:flex;
     justify-content:center;
@@ -97,7 +97,7 @@ body{
     box-shadow:0 0 25px #00bfff;
 }
 
-/* CONTACT */
+/* ===== CONTACT ===== */
 .contact-box{
     background:#020b1c;
     padding:30px;
@@ -110,16 +110,6 @@ body{
         0 0 10px #00bfff,
         0 0 20px #00bfff,
         0 0 40px rgba(0,191,255,0.5);
-
-    transition:0.3s;
-}
-
-.contact-box:hover{
-    transform:scale(1.02);
-    box-shadow: 
-        0 0 20px #00bfff,
-        0 0 40px #00bfff,
-        0 0 80px rgba(0,191,255,0.8);
 }
 
 .email{
@@ -149,7 +139,7 @@ body{
     transform:scale(1.2);
 }
 
-/* MAP */
+/* ===== MAP ===== */
 .map-box{
     background:#020b1c;
     padding:20px;
@@ -162,16 +152,6 @@ body{
         0 0 10px #00bfff,
         0 0 25px #00bfff,
         0 0 50px rgba(0,191,255,0.5);
-
-    transition:0.3s;
-}
-
-.map-box:hover{
-    transform:scale(1.02);
-    box-shadow: 
-        0 0 20px #00bfff,
-        0 0 50px #00bfff,
-        0 0 100px rgba(0,191,255,0.8);
 }
 
 .map-box h2{
@@ -195,8 +175,16 @@ body{
     color:white;
 }
 
-</style>
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+    .info-box,
+    .contact-box,
+    .map-box{
+        width:90%;
+    }
+}
 
+</style>
 </head>
 
 <body>
@@ -211,9 +199,8 @@ body{
 <h2>Giới thiệu</h2>
 <p>Tên mình là Đặng Văn Phụng, năm nay 18T, đang học và làm việc tại Cao Đẳng SaiGonTech.</p>
 
-<!-- THÔNG TIN CÁ NHÂN -->
+<!-- INFO -->
 <div class="info-box">
-
 <h3><i class="fas fa-user"></i> Thông tin cá nhân</h3>
 
 <div class="info-item">
@@ -229,7 +216,6 @@ body{
 </div>
 
 </div>
-
 </div>
 
 <div class="section">
@@ -276,15 +262,15 @@ body{
 <h2>📍 Vị trí hiện tại</h2>
 
 <a href="https://maps.google.com/?q=10.997778,106.751056" target="_blank" class="map-link">
-  Mở trong Maps ↗
+Mở trong Maps ↗
 </a>
 
 <iframe
- src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed"
- width="100%"
- height="350"
- style="border:0; border-radius:10px;"
- loading="lazy">
+src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed"
+width="100%"
+height="350"
+style="border:0; border-radius:10px;"
+loading="lazy">
 </iframe>
 
 </div>
