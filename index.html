@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Dangvanphungprogame</title>
 
-<!-- Font Awesome (icon đẹp) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -33,7 +32,7 @@ body{
     padding:30px;
 }
 
-/* khung sở thích */
+/* sở thích */
 .hobby{
     display:flex;
     justify-content:center;
@@ -48,7 +47,7 @@ body{
     box-shadow:0 0 5px gray;
 }
 
-/* ===== CONTACT ĐẸP ===== */
+/* CONTACT */
 .contact-box{
     background:#020b1c;
     color:white;
@@ -58,22 +57,16 @@ body{
     margin:auto;
 }
 
-/* email */
 .email{
     color:#00bfff;
     font-size:18px;
     text-decoration:none;
 }
 
-.email i{
-    margin-right:8px;
-}
-
 .email:hover{
     text-decoration:underline;
 }
 
-/* icon mạng xã hội */
 .social{
     margin-top:15px;
 }
@@ -89,6 +82,38 @@ body{
     color:#00bfff;
 }
 
+/* MAP */
+.map-box{
+    background:#020b1c;
+    color:white;
+    padding:20px;
+    border-radius:15px;
+    width:80%;
+    margin:auto;
+    border:2px solid #00bfff;
+}
+
+.map-box h2{
+    text-align:left;
+    margin-bottom:15px;
+}
+
+.map-link{
+    display:inline-block;
+    margin-bottom:10px;
+    background:white;
+    color:#333;
+    padding:5px 10px;
+    border-radius:5px;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.map-link:hover{
+    background:#00bfff;
+    color:white;
+}
+
 </style>
 
 </head>
@@ -96,51 +121,29 @@ body{
 <body>
 
 <div class="header">
-
-<img src="058563264cd7c2899bc6.jpg" class="avatar">
-
+<img src="058563264cd7c2899bc6.jpg">
 <h1>Đặng Văn Phụng</h1>
-
 <p>Sinh viên CNTT-Part Time</p>
-
 </div>
 
 <div class="section">
-
 <h2>Giới thiệu</h2>
-
 <p>Tên mình là Đặng Văn Phụng, năm nay 18T, đang học và làm việc tại Cao Đẳng SaiGonTech.</p>
-
 </div>
 
 <div class="section">
-
 <h2>Sở thích</h2>
 
 <div class="hobby">
-
-<div class="box">
-🎮
-<p>Chơi game</p>
-</div>
-
-<div class="box">
-💻
-<p>Lập trình</p>
-</div>
-
-<div class="box">
-🎵
-<p>Nghe nhạc</p>
+<div class="box">🎮<p>Chơi game</p></div>
+<div class="box">💻<p>Lập trình</p></div>
+<div class="box">🎵<p>Nghe nhạc</p></div>
 </div>
 
 </div>
 
-</div>
-
-<!-- ===== LIÊN HỆ MỚI ===== -->
+<!-- CONTACT -->
 <div class="section">
-
 <div class="contact-box">
 
 <h2>📬 Liên hệ</h2>
@@ -163,7 +166,27 @@ body{
 </div>
 
 </div>
+</div>
 
+<!-- MAP -->
+<div class="section">
+<div class="map-box">
+
+<h2>📍 Vị trí hiện tại</h2>
+
+<a href="https://maps.google.com/?q=10.9804,106.6519" target="_blank" class="map-link">
+  Mở trong Maps ↗
+</a>
+
+<iframe
+ src="https://www.google.com/maps?q=XQX2+3C2+Tan+Uyen+Binh+Duong&z=15&output=embed"
+  width="100%"
+  height="350"
+  style="border:0; border-radius:10px;"
+  loading="lazy">
+</iframe>
+
+</div>
 </div>
 
 </body>
