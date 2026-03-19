@@ -16,7 +16,7 @@ body{
     color:white;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header{
     background:#111;
     padding:40px;
@@ -29,12 +29,50 @@ body{
     box-shadow:0 0 20px #00bfff;
 }
 
-/* ===== SECTION ===== */
+/* SECTION */
 .section{
     padding:40px 20px;
 }
 
-/* ===== THÔNG TIN CÁ NHÂN ===== */
+/* ===== ABOUT BOX ===== */
+.about-box{
+    background:#020b1c;
+    padding:30px;
+    border-radius:15px;
+    width:65%;
+    margin:30px auto;
+
+    text-align:justify;
+    line-height:1.8;
+
+    border:1px solid #00bfff;
+    box-shadow: 
+        0 0 10px #00bfff,
+        0 0 25px #00bfff,
+        0 0 50px rgba(0,191,255,0.4);
+
+    transition:0.3s;
+}
+
+.about-box:hover{
+    transform:translateY(-5px);
+    box-shadow: 
+        0 0 20px #00bfff,
+        0 0 50px #00bfff,
+        0 0 100px rgba(0,191,255,0.8);
+}
+
+.about-box h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.about-box p{
+    margin-bottom:15px;
+    text-indent:20px;
+}
+
+/* ===== INFO ===== */
 .info-box{
     background:#020b1c;
     padding:25px;
@@ -48,16 +86,6 @@ body{
         0 0 10px #00bfff,
         0 0 25px #00bfff,
         0 0 50px rgba(0,191,255,0.4);
-
-    transition:0.3s;
-}
-
-.info-box:hover{
-    transform:translateY(-5px);
-    box-shadow: 
-        0 0 20px #00bfff,
-        0 0 50px #00bfff,
-        0 0 100px rgba(0,191,255,0.8);
 }
 
 .info-box h3{
@@ -66,7 +94,6 @@ body{
 
 .info-item{
     margin:10px 0;
-    font-size:16px;
 }
 
 .info-item i{
@@ -74,7 +101,7 @@ body{
     margin-right:10px;
 }
 
-/* ===== SỞ THÍCH ===== */
+/* ===== HOBBY ===== */
 .hobby{
     display:flex;
     justify-content:center;
@@ -89,7 +116,6 @@ body{
     border-radius:10px;
     border:1px solid #00bfff;
     box-shadow:0 0 10px #00bfff;
-    transition:0.3s;
 }
 
 .box:hover{
@@ -106,37 +132,22 @@ body{
     margin:auto;
 
     border:1px solid #00bfff;
-    box-shadow: 
-        0 0 10px #00bfff,
-        0 0 20px #00bfff,
-        0 0 40px rgba(0,191,255,0.5);
+    box-shadow:0 0 20px #00bfff;
 }
 
 .email{
     color:#00bfff;
-    font-size:18px;
     text-decoration:none;
-}
-
-.email:hover{
-    text-decoration:underline;
-}
-
-/* icon mạng xã hội */
-.social{
-    margin-top:15px;
 }
 
 .social a{
     color:#ccc;
     font-size:30px;
     margin:0 15px;
-    transition:0.3s;
 }
 
 .social a:hover{
     color:#00bfff;
-    transform:scale(1.2);
 }
 
 /* ===== MAP ===== */
@@ -148,15 +159,7 @@ body{
     margin:auto;
 
     border:1px solid #00bfff;
-    box-shadow: 
-        0 0 10px #00bfff,
-        0 0 25px #00bfff,
-        0 0 50px rgba(0,191,255,0.5);
-}
-
-.map-box h2{
-    text-align:left;
-    margin-bottom:15px;
+    box-shadow:0 0 20px #00bfff;
 }
 
 .map-link{
@@ -167,7 +170,6 @@ body{
     padding:5px 10px;
     border-radius:5px;
     text-decoration:none;
-    font-size:14px;
 }
 
 .map-link:hover{
@@ -175,8 +177,9 @@ body{
     color:white;
 }
 
-/* ===== RESPONSIVE ===== */
+/* RESPONSIVE */
 @media(max-width:768px){
+    .about-box,
     .info-box,
     .contact-box,
     .map-box{
@@ -195,30 +198,27 @@ body{
 <p>Sinh viên CNTT-Part Time</p>
 </div>
 
+<!-- ABOUT -->
 <div class="section">
-  <div class="about-box">
+<div class="about-box">
 
-    <h2>📝 Một chút về tôi</h2>
+<h2>📝 Một chút về tôi</h2>
 
-    <p>Xin chào, nếu bạn đang đọc những dòng này thì có lẽ bạn vừa ghé qua blog cá nhân nhỏ của tôi.</p>
+<p>Xin chào, nếu bạn đang đọc những dòng này thì có lẽ bạn vừa ghé qua blog cá nhân nhỏ của tôi.</p>
 
-    <p>Tôi là Đặng Văn Phụng. Nếu phải mô tả ngắn gọn về bản thân thì chắc chỉ có thể nói rằng tôi là một người khá khó đoán. Có lúc cởi mở, nhiệt tình, có lúc lại hướng nội và thích ở một mình. Nhưng cũng có lúc tôi lại hứng ngoại và có thể nói chuyện rất thoải mái với những người thân thiết.</p>
+<p>Tôi là Đặng Văn Phụng. Nếu phải mô tả ngắn gọn về bản thân thì chắc chỉ có thể nói rằng tôi là một người khá khó đoán...</p>
 
-    <p>Với người lạ tôi thường khá trầm và ít nói. Nhưng khi đã nói chuyện đủ lâu thì tôi có thể nói nhiều và đôi khi cũng hơi "khùng" một chút 😄.</p>
+<p>Với người lạ tôi thường khá trầm và ít nói...</p>
 
-    <p>Tôi thích sự chân thành, đặc biệt là trong lời nói và cách cư xử. Tôi tin rằng cách mình nói chuyện với người khác cũng thể hiện rất nhiều về con người của mình.</p>
+<p>Tôi thích sự chân thành và một cuộc sống nhẹ nhàng...</p>
 
-    <p>Tôi thích một cuộc sống nhẹ nhàng, không quá bon chen, nhưng vẫn có mục tiêu để cố gắng từng ngày.</p>
+<p>Cho anh thêm một chút thời gian nhé ❤️</p>
 
-    <p>Hiện tại anh vẫn đang sống cuộc sống của mình, học thêm nhiều thứ, làm việc chăm chỉ hơn một chút và cố gắng trưởng thành từng ngày.</p>
-
-    <p>Nếu một ngày chúng ta thật sự gặp nhau và bắt đầu một câu chuyện nào đó, anh hy vọng lúc đó cả hai đều là phiên bản tốt hơn của chính mình.</p>
-
-    <p>Cho anh thêm một chút thời gian nhé. Anh vẫn đang đi từng bước một trên con đường của mình. Và biết đâu, giữa rất nhiều người trên thế giới này, anh lại tình cờ gặp được em theo một cách rất tự nhiên ❤️</p>
-
-  </div>
 </div>
+</div>
+
 <!-- INFO -->
+<div class="section">
 <div class="info-box">
 <h3><i class="fas fa-user"></i> Thông tin cá nhân</h3>
 
@@ -237,6 +237,7 @@ body{
 </div>
 </div>
 
+<!-- HOBBY -->
 <div class="section">
 <h2>Sở thích</h2>
 
@@ -245,30 +246,28 @@ body{
 <div class="box">💻<p>Lập trình</p></div>
 <div class="box">🎵<p>Nghe nhạc</p></div>
 </div>
-
 </div>
 
 <!-- CONTACT -->
 <div class="section">
 <div class="contact-box">
-
 <h2>📬 Liên hệ</h2>
 
 <p>
-  <a href="mailto:thingphung1245@gmail.com" class="email">
-    <i class="fas fa-envelope"></i>
-    thingphung1245@gmail.com
-  </a>
+<a href="mailto:thingphung1245@gmail.com" class="email">
+<i class="fas fa-envelope"></i>
+thingphung1245@gmail.com
+</a>
 </p>
 
 <div class="social">
-  <a href="https://facebook.com/thinhphung07" target="_blank">
-    <i class="fab fa-facebook"></i>
-  </a>
+<a href="https://facebook.com/thinhphung07" target="_blank">
+<i class="fab fa-facebook"></i>
+</a>
 
-  <a href="https://tiktok.com/@dvp.138" target="_blank">
-    <i class="fab fa-tiktok"></i>
-  </a>
+<a href="https://tiktok.com/@dvp.138" target="_blank">
+<i class="fab fa-tiktok"></i>
+</a>
 </div>
 
 </div>
