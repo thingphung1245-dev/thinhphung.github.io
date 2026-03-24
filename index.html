@@ -56,7 +56,7 @@ body{
     padding:40px 20px;
 }
 
-/* CARD CHUNG */
+/* CARD */
 .card{
     max-width:900px;
     margin:20px auto;
@@ -87,11 +87,6 @@ body{
     margin-bottom:10px;
 }
 
-/* INFO */
-.info p{
-    margin:8px 0;
-}
-
 /* HOBBY */
 .hobby{
     display:flex;
@@ -109,6 +104,7 @@ body{
     background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
 
+    cursor:pointer;
     transition:0.3s;
 }
 
@@ -145,6 +141,56 @@ iframe{
     border-radius:15px;
 }
 
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding:30px;
+    border-radius:20px;
+    width:80%;
+    max-width:500px;
+    text-align:center;
+
+    border:1px solid #00bfff;
+    box-shadow:0 0 40px #00bfff;
+
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop{
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.close{
+    float:right;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.close:hover{
+    color:red;
+}
+
 /* RESPONSIVE */
 @media(max-width:768px){
     #name{
@@ -166,33 +212,31 @@ iframe{
 <div class="section">
 <div class="card">
 <h2>📝 Một chút về tôi</h2>
-
-<p>Xin chào, nếu bạn đang đọc những dòng này thì có lẽ bạn vừa ghé qua blog cá nhân nhỏ của tôi.</p>
-<p>Tôi là Đặng Văn Phụng, một người khá gần gũi, hòa đồng.</p>
-<p>Tôi có một gia đình nhỏ gồm 4 người 👪 và một người yêu hướng ngoại 👧.</p>
-<p>Tôi thích sự chân thành và cuộc sống nhẹ nhàng.</p>
-<p>Hiện tại tôi đang học CNTT năm nhất tại Cao Đẳng Sài Gòn.</p>
-
+<p>Xin chào, tôi là Đặng Văn Phụng.</p>
+<p>Tôi là một người hòa đồng, thích lập trình và cuộc sống đơn giản.</p>
+<p>Hiện tại tôi đang học CNTT năm nhất.</p>
 </div>
 </div>
 
 <div class="section">
-<div class="card info">
+<div class="card">
 <h3><i class="fas fa-user"></i> Thông tin cá nhân</h3>
 <p>📅 Ngày sinh: 13 / 08 / 2007</p>
-<p>📍 Nơi sinh: TP.HCM</p>
-<p>🏠 Quê quán: Nghệ An</p>
+<p>📍 TP.HCM</p>
+<p>🏠 Nghệ An</p>
 </div>
 </div>
 
 <div class="section">
 <div class="card">
 <h2>Sở thích</h2>
+
 <div class="hobby">
-<div class="box">🎮<p>Chơi game</p></div>
-<div class="box">💻<p>Lập trình</p></div>
-<div class="box">🎵<p>Nghe nhạc</p></div>
+<div class="box" onclick="openModal('game')">🎮<p>Chơi game</p></div>
+<div class="box" onclick="openModal('code')">💻<p>Lập trình</p></div>
+<div class="box" onclick="openModal('music')">🎵<p>Nghe nhạc</p></div>
 </div>
+
 </div>
 </div>
 
@@ -215,9 +259,18 @@ width="100%" height="350"></iframe>
 </div>
 </div>
 
+<!-- POPUP -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2 id="modal-title"></h2>
+    <p id="modal-text"></p>
+  </div>
+</div>
+
 <script>
 
-/* TYPEWRITER EFFECT */
+/* TYPEWRITER */
 const text = "Đặng Văn Phụng";
 let i = 0;
 
@@ -230,6 +283,40 @@ function typeEffect(){
 }
 
 window.onload = typeEffect;
+
+/* MODAL */
+function openModal(type){
+    const title = document.getElementById("modal-title");
+    const text = document.getElementById("modal-text");
+
+    if(type === "game"){
+        title.innerHTML = "🎮 Chơi game";
+        text.innerHTML = "Tôi thích chơi Liên Minh, Free Fire và các game giải trí.";
+    }
+
+    if(type === "code"){
+        title.innerHTML = "💻 Lập trình";
+        text.innerHTML = "Tôi thích làm web bằng HTML, CSS, JavaScript và tạo UI đẹp.";
+    }
+
+    if(type === "music"){
+        title.innerHTML = "🎵 Nghe nhạc";
+        text.innerHTML = "Tôi thích nghe nhạc chill, remix và nhạc thư giãn.";
+    }
+
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+window.onclick = function(e){
+    const modal = document.getElementById("modal");
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
+}
 
 </script>
 
