@@ -8,47 +8,47 @@
 
 <style>
 
-body{
-    font-family: Arial;
+*{
     margin:0;
-    text-align:center;
-    background: linear-gradient(135deg, #020b1c, #0a1f44, #000);
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#020b1c,#0a1f44,#000);
     color:white;
-}
-
-/* ANIMATION LOAD */
-.section, .header{
-    animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 /* HEADER */
 .header{
-    background:#111;
-    padding:40px;
+    text-align:center;
+    padding:60px 20px;
 }
 
 .header img{
-    width:150px;
+    width:140px;
     border-radius:50%;
     border:3px solid #00bfff;
-    box-shadow:0 0 20px #00bfff;
-    transition:0.3s;
+    box-shadow:0 0 25px #00bfff;
+    transition:0.4s;
 }
 
 .header img:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 40px #00bfff;
+    transform:scale(1.1);
+    box-shadow:0 0 50px #00bfff;
+}
+
+/* TYPEWRITER */
+#name{
+    font-size:32px;
+    margin-top:15px;
+    color:#00bfff;
+    border-right:3px solid #00bfff;
+    display:inline-block;
+    padding-right:5px;
+    white-space:nowrap;
+    overflow:hidden;
 }
 
 /* SECTION */
@@ -56,76 +56,59 @@ body{
     padding:40px 20px;
 }
 
-/* ABOUT BOX */
-.about-box{
-    background:#020b1c;
+/* CARD CHUNG */
+.card{
+    max-width:900px;
+    margin:20px auto;
     padding:30px;
-    border-radius:15px;
-    width:65%;
-    margin:30px auto;
-    text-align:justify;
-    line-height:1.8;
+    border-radius:20px;
 
-    border:1px solid #00bfff;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
 
-    box-shadow: 
-        0 0 10px #00bfff,
-        0 0 25px rgba(0,191,255,0.5);
+    border:1px solid rgba(0,191,255,0.3);
+    box-shadow:0 0 20px rgba(0,191,255,0.3);
 
     transition:0.4s;
 }
 
-.about-box:hover{
-    transform:translateY(-8px);
-    box-shadow: 
-        0 0 20px #00bfff,
-        0 0 60px rgba(0,191,255,0.8);
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 50px rgba(0,191,255,0.7);
 }
 
-.about-box h2{
+.card h2, .card h3{
     text-align:center;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
-.about-box p{
-    margin-bottom:15px;
-    text-indent:20px;
+.card p{
+    line-height:1.7;
+    margin-bottom:10px;
 }
 
 /* INFO */
-.info-box{
-    background:#020b1c;
-    padding:25px;
-    border-radius:15px;
-    width:60%;
-    margin:30px auto;
-    text-align:left;
-
-    border:1px solid #00bfff;
-    box-shadow:0 0 20px #00bfff;
-    transition:0.3s;
-}
-
-.info-box:hover{
-    transform:translateY(-5px);
-    box-shadow:0 0 40px #00bfff;
+.info p{
+    margin:8px 0;
 }
 
 /* HOBBY */
 .hobby{
     display:flex;
     justify-content:center;
-    gap:20px;
     flex-wrap:wrap;
+    gap:20px;
 }
 
 .box{
-    background:#111;
-    padding:20px;
     width:150px;
-    border-radius:10px;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+
+    background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
-    box-shadow:0 0 10px #00bfff;
+
     transition:0.3s;
 }
 
@@ -135,25 +118,20 @@ body{
 }
 
 /* CONTACT */
-.contact-box{
-    background:#020b1c;
-    padding:30px;
-    border-radius:15px;
-    width:60%;
-    margin:auto;
-
-    border:1px solid #00bfff;
-    box-shadow:0 0 20px #00bfff;
-}
-
 .email{
     color:#00bfff;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.social{
+    text-align:center;
 }
 
 .social a{
     color:#ccc;
-    font-size:30px;
-    margin:0 15px;
+    font-size:28px;
+    margin:0 10px;
     transition:0.3s;
 }
 
@@ -163,24 +141,14 @@ body{
 }
 
 /* MAP */
-.map-box{
-    background:#020b1c;
-    padding:20px;
+iframe{
     border-radius:15px;
-    width:80%;
-    margin:auto;
-
-    border:1px solid #00bfff;
-    box-shadow:0 0 20px #00bfff;
 }
 
 /* RESPONSIVE */
 @media(max-width:768px){
-    .about-box,
-    .info-box,
-    .contact-box,
-    .map-box{
-        width:90%;
+    #name{
+        font-size:24px;
     }
 }
 
@@ -191,29 +159,25 @@ body{
 
 <div class="header">
 <img src="058563264cd7c2899bc6.jpg">
-<h1>Đặng Văn Phụng</h1>
-<p>Sinh viên CNTT-Part Time</p>
+<h1 id="name"></h1>
+<p>Sinh viên CNTT - Part Time</p>
 </div>
 
 <div class="section">
-<div class="about-box">
+<div class="card">
 <h2>📝 Một chút về tôi</h2>
 
 <p>Xin chào, nếu bạn đang đọc những dòng này thì có lẽ bạn vừa ghé qua blog cá nhân nhỏ của tôi.</p>
+<p>Tôi là Đặng Văn Phụng, một người khá gần gũi, hòa đồng.</p>
+<p>Tôi có một gia đình nhỏ gồm 4 người 👪 và một người yêu hướng ngoại 👧.</p>
+<p>Tôi thích sự chân thành và cuộc sống nhẹ nhàng.</p>
+<p>Hiện tại tôi đang học CNTT năm nhất tại Cao Đẳng Sài Gòn.</p>
 
-<p>Tôi là Đặng Văn Phụng. Nếu phải mô tả ngắn gọn về bản thân thì chắc chỉ có thể nói rằng tôi là một người khá Gần Gũi,Hòa Đồng</p>
-
-<p>Tôi có 1 Gia Đình Nhỏ Gồm 4 Người👪 và 1 cô NY Hướng Ngoại cao👧,Gia đình tôi rất hòa đồng và vui vẻ</p>
-
-<p>Tôi thích sự chân thành và một cuộc sống nhẹ nhàng..</p>
-    <p> Tôi đang học và làm việc Tại Cao Đẳng Sài Gòn với ngành CNTT Năm Nhất</p>
-
-<p>Hi vọng Tương Lai của tôi thành công hơn,!</p>
 </div>
 </div>
 
 <div class="section">
-<div class="info-box">
+<div class="card info">
 <h3><i class="fas fa-user"></i> Thông tin cá nhân</h3>
 <p>📅 Ngày sinh: 13 / 08 / 2007</p>
 <p>📍 Nơi sinh: TP.HCM</p>
@@ -222,6 +186,7 @@ body{
 </div>
 
 <div class="section">
+<div class="card">
 <h2>Sở thích</h2>
 <div class="hobby">
 <div class="box">🎮<p>Chơi game</p></div>
@@ -229,9 +194,10 @@ body{
 <div class="box">🎵<p>Nghe nhạc</p></div>
 </div>
 </div>
+</div>
 
 <div class="section">
-<div class="contact-box">
+<div class="card">
 <h2>📬 Liên hệ</h2>
 <p class="email">📧 thingphung1245@gmail.com</p>
 <div class="social">
@@ -242,12 +208,30 @@ body{
 </div>
 
 <div class="section">
-<div class="map-box">
+<div class="card">
 <h2>📍 Vị trí</h2>
 <iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed"
-width="100%" height="350" style="border:0;border-radius:10px;"></iframe>
+width="100%" height="350"></iframe>
 </div>
 </div>
+
+<script>
+
+/* TYPEWRITER EFFECT */
+const text = "Đặng Văn Phụng";
+let i = 0;
+
+function typeEffect(){
+    if(i < text.length){
+        document.getElementById("name").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 100);
+    }
+}
+
+window.onload = typeEffect;
+
+</script>
 
 </body>
 </html>
