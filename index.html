@@ -202,7 +202,32 @@ return;
 }
 
 if(type==="code"){title.innerHTML="💻";body.innerHTML="HTML CSS JS";}
-if(type==="music"){title.innerHTML="🎵";body.innerHTML="Nhạc chill";}
+    /* 🔥 THÊM NHẠC Ở ĐÂY */
+if(type==="music"){
+title.innerHTML="🎵 Nghe nhạc";
+
+body.innerHTML=`
+<h3>🎶 Danh sách nhạc</h3>
+
+<p>1. Nhạc Chill 1</p>
+<audio controls>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<p>2. Nhạc Chill 2</p>
+<audio controls>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+</audio>
+
+<p>3. Nhạc Chill 3</p>
+<audio controls>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+</audio>
+`;
+}
+
+modal.style.display="flex";
+
 
 modal.style.display="flex";
 }
