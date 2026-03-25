@@ -13,6 +13,7 @@
         color:white;
         font-family:Arial;
         flex-direction:column;
+        outline:none;
     }
     canvas{
         background:#000;
@@ -20,10 +21,12 @@
     }
 </style>
 </head>
-<body>
+
+<body tabindex="0">
 
 <h2>🐍 Snake Game</h2>
 <canvas id="game" width="400" height="400"></canvas>
+<p>Điểm: <span id="score">0</span></p>
 <p>Dùng phím mũi tên để chơi</p>
 
 <script>
@@ -33,13 +36,18 @@ const ctx = canvas.getContext("2d");
 const box = 20;
 let snake = [{x:200, y:200}];
 let direction = "RIGHT";
+let score = 0;
+
+// 👉 Tự focus để nhận phím
+document.body.focus();
+
+// 👉 Lắng nghe phím chuẩn
+window.addEventListener("keydown", changeDirection);
 
 let food = {
     x: Math.floor(Math.random()*20)*box,
     y: Math.floor(Math.random()*20)*box
 };
-
-document.addEventListener("keydown", changeDirection);
 
 function changeDirection(e){
     if(e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
@@ -72,6 +80,9 @@ function draw(){
 
     // ăn mồi
     if(headX === food.x && headY === food.y){
+        score++;
+        document.getElementById("score").innerText = score;
+
         food = {
             x: Math.floor(Math.random()*20)*box,
             y: Math.floor(Math.random()*20)*box
@@ -89,7 +100,8 @@ function draw(){
         collision(newHead, snake)
     ){
         clearInterval(game);
-        alert("💀 Game Over!");
+        alert("💀 Game Over! Điểm: " + score);
+        location.reload(); // chơi lại
     }
 
     snake.unshift(newHead);
