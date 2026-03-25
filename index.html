@@ -32,6 +32,22 @@ body{
     box-shadow:0 0 25px #00bfff;
 }
 
+/* 👉 CHỮ CHẠY */
+#name{
+    color:#00bfff;
+    border-right:3px solid #00bfff;
+    padding-right:5px;
+    white-space:nowrap;
+    overflow:hidden;
+    display:inline-block;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink{
+    0%,100%{border-color:#00bfff;}
+    50%{border-color:transparent;}
+}
+
 /* SECTION */
 .section{
     padding:40px 20px;
@@ -126,7 +142,7 @@ iframe{
 <!-- HEADER -->
 <div class="header">
     <img src="058563264cd7c2899bc6.jpg">
-    <h1>Đặng Văn Phụng</h1>
+    <h1 id="name"></h1>
     <p>Sinh viên CNTT - Part Time</p>
 </div>
 
@@ -183,6 +199,38 @@ iframe{
 </div>
 
 <script>
+/* 🔥 CHỮ CHẠY */
+const text = "Đặng Văn Phụng";
+let i = 0;
+let isDeleting = false;
+
+function typeEffect(){
+    const el = document.getElementById("name");
+
+    if(!isDeleting){
+        el.innerHTML = text.substring(0, i + 1);
+        i++;
+
+        if(i === text.length){
+            isDeleting = true;
+            setTimeout(typeEffect, 1500);
+            return;
+        }
+    } else {
+        el.innerHTML = text.substring(0, i - 1);
+        i--;
+
+        if(i === 0){
+            isDeleting = false;
+        }
+    }
+
+    setTimeout(typeEffect, isDeleting ? 50 : 120);
+}
+
+window.onload = typeEffect;
+
+/* GAME */
 let gameInterval;
 
 function openModal(type){
