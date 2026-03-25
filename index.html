@@ -14,13 +14,15 @@
     font-family:'Segoe UI', sans-serif;
 }
 
-/* 🔥 BACKGROUND ANIME XỊN */
+/* 🔥 BACKGROUND */
 body{
     background: linear-gradient(-45deg,#020b1c,#0a1f44,#001f3f,#000);
     background-size: 400% 400%;
     animation: gradientMove 12s ease infinite;
     color:white;
     overflow-x:hidden;
+    position:relative;
+    z-index:1; /* ✅ FIX MẤT NỘI DUNG */
 }
 
 @keyframes gradientMove{
@@ -29,7 +31,7 @@ body{
     100%{background-position:0% 50%;}
 }
 
-/* 🔥 CANVAS BACKGROUND */
+/* CANVAS */
 #bgCanvas{
     position:fixed;
     top:0;
@@ -37,9 +39,10 @@ body{
     width:100%;
     height:100%;
     z-index:-2;
+    pointer-events:none;
 }
 
-/* 🔥 ÁNH SÁNG CHUỘT */
+/* ÁNH SÁNG CHUỘT */
 #cursor-light{
     position:fixed;
     width:300px;
@@ -68,15 +71,6 @@ body{
     color:#00bfff;
     border-right:3px solid #00bfff;
     padding-right:5px;
-    white-space:nowrap;
-    overflow:hidden;
-    display:inline-block;
-    animation: blink 0.7s infinite;
-}
-
-@keyframes blink{
-    0%,100%{border-color:#00bfff;}
-    50%{border-color:transparent;}
 }
 
 /* SECTION */
@@ -93,36 +87,6 @@ body{
     background:rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
     border:1px solid rgba(0,191,255,0.3);
-    position:relative;
-    overflow:hidden;
-    transition:0.4s;
-}
-
-.card::before{
-    content:"";
-    position:absolute;
-    width:200%;
-    height:200%;
-    background: radial-gradient(circle, rgba(0,191,255,0.3) 0%, transparent 70%);
-    top:-50%;
-    left:-50%;
-    opacity:0;
-    transition:0.5s;
-    pointer-events:none;
-}
-
-.card:hover{
-    transform: translateY(-10px) scale(1.02);
-    box-shadow:
-        0 0 20px rgba(0,191,255,0.6),
-        0 0 40px rgba(0,191,255,0.5),
-        0 0 60px rgba(0,191,255,0.4),
-        0 0 100px rgba(0,191,255,0.3);
-    border:1px solid #00bfff;
-}
-
-.card:hover::before{
-    opacity:1;
 }
 
 /* HOBBY */
@@ -142,9 +106,6 @@ body{
     background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
     cursor:pointer;
-    transition:0.3s;
-    position:relative;
-    z-index:2;
 }
 
 .box:hover{
@@ -161,17 +122,10 @@ body{
     color:#ccc;
     font-size:28px;
     margin:0 10px;
-    position:relative;
-    z-index:2;
 }
 
 .social a:hover{
     color:#00bfff;
-}
-
-/* MAP */
-iframe{
-    border-radius:15px;
 }
 
 /* MODAL */
@@ -193,20 +147,12 @@ iframe{
     padding:20px;
     border-radius:15px;
     text-align:center;
-    border:2px solid #0f0;
-}
-
-.close{
-    float:right;
-    cursor:pointer;
-    font-size:25px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 BACKGROUND -->
 <canvas id="bgCanvas"></canvas>
 <div id="cursor-light"></div>
 
@@ -216,56 +162,116 @@ iframe{
     <p>Sinh viên CNTT - Part Time</p>
 </div>
 
-<!-- (giữ nguyên toàn bộ phần HTML của bạn) -->
+<!-- GIỚI THIỆU -->
+<div class="section">
+    <div class="card">
+        <h2>📝 Một chút về tôi</h2>
+        <p>Xin chào, tôi là Đặng Văn Phụng.</p>
+        <p>Tôi thích lập trình và cuộc sống đơn giản.</p>
+        <p>Hiện tại tôi đang học CNTT năm nhất.</p>
+          <p>📅 Ngày sinh: 13 / 08 / 2007</p>
+            <p>📍 TP.HCM</p>
+            <p>🏠 Nghệ An - Nam Định</p>
+    </div>
+</div>
+
+<!-- SỞ THÍCH -->
+<div class="section">
+    <div class="card">
+        <h2>Sở thích</h2>
+        <div class="hobby">
+            <div class="box" onclick="openModal('game')">🎮 Chơi game</div>
+            <div class="box" onclick="openModal('code')">💻 Lập trình</div>
+            <div class="box" onclick="openModal('music')">🎵 Nghe nhạc</div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+    <div class="card">
+        <h2>📬 Liên hệ</h2>
+        <p>📧 thingphung1245@gmail.com</p>
+        <div class="social">
+            <a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal()">×</span>
+        <h2 id="modal-title"></h2>
+        <div id="modal-body"></div>
+    </div>
+</div>
 
 <script>
-/* 🔥 BACKGROUND PARTICLE */
-const canvasBg = document.getElementById("bgCanvas");
-const ctxBg = canvasBg.getContext("2d");
+/* TEXT */
+const text = "Đặng Văn Phụng";
+let i=0;
+function typeEffect(){
+    document.getElementById("name").innerHTML = text.substring(0,i++);
+    if(i<=text.length) setTimeout(typeEffect,100);
+}
+typeEffect();
 
-canvasBg.width = window.innerWidth;
-canvasBg.height = window.innerHeight;
+/* BACKGROUND */
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-let particles = [];
-
+let stars=[];
 for(let i=0;i<100;i++){
-    particles.push({
-        x: Math.random()*canvasBg.width,
-        y: Math.random()*canvasBg.height,
-        r: Math.random()*2 + 1,
-        dx: Math.random()*1 - 0.5,
-        dy: Math.random()*1 - 0.5
-    });
+    stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
 }
 
-function animateBg(){
-    ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height);
-
-    ctxBg.fillStyle = "#00bfff";
-
-    particles.forEach(p=>{
-        ctxBg.beginPath();
-        ctxBg.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctxBg.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if(p.x<0||p.x>canvasBg.width) p.dx *= -1;
-        if(p.y<0||p.y>canvasBg.height) p.dy *= -1;
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00bfff";
+    stars.forEach(s=>{
+        ctx.fillRect(s.x,s.y,2,2);
+        s.y+=0.3;
+        if(s.y>canvas.height){s.y=0;}
     });
-
-    requestAnimationFrame(animateBg);
+    requestAnimationFrame(draw);
 }
-animateBg();
+draw();
 
-/* 🔥 ÁNH SÁNG THEO CHUỘT */
-const light = document.getElementById("cursor-light");
-
-document.addEventListener("mousemove", e=>{
-    light.style.left = e.clientX + "px";
-    light.style.top = e.clientY + "px";
+/* CURSOR LIGHT */
+document.addEventListener("mousemove",e=>{
+    document.getElementById("cursor-light").style.left=e.clientX+"px";
+    document.getElementById("cursor-light").style.top=e.clientY+"px";
 });
+
+/* MODAL */
+function openModal(type){
+    const modal=document.getElementById("modal");
+    const title=document.getElementById("modal-title");
+    const body=document.getElementById("modal-body");
+
+    if(type==="game"){
+        title.innerHTML="🐍 Game";
+        body.innerHTML="Game đơn giản (bạn có thể thêm lại snake cũ)";
+    }
+    if(type==="code"){
+        title.innerHTML="💻 Lập trình";
+        body.innerHTML="HTML CSS JS";
+    }
+    if(type==="music"){
+        title.innerHTML="🎵 Nhạc";
+        body.innerHTML="Nhạc chill";
+    }
+
+    modal.style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
 </script>
 
 </body>
