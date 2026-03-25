@@ -50,6 +50,12 @@ body{
     z-index:-1;
 }
 
+/* 🔥 FIX CLICK */
+.header, .section, .card, .box, .social{
+    position:relative;
+    z-index:10;
+}
+
 /* HEADER */
 .header{
     text-align:center;
@@ -112,7 +118,6 @@ body{
     background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
     cursor:pointer;
-    z-index:2;
 }
 
 .box:hover{
@@ -144,7 +149,7 @@ body{
     background:rgba(0,0,0,0.8);
     justify-content:center;
     align-items:center;
-    z-index:9999;
+    z-index:99999;
 }
 
 .modal-content{
@@ -163,18 +168,15 @@ body{
 
 <body>
 
-<!-- BACKGROUND -->
 <canvas id="bgCanvas"></canvas>
 <div id="cursor-light"></div>
 
-<!-- HEADER -->
 <div class="header">
     <img src="058563264cd7c2899bc6.jpg">
     <h1 id="name"></h1>
     <p>Sinh viên CNTT - Part Time</p>
 </div>
 
-<!-- GIỚI THIỆU -->
 <div class="section">
 <div class="card">
 <h2>📝 Một chút về tôi</h2>
@@ -187,7 +189,6 @@ body{
 </div>
 </div>
 
-<!-- SỞ THÍCH -->
 <div class="section">
 <div class="card">
 <h2>Sở thích</h2>
@@ -199,7 +200,6 @@ body{
 </div>
 </div>
 
-<!-- CONTACT -->
 <div class="section">
 <div class="card">
 <h2>📬 Liên hệ</h2>
@@ -211,7 +211,6 @@ body{
 </div>
 </div>
 
-<!-- MAP -->
 <div class="section">
 <div class="card">
 <h2>📍 Vị trí</h2>
@@ -220,7 +219,6 @@ width="100%" height="350"></iframe>
 </div>
 </div>
 
-<!-- MODAL -->
 <div id="modal" class="modal">
 <div class="modal-content">
 <span class="close" onclick="closeModal()">X</span>
@@ -230,7 +228,6 @@ width="100%" height="350"></iframe>
 </div>
 
 <script>
-/* TEXT */
 const text="Đặng Văn Phụng";
 let i=0,isDeleting=false;
 function typeEffect(){
@@ -243,8 +240,9 @@ setTimeout(typeEffect,isDeleting?50:120);
 }
 typeEffect();
 
-/* GAME */
+/* GAME FIX */
 let gameInterval;
+
 function openModal(type){
 let title=document.getElementById("modal-title");
 let body=document.getElementById("modal-body");
@@ -252,8 +250,9 @@ let body=document.getElementById("modal-body");
 if(type==="game"){
 title.innerHTML="🐍 Snake";
 body.innerHTML=`<canvas id="gameCanvas" width="300" height="300"></canvas><p>Điểm: <span id="score">0</span></p>`;
-startGame();
+setTimeout(startGame,100); // 🔥 FIX delay
 }
+
 if(type==="code"){title.innerHTML="💻";body.innerHTML="HTML CSS JS";}
 if(type==="music"){title.innerHTML="🎵";body.innerHTML="Nhạc chill";}
 
@@ -268,19 +267,24 @@ clearInterval(gameInterval);
 function startGame(){
 const canvas=document.getElementById("gameCanvas");
 const ctx=canvas.getContext("2d");
-let snake=[{x:150,y:150}],dir="RIGHT",score=0;
 
-window.onkeydown=e=>{
+let snake=[{x:150,y:150}];
+let dir="RIGHT";
+let score=0;
+
+document.addEventListener("keydown", e=>{
 if(e.key==="ArrowUp")dir="UP";
 if(e.key==="ArrowDown")dir="DOWN";
 if(e.key==="ArrowLeft")dir="LEFT";
 if(e.key==="ArrowRight")dir="RIGHT";
-};
+});
 
 let food={x:100,y:100};
 
 gameInterval=setInterval(()=>{
+ctx.fillStyle="#000";
 ctx.fillRect(0,0,300,300);
+
 let head={...snake[0]};
 if(dir==="UP")head.y-=15;
 if(dir==="DOWN")head.y+=15;
@@ -288,11 +292,14 @@ if(dir==="LEFT")head.x-=15;
 if(dir==="RIGHT")head.x+=15;
 
 snake.unshift(head);
-if(head.x===food.x&&head.y===food.y){
+
+if(head.x===food.x && head.y===food.y){
 score++;
 document.getElementById("score").innerText=score;
-food={x:Math.random()*300,y:Math.random()*300};
-}else snake.pop();
+food={x:Math.floor(Math.random()*20)*15,y:Math.floor(Math.random()*20)*15};
+}else{
+snake.pop();
+}
 
 ctx.fillStyle="red";
 ctx.fillRect(food.x,food.y,15,15);
@@ -303,7 +310,7 @@ snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
 },120);
 }
 
-/* BACKGROUND PARTICLES */
+/* BACKGROUND */
 const canvasBg=document.getElementById("bgCanvas");
 const ctxBg=canvasBg.getContext("2d");
 canvasBg.width=innerWidth;
@@ -326,7 +333,7 @@ requestAnimationFrame(draw);
 }
 draw();
 
-/* CURSOR LIGHT */
+/* CURSOR */
 document.addEventListener("mousemove",e=>{
 document.getElementById("cursor-light").style.left=e.clientX+"px";
 document.getElementById("cursor-light").style.top=e.clientY+"px";
