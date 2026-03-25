@@ -16,77 +16,67 @@ body{
     color:white;
 }
 
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
 /* MENU */
 .navbar{
     position:fixed;
-    top:0;
-    left:0;
+    top:0;left:0;
     width:100%;
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding:15px 40px;
+    padding:15px 30px;
     background:rgba(0,0,0,0.6);
     backdrop-filter: blur(10px);
-    z-index:999;
+    z-index:1000;
 }
 
-.logo{font-size:28px;font-weight:bold;color:#00bfff;}
-
-.menu{display:flex;gap:20px;align-items:center;}
+.logo{color:#00bfff;font-size:26px;font-weight:bold;}
 
 .menu a{
-    text-decoration:none;
     color:#ccc;
-    padding:8px 16px;
-    border-radius:20px;
+    margin-left:15px;
+    text-decoration:none;
 }
 
-.menu a:hover{background:#00bfff;color:#000;}
+.menu a:hover{color:#00bfff;}
 
 /* BACKGROUND FIX */
 #bgCanvas{
     position:fixed;
-    top:0;
-    left:0;
+    top:0;left:0;
     width:100%;
     height:100%;
-    z-index:-10; /* FIX đè */
-    pointer-events:none; /* FIX click */
-}
-
-#cursor-light{
-    position:fixed;
-    width:300px;height:300px;
-    background: radial-gradient(circle, rgba(0,191,255,0.25), transparent 70%);
+    z-index:-100;
     pointer-events:none;
-    transform:translate(-50%,-50%);
-    z-index:-5;
 }
 
 /* CONTENT */
-.header,.navbar,.modal,.card{
-    position:relative;
-    z-index:10;
+.header{
+    margin-top:90px;
+    text-align:center;
 }
 
-.header{margin-top:80px;text-align:center;padding:60px 20px;}
-
 .header img{
-    width:140px;border-radius:50%;
+    width:130px;
+    border-radius:50%;
     border:3px solid #00bfff;
-    box-shadow:0 0 25px #00bfff;
 }
 
 /* MODAL */
 .modal{
     display:none;
     position:fixed;
+    top:0;left:0;
     width:100%;height:100%;
-    background:rgba(0,0,0,0.85);
+    background:rgba(0,0,0,0.9);
+    z-index:9999;
     justify-content:center;
     align-items:center;
-    z-index:99999;
 }
 
 .modal-content{
@@ -96,7 +86,7 @@ body{
     text-align:center;
 }
 
-/* MOBILE BUTTON */
+/* GAME BUTTON MOBILE */
 .controls{
     margin-top:15px;
     display:grid;
@@ -111,7 +101,6 @@ body{
     padding:10px;
     border-radius:10px;
     font-size:18px;
-    cursor:pointer;
 }
 </style>
 </head>
@@ -119,29 +108,29 @@ body{
 <body>
 
 <div class="navbar">
-    <div class="logo">DvP</div>
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href="#" onclick="openModal('game')">Game</a>
-    </div>
+<div class="logo">DvP</div>
+<div class="menu">
+<a href="#">Home</a>
+<a href="#" onclick="openModal()">Game</a>
+</div>
 </div>
 
 <canvas id="bgCanvas"></canvas>
-<div id="cursor-light"></div>
 
 <div class="header">
-    <img src="058563264cd7c2899bc6.jpg">
-    <h1 id="name"></h1>
+<img src="058563264cd7c2899bc6.jpg">
+<h1 id="name"></h1>
 </div>
 
 <div id="modal" class="modal">
 <div class="modal-content">
-<span onclick="closeModal()">X</span>
+<span onclick="closeModal()" style="cursor:pointer">X</span>
 <div id="modal-body"></div>
 </div>
 </div>
 
 <script>
+
 /* TEXT */
 const text="Đặng Văn Phụng";
 let i=0;
@@ -156,7 +145,6 @@ let dir="RIGHT";
 let gameInterval;
 
 function openModal(){
-const modal=document.getElementById("modal");
 const body=document.getElementById("modal-body");
 
 body.innerHTML=`
@@ -173,7 +161,7 @@ body.innerHTML=`
 </div>
 `;
 
-modal.style.display="flex";
+document.getElementById("modal").style.display="flex";
 setTimeout(startGame,100);
 }
 
@@ -186,51 +174,48 @@ function startGame(){
 const canvas=document.getElementById("gameCanvas");
 const ctx=canvas.getContext("2d");
 
-let snake=[{x:150,y:150}];
-let food={x:60,y:60};
+let grid=15;
+let snake=[{x:10,y:10}];
+let food={x:5,y:5};
 let score=0;
 
 document.onkeydown=e=>{
-if(e.key==="ArrowUp") dir="UP";
-if(e.key==="ArrowDown") dir="DOWN";
-if(e.key==="ArrowLeft") dir="LEFT";
-if(e.key==="ArrowRight") dir="RIGHT";
+if(e.key==="ArrowUp" && dir!=="DOWN") dir="UP";
+if(e.key==="ArrowDown" && dir!=="UP") dir="DOWN";
+if(e.key==="ArrowLeft" && dir!=="RIGHT") dir="LEFT";
+if(e.key==="ArrowRight" && dir!=="LEFT") dir="RIGHT";
 };
-
-/* FIX resize canvas */
-function resize(){
-canvas.width=300;
-canvas.height=300;
-}
-resize();
 
 gameInterval=setInterval(()=>{
 ctx.fillStyle="#000";
 ctx.fillRect(0,0,300,300);
 
 let head={...snake[0]};
-if(dir==="UP") head.y-=15;
-if(dir==="DOWN") head.y+=15;
-if(dir==="LEFT") head.x-=15;
-if(dir==="RIGHT") head.x+=15;
+if(dir==="UP") head.y--;
+if(dir==="DOWN") head.y++;
+if(dir==="LEFT") head.x--;
+if(dir==="RIGHT") head.x++;
 
 snake.unshift(head);
 
 if(head.x===food.x && head.y===food.y){
 score++;
 document.getElementById("score").innerText=score;
-food={x:Math.floor(Math.random()*20)*15,y:Math.floor(Math.random()*20)*15};
+food={
+x:Math.floor(Math.random()*20),
+y:Math.floor(Math.random()*20)
+};
 }else{
 snake.pop();
 }
 
 ctx.fillStyle="red";
-ctx.fillRect(food.x,food.y,15,15);
+ctx.fillRect(food.x*grid,food.y*grid,grid,grid);
 
 ctx.fillStyle="lime";
-snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
+snake.forEach(s=>ctx.fillRect(s.x*grid,s.y*grid,grid,grid));
 
-if(head.x<0||head.y<0||head.x>=300||head.y>=300){
+if(head.x<0||head.y<0||head.x>=20||head.y>=20){
 alert("Game Over");
 closeModal();
 }
@@ -242,38 +227,35 @@ closeModal();
 const canvasBg=document.getElementById("bgCanvas");
 const ctxBg=canvasBg.getContext("2d");
 
-function resizeCanvas(){
+function resize(){
 canvasBg.width=window.innerWidth;
 canvasBg.height=window.innerHeight;
 }
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+resize();
+window.addEventListener("resize",resize);
 
 let p=[];
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
 p.push({x:Math.random()*canvasBg.width,y:Math.random()*canvasBg.height});
 }
 
 function draw(){
 ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height);
-ctxBg.fillStyle="rgba(0,191,255,0.7)";
+ctxBg.fillStyle="#00bfff";
+
 p.forEach(a=>{
 ctxBg.fillRect(a.x,a.y,2,2);
-a.y+=0.3;
+a.y+=0.5;
 if(a.y>canvasBg.height){
 a.y=0;
 a.x=Math.random()*canvasBg.width;
 }
 });
+
 requestAnimationFrame(draw);
 }
 draw();
 
-/* CURSOR */
-document.addEventListener("mousemove",e=>{
-document.getElementById("cursor-light").style.left=e.clientX+"px";
-document.getElementById("cursor-light").style.top=e.clientY+"px";
-});
 </script>
 
 </body>
