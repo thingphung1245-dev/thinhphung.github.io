@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -53,6 +54,7 @@ body{
     padding:40px 20px;
 }
 
+/* 🔥 CARD XỊN */
 .card{
     max-width:900px;
     margin:20px auto;
@@ -61,6 +63,37 @@ body{
     background:rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
     border:1px solid rgba(0,191,255,0.3);
+    position:relative;
+    overflow:hidden;
+    transition:0.4s;
+}
+
+/* ánh sáng chạy */
+.card::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle, rgba(0,191,255,0.3) 0%, transparent 70%);
+    top:-50%;
+    left:-50%;
+    opacity:0;
+    transition:0.5s;
+}
+
+/* hover */
+.card:hover{
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 0 20px rgba(0,191,255,0.6),
+        0 0 40px rgba(0,191,255,0.5),
+        0 0 60px rgba(0,191,255,0.4),
+        0 0 100px rgba(0,191,255,0.3);
+    border:1px solid #00bfff;
+}
+
+.card:hover::before{
+    opacity:1;
 }
 
 /* HOBBY */
@@ -80,6 +113,7 @@ body{
     background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
     cursor:pointer;
+    transition:0.3s;
 }
 
 .box:hover{
@@ -139,14 +173,12 @@ iframe{
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <img src="058563264cd7c2899bc6.jpg">
     <h1 id="name"></h1>
     <p>Sinh viên CNTT - Part Time</p>
 </div>
 
-<!-- GIỚI THIỆU -->
 <div class="section">
     <div class="card">
         <h2>📝 Một chút về tôi</h2>
@@ -156,7 +188,6 @@ iframe{
     </div>
 </div>
 
-<!-- SỞ THÍCH -->
 <div class="section">
     <div class="card">
         <h2>Sở thích</h2>
@@ -168,7 +199,6 @@ iframe{
     </div>
 </div>
 
-<!-- CONTACT -->
 <div class="section">
     <div class="card">
         <h2>📬 Liên hệ</h2>
@@ -180,7 +210,6 @@ iframe{
     </div>
 </div>
 
-<!-- MAP -->
 <div class="section">
     <div class="card">
         <h2>📍 Vị trí</h2>
@@ -189,7 +218,6 @@ iframe{
     </div>
 </div>
 
-<!-- MODAL -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">×</span>
@@ -199,7 +227,6 @@ iframe{
 </div>
 
 <script>
-/* 🔥 CHỮ CHẠY */
 const text = "Đặng Văn Phụng";
 let i = 0;
 let isDeleting = false;
@@ -210,7 +237,6 @@ function typeEffect(){
     if(!isDeleting){
         el.innerHTML = text.substring(0, i + 1);
         i++;
-
         if(i === text.length){
             isDeleting = true;
             setTimeout(typeEffect, 1500);
@@ -219,7 +245,6 @@ function typeEffect(){
     } else {
         el.innerHTML = text.substring(0, i - 1);
         i--;
-
         if(i === 0){
             isDeleting = false;
         }
@@ -227,7 +252,6 @@ function typeEffect(){
 
     setTimeout(typeEffect, isDeleting ? 50 : 120);
 }
-
 window.onload = typeEffect;
 
 /* GAME */
@@ -334,3 +358,4 @@ function startGame(){
 
 </body>
 </html>
+```
