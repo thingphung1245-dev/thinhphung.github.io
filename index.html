@@ -7,14 +7,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif;}
 
-/* 🔥 BACKGROUND */
 body{
     background: linear-gradient(-45deg,#020b1c,#0a1f44,#001f3f,#000);
     background-size: 400% 400%;
@@ -28,141 +22,90 @@ body{
     100%{background-position:0% 50%;}
 }
 
-/* CANVAS */
+/* BACKGROUND */
 #bgCanvas{
     position:fixed;
-    top:0;
-    left:0;
     width:100%;
     height:100%;
     z-index:-2;
     pointer-events:none;
 }
 
-/* ÁNH SÁNG CHUỘT */
 #cursor-light{
     position:fixed;
-    width:300px;
-    height:300px;
+    width:300px;height:300px;
     background: radial-gradient(circle, rgba(0,191,255,0.25), transparent 70%);
     pointer-events:none;
     transform:translate(-50%,-50%);
     z-index:-1;
 }
 
-/* 🔥 FIX CLICK */
-.header, .section, .card, .box, .social{
+/* FIX CLICK */
+.header,.section,.card,.box,.social{
     position:relative;
     z-index:10;
 }
 
-/* HEADER */
-.header{
-    text-align:center;
-    padding:60px 20px;
-}
-
+.header{text-align:center;padding:60px 20px;}
 .header img{
-    width:140px;
-    border-radius:50%;
+    width:140px;border-radius:50%;
     border:3px solid #00bfff;
     box-shadow:0 0 25px #00bfff;
 }
 
-/* TEXT */
 #name{
     color:#00bfff;
     border-right:3px solid #00bfff;
-    padding-right:5px;
-    white-space:nowrap;
-    overflow:hidden;
-    display:inline-block;
     animation: blink 0.7s infinite;
 }
-
 @keyframes blink{
-    0%,100%{border-color:#00bfff;}
     50%{border-color:transparent;}
 }
 
-/* SECTION */
-.section{
-    padding:40px 20px;
-}
+.section{padding:40px 20px;}
 
-/* CARD */
 .card{
-    max-width:900px;
-    margin:20px auto;
-    padding:30px;
+    max-width:900px;margin:20px auto;padding:30px;
     border-radius:20px;
     background:rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
     border:1px solid rgba(0,191,255,0.3);
 }
 
-/* HOBBY */
-.hobby{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:20px;
-}
+.hobby{display:flex;flex-direction:column;align-items:center;gap:20px;}
 
 .box{
-    width:80%;
-    max-width:300px;
-    padding:20px;
-    border-radius:15px;
-    text-align:center;
+    width:80%;max-width:300px;padding:20px;
+    border-radius:15px;text-align:center;
     background:rgba(255,255,255,0.05);
     border:1px solid #00bfff;
     cursor:pointer;
 }
+.box:hover{transform:scale(1.1);box-shadow:0 0 30px #00bfff;}
 
-.box:hover{
-    transform:scale(1.1);
-    box-shadow:0 0 30px #00bfff;
-}
-
-/* SOCIAL */
-.social{
-    text-align:center;
-}
-
-.social a{
-    color:#ccc;
-    font-size:28px;
-    margin:0 10px;
-}
-
-.social a:hover{
-    color:#00bfff;
-}
+.social{text-align:center;}
+.social a{color:#ccc;font-size:28px;margin:0 10px;}
+.social a:hover{color:#00bfff;}
 
 /* MODAL */
 .modal{
     display:none;
     position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.8);
+    width:100%;height:100%;
+    top:0;left:0;
+    background:rgba(0,0,0,0.85);
     justify-content:center;
     align-items:center;
-    z-index:99999;
+    z-index:999999;
 }
 
 .modal-content{
     background:#111;
     padding:20px;
     border-radius:15px;
-    text-align:center;
 }
 
-.close{
-    float:right;
-    cursor:pointer;
-}
+.close{float:right;cursor:pointer;}
 </style>
 </head>
 
@@ -183,7 +126,7 @@ body{
 <p>Xin chào, tôi là Đặng Văn Phụng.</p>
 <p>Tôi thích lập trình và cuộc sống đơn giản.</p>
 <p>Hiện tại tôi đang học CNTT năm nhất.</p>
-<p>📅 Ngày sinh: 13 / 08 / 2007</p>
+<p>📅 13 / 08 / 2007</p>
 <p>📍 TP.HCM</p>
 <p>🏠 Nghệ An - Nam Định</p>
 </div>
@@ -228,75 +171,92 @@ width="100%" height="350"></iframe>
 </div>
 
 <script>
+/* TEXT */
 const text="Đặng Văn Phụng";
 let i=0,isDeleting=false;
 function typeEffect(){
 let el=document.getElementById("name");
-if(!isDeleting){el.innerHTML=text.substring(0,i++);}
-else{el.innerHTML=text.substring(0,i--);}
-if(i===text.length)isDeleting=true;
-if(i===0)isDeleting=false;
-setTimeout(typeEffect,isDeleting?50:120);
+el.innerHTML=text.substring(0,i);
+i += isDeleting?-1:1;
+if(i===text.length) isDeleting=true;
+if(i===0) isDeleting=false;
+setTimeout(typeEffect,100);
 }
 typeEffect();
 
-/* GAME FIX */
+/* GAME FIX CHUẨN */
 let gameInterval;
+let gameRunning=false;
 
 function openModal(type){
-let title=document.getElementById("modal-title");
-let body=document.getElementById("modal-body");
+const modal=document.getElementById("modal");
+const title=document.getElementById("modal-title");
+const body=document.getElementById("modal-body");
 
 if(type==="game"){
-title.innerHTML="🐍 Snake";
+title.innerHTML="🐍 Snake Game";
 body.innerHTML=`<canvas id="gameCanvas" width="300" height="300"></canvas><p>Điểm: <span id="score">0</span></p>`;
-setTimeout(startGame,100); // 🔥 FIX delay
+modal.style.display="flex";
+setTimeout(startGame,50);
+return;
 }
 
 if(type==="code"){title.innerHTML="💻";body.innerHTML="HTML CSS JS";}
 if(type==="music"){title.innerHTML="🎵";body.innerHTML="Nhạc chill";}
 
-document.getElementById("modal").style.display="flex";
+modal.style.display="flex";
 }
 
 function closeModal(){
 document.getElementById("modal").style.display="none";
 clearInterval(gameInterval);
+gameRunning=false;
 }
 
 function startGame(){
+if(gameRunning) return;
+gameRunning=true;
+
 const canvas=document.getElementById("gameCanvas");
+if(!canvas) return;
+
 const ctx=canvas.getContext("2d");
 
 let snake=[{x:150,y:150}];
 let dir="RIGHT";
 let score=0;
 
-document.addEventListener("keydown", e=>{
-if(e.key==="ArrowUp")dir="UP";
-if(e.key==="ArrowDown")dir="DOWN";
-if(e.key==="ArrowLeft")dir="LEFT";
-if(e.key==="ArrowRight")dir="RIGHT";
-});
+document.onkeydown=function(e){
+if(e.key==="ArrowUp" && dir!=="DOWN") dir="UP";
+if(e.key==="ArrowDown" && dir!=="UP") dir="DOWN";
+if(e.key==="ArrowLeft" && dir!=="RIGHT") dir="LEFT";
+if(e.key==="ArrowRight" && dir!=="LEFT") dir="RIGHT";
+};
 
-let food={x:100,y:100};
+let food={
+x:Math.floor(Math.random()*20)*15,
+y:Math.floor(Math.random()*20)*15
+};
 
 gameInterval=setInterval(()=>{
 ctx.fillStyle="#000";
 ctx.fillRect(0,0,300,300);
 
 let head={...snake[0]};
-if(dir==="UP")head.y-=15;
-if(dir==="DOWN")head.y+=15;
-if(dir==="LEFT")head.x-=15;
-if(dir==="RIGHT")head.x+=15;
+if(dir==="UP") head.y-=15;
+if(dir==="DOWN") head.y+=15;
+if(dir==="LEFT") head.x-=15;
+if(dir==="RIGHT") head.x+=15;
 
 snake.unshift(head);
 
 if(head.x===food.x && head.y===food.y){
 score++;
 document.getElementById("score").innerText=score;
-food={x:Math.floor(Math.random()*20)*15,y:Math.floor(Math.random()*20)*15};
+food={
+x:Math.floor(Math.random()*20)*15,
+y:Math.floor(Math.random()*20)*15
+};
 }else{
 snake.pop();
 }
@@ -306,6 +266,13 @@ ctx.fillRect(food.x,food.y,15,15);
 
 ctx.fillStyle="lime";
 snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
+
+if(head.x<0||head.y<0||head.x>=300||head.y>=300||
+snake.slice(1).some(s=>s.x===head.x&&s.y===head.y)){
+clearInterval(gameInterval);
+alert("Game Over: "+score);
+closeModal();
+}
 
 },120);
 }
