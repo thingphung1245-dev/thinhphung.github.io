@@ -31,17 +31,9 @@ body{
     z-index:999;
 }
 
-.logo{
-    font-size:28px;
-    font-weight:bold;
-    color:#00bfff;
-}
+.logo{font-size:28px;font-weight:bold;color:#00bfff;}
 
-.menu{
-    display:flex;
-    gap:20px;
-    align-items:center;
-}
+.menu{display:flex;gap:20px;align-items:center;}
 
 .menu a{
     text-decoration:none;
@@ -51,10 +43,7 @@ body{
     transition:0.3s;
 }
 
-.menu a:hover{
-    background:#00bfff;
-    color:#000;
-}
+.menu a:hover{background:#00bfff;color:#000;}
 
 .mode-btn{
     background:#00bfff;
@@ -62,23 +51,6 @@ body{
     padding:8px 18px;
     border-radius:20px;
     cursor:pointer;
-    font-weight:bold;
-}
-
-/* LIGHT MODE */
-.light-mode{
-    background:#f5f5f5;
-    color:#000;
-}
-.light-mode .card{
-    background:#fff;
-    color:#000;
-}
-
-@keyframes gradientMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
 }
 
 /* BACKGROUND */
@@ -87,7 +59,6 @@ body{
     width:100%;
     height:100%;
     z-index:-2;
-    pointer-events:none;
 }
 
 #cursor-light{
@@ -99,13 +70,7 @@ body{
     z-index:-1;
 }
 
-/* FIX CLICK */
-.header,.section,.card,.box,.social{
-    position:relative;
-    z-index:10;
-}
-
-/* đẩy xuống tránh menu che */
+/* CONTENT */
 .header{margin-top:80px;text-align:center;padding:60px 20px;}
 
 .header img{
@@ -114,46 +79,20 @@ body{
     box-shadow:0 0 25px #00bfff;
 }
 
-#name{
-    color:#00bfff;
-    border-right:3px solid #00bfff;
-    animation: blink 0.7s infinite;
-}
-@keyframes blink{
-    50%{border-color:transparent;}
-}
-
 .section{padding:40px 20px;}
 
 .card{
     max-width:900px;margin:20px auto;padding:30px;
     border-radius:20px;
     background:rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
     border:1px solid rgba(0,191,255,0.3);
 }
-
-.hobby{display:flex;flex-direction:column;align-items:center;gap:20px;}
-
-.box{
-    width:80%;max-width:300px;padding:20px;
-    border-radius:15px;text-align:center;
-    background:rgba(255,255,255,0.05);
-    border:1px solid #00bfff;
-    cursor:pointer;
-}
-.box:hover{transform:scale(1.1);box-shadow:0 0 30px #00bfff;}
-
-.social{text-align:center;}
-.social a{color:#ccc;font-size:28px;margin:0 10px;}
-.social a:hover{color:#00bfff;}
 
 /* MODAL */
 .modal{
     display:none;
     position:fixed;
     width:100%;height:100%;
-    top:0;left:0;
     background:rgba(0,0,0,0.85);
     justify-content:center;
     align-items:center;
@@ -164,25 +103,37 @@ body{
     background:#111;
     padding:20px;
     border-radius:15px;
+    text-align:center;
 }
 
-.close{float:right;cursor:pointer;}
+/* MOBILE GAME BUTTON */
+.controls{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:repeat(3,60px);
+    gap:10px;
+    justify-content:center;
+}
+
+.btn{
+    background:#00bfff;
+    border:none;
+    padding:10px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+}
 </style>
 </head>
 
 <body>
 
-<!-- MENU -->
 <div class="navbar">
-    <div class="logo">PnQ</div>
-
+    <div class="logo">DvP</div>
     <div class="menu">
         <a href="#">Home</a>
         <a href="#about">About</a>
-        <a href="#hobby">My World</a>
         <a href="#" onclick="openModal('game')">Game</a>
-        <a href="#contact">Contact</a>
-        <button class="mode-btn" onclick="toggleMode()">🌙 Mode</button>
     </div>
 </div>
 
@@ -192,119 +143,133 @@ body{
 <div class="header">
     <img src="058563264cd7c2899bc6.jpg">
     <h1 id="name"></h1>
-    <p>Sinh viên CNTT - Part Time</p>
-</div>
-
-<div class="section" id="about">
-<div class="card">
-<h2>📝 Một chút về tôi</h2>
-<p>Xin chào, tôi là Đặng Văn Phụng.</p>
-<p>Tôi thích lập trình và cuộc sống đơn giản.</p>
-<p>Hiện tại tôi đang học CNTT năm nhất.</p>
-<p>📅 13 / 08 / 2007</p>
-<p>📍 TP.HCM</p>
-<p>🏠 Nghệ An - Nam Định</p>
-</div>
-</div>
-
-<div class="section" id="hobby">
-<div class="card">
-<h2>Sở thích</h2>
-<div class="hobby">
-<div class="box" onclick="openModal('game')">🎮 Chơi game</div>
-<div class="box" onclick="openModal('code')">💻 Lập trình</div>
-<div class="box" onclick="openModal('music')">🎵 Nghe nhạc</div>
-</div>
-</div>
-</div>
-
-<div class="section" id="contact">
-<div class="card">
-<h2>📬 Liên hệ</h2>
-<p>📧 thingphung1245@gmail.com</p>
-<div class="social">
-<a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i></a>
-<a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i></a>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="card">
-<h2>📍 Vị trí</h2>
-<iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed"
-width="100%" height="350"></iframe>
-</div>
 </div>
 
 <div id="modal" class="modal">
 <div class="modal-content">
-<span class="close" onclick="closeModal()">X</span>
+<span onclick="closeModal()">X</span>
 <h2 id="modal-title"></h2>
 <div id="modal-body"></div>
 </div>
 </div>
 
 <script>
-function toggleMode(){
-    document.body.classList.toggle("light-mode");
-}
-
 /* TEXT */
 const text="Đặng Văn Phụng";
-let i=0,isDeleting=false;
+let i=0;
 function typeEffect(){
-let el=document.getElementById("name");
-el.innerHTML=text.substring(0,i);
-i += isDeleting?-1:1;
-if(i===text.length) isDeleting=true;
-if(i===0) isDeleting=false;
-setTimeout(typeEffect,100);
+document.getElementById("name").innerHTML=text.substring(0,i++);
+if(i<=text.length) setTimeout(typeEffect,100);
 }
 typeEffect();
 
 /* GAME */
+let dir="RIGHT";
 let gameInterval;
-let gameRunning=false;
 
 function openModal(type){
 const modal=document.getElementById("modal");
-const title=document.getElementById("modal-title");
 const body=document.getElementById("modal-body");
 
-if(type==="game"){
-title.innerHTML="🐍 Snake Game";
-body.innerHTML=`<canvas id="gameCanvas" width="300" height="300"></canvas><p>Điểm: <span id="score">0</span></p>`;
-modal.style.display="flex";
-setTimeout(startGame,50);
-return;
-}
-
-if(type==="code"){title.innerHTML="💻";body.innerHTML="HTML CSS JS";}
-
-if(type==="music"){
-title.innerHTML="🎵 Nghe nhạc";
 body.innerHTML=`
-<h3>🎶 Danh sách nhạc</h3>
-<p>1. Nhạc Chill 1</p>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-<p>2. Nhạc Chill 2</p>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
-<p>3. Nhạc Chill 3</p>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
+<canvas id="gameCanvas" width="300" height="300"></canvas>
+<p>Điểm: <span id="score">0</span></p>
+
+<div class="controls">
+<div></div>
+<button class="btn" onclick="dir='UP'">⬆️</button>
+<div></div>
+<button class="btn" onclick="dir='LEFT'">⬅️</button>
+<button class="btn" onclick="dir='DOWN'">⬇️</button>
+<button class="btn" onclick="dir='RIGHT'">➡️</button>
+</div>
 `;
-}
 
 modal.style.display="flex";
+setTimeout(startGame,100);
 }
 
 function closeModal(){
 document.getElementById("modal").style.display="none";
 clearInterval(gameInterval);
-gameRunning=false;
 }
 
-/* BACKGROUND + CURSOR giữ nguyên */
+function startGame(){
+const canvas=document.getElementById("gameCanvas");
+const ctx=canvas.getContext("2d");
+
+let snake=[{x:150,y:150}];
+let food={x:60,y:60};
+let score=0;
+
+document.onkeydown=e=>{
+if(e.key==="ArrowUp") dir="UP";
+if(e.key==="ArrowDown") dir="DOWN";
+if(e.key==="ArrowLeft") dir="LEFT";
+if(e.key==="ArrowRight") dir="RIGHT";
+};
+
+gameInterval=setInterval(()=>{
+ctx.fillStyle="#000";
+ctx.fillRect(0,0,300,300);
+
+let head={...snake[0]};
+if(dir==="UP") head.y-=15;
+if(dir==="DOWN") head.y+=15;
+if(dir==="LEFT") head.x-=15;
+if(dir==="RIGHT") head.x+=15;
+
+snake.unshift(head);
+
+if(head.x===food.x && head.y===food.y){
+score++;
+document.getElementById("score").innerText=score;
+food={x:Math.random()*285,y:Math.random()*285};
+}else{
+snake.pop();
+}
+
+ctx.fillStyle="red";
+ctx.fillRect(food.x,food.y,15,15);
+
+ctx.fillStyle="lime";
+snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
+
+if(head.x<0||head.y<0||head.x>300||head.y>300){
+alert("Game Over");
+closeModal();
+}
+},120);
+}
+
+/* BACKGROUND */
+const canvasBg=document.getElementById("bgCanvas");
+const ctxBg=canvasBg.getContext("2d");
+canvasBg.width=innerWidth;
+canvasBg.height=innerHeight;
+
+let p=[];
+for(let i=0;i<80;i++){
+p.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight});
+}
+
+function draw(){
+ctxBg.clearRect(0,0,innerWidth,innerHeight);
+ctxBg.fillStyle="#00bfff";
+p.forEach(a=>{
+ctxBg.fillRect(a.x,a.y,2,2);
+a.y+=0.3;
+if(a.y>innerHeight)a.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
+
+/* CURSOR */
+document.addEventListener("mousemove",e=>{
+document.getElementById("cursor-light").style.left=e.clientX+"px";
+document.getElementById("cursor-light").style.top=e.clientY+"px";
+});
 </script>
 
 </body>
