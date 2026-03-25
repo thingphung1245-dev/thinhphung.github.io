@@ -25,25 +25,31 @@ body{
 /* MENU */
 .navbar{
     position:fixed;
-    top:0;left:0;
+    top:0;
     width:100%;
     display:flex;
     justify-content:space-between;
-    padding:15px 30px;
+    padding:15px 40px;
     background:rgba(0,0,0,0.6);
     backdrop-filter: blur(10px);
-    z-index:1000;
+    z-index:999;
 }
 
-.logo{color:#00bfff;font-size:26px;font-weight:bold;}
+.logo{font-size:28px;color:#00bfff;}
+
+.menu{display:flex;gap:20px;}
 
 .menu a{
     color:#ccc;
-    margin-left:15px;
     text-decoration:none;
+    padding:8px 16px;
 }
 
-.menu a:hover{color:#00bfff;}
+.menu a:hover{
+    background:#00bfff;
+    color:#000;
+    border-radius:20px;
+}
 
 /* BACKGROUND FIX */
 #bgCanvas{
@@ -55,28 +61,62 @@ body{
     pointer-events:none;
 }
 
-/* CONTENT */
-.header{
-    margin-top:90px;
-    text-align:center;
+#cursor-light{
+    position:fixed;
+    width:300px;height:300px;
+    background: radial-gradient(circle, rgba(0,191,255,0.25), transparent);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:-50;
 }
 
+/* CONTENT */
+.header,.section,.card,.box,.social{
+    position:relative;
+    z-index:10;
+}
+
+.header{margin-top:80px;text-align:center;padding:60px;}
 .header img{
-    width:130px;
-    border-radius:50%;
+    width:140px;border-radius:50%;
     border:3px solid #00bfff;
 }
+
+.section{padding:40px;}
+
+.card{
+    max-width:900px;margin:auto;padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,191,255,0.3);
+}
+
+.hobby{display:flex;flex-direction:column;align-items:center;gap:20px;}
+
+.box{
+    width:80%;max-width:300px;
+    padding:20px;
+    text-align:center;
+    border:1px solid #00bfff;
+    border-radius:15px;
+    cursor:pointer;
+}
+
+.box:hover{transform:scale(1.1);}
+
+.social{text-align:center;}
+.social a{color:#ccc;font-size:28px;margin:0 10px;}
+.social a:hover{color:#00bfff;}
 
 /* MODAL */
 .modal{
     display:none;
     position:fixed;
-    top:0;left:0;
     width:100%;height:100%;
     background:rgba(0,0,0,0.9);
-    z-index:9999;
     justify-content:center;
     align-items:center;
+    z-index:999999;
 }
 
 .modal-content{
@@ -88,7 +128,7 @@ body{
 
 /* GAME BUTTON MOBILE */
 .controls{
-    margin-top:15px;
+    margin-top:10px;
     display:grid;
     grid-template-columns:repeat(3,60px);
     gap:10px;
@@ -100,7 +140,6 @@ body{
     border:none;
     padding:10px;
     border-radius:10px;
-    font-size:18px;
 }
 </style>
 </head>
@@ -111,26 +150,69 @@ body{
 <div class="logo">DvP</div>
 <div class="menu">
 <a href="#">Home</a>
-<a href="#" onclick="openModal()">Game</a>
+<a href="#about">About</a>
+<a href="#hobby">My World</a>
+<a href="#" onclick="openModal('game')">Game</a>
+<a href="#contact">Contact</a>
 </div>
 </div>
 
 <canvas id="bgCanvas"></canvas>
+<div id="cursor-light"></div>
 
 <div class="header">
 <img src="058563264cd7c2899bc6.jpg">
 <h1 id="name"></h1>
+<p>Sinh viên CNTT - Part Time</p>
+</div>
+
+<div class="section" id="about">
+<div class="card">
+<h2>📝 Một chút về tôi</h2>
+<p>Xin chào, tôi là Đặng Văn Phụng.</p>
+<p>Tôi thích lập trình.</p>
+</div>
+</div>
+
+<div class="section" id="hobby">
+<div class="card">
+<h2>Sở thích</h2>
+<div class="hobby">
+<div class="box" onclick="openModal('game')">🎮 Chơi game</div>
+<div class="box" onclick="openModal('code')">💻 Lập trình</div>
+<div class="box" onclick="openModal('music')">🎵 Nghe nhạc</div>
+</div>
+</div>
+</div>
+
+<div class="section" id="contact">
+<div class="card">
+<h2>📬 Liên hệ</h2>
+<p>📧 thingphung1245@gmail.com</p>
+<div class="social">
+<a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i></a>
+<a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i></a>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="card">
+<h2>📍 Vị trí</h2>
+<iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed"
+width="100%" height="300"></iframe>
+</div>
 </div>
 
 <div id="modal" class="modal">
 <div class="modal-content">
-<span onclick="closeModal()" style="cursor:pointer">X</span>
+<span onclick="closeModal()">X</span>
+<h2 id="modal-title"></h2>
 <div id="modal-body"></div>
 </div>
 </div>
 
 <script>
-
 /* TEXT */
 const text="Đặng Văn Phụng";
 let i=0;
@@ -144,9 +226,13 @@ typeEffect();
 let dir="RIGHT";
 let gameInterval;
 
-function openModal(){
+function openModal(type){
+const modal=document.getElementById("modal");
+const title=document.getElementById("modal-title");
 const body=document.getElementById("modal-body");
 
+if(type==="game"){
+title.innerHTML="🐍 Snake Game";
 body.innerHTML=`
 <canvas id="gameCanvas" width="300" height="300"></canvas>
 <p>Điểm: <span id="score">0</span></p>
@@ -160,9 +246,18 @@ body.innerHTML=`
 <button class="btn" onclick="dir='RIGHT'">➡️</button>
 </div>
 `;
-
-document.getElementById("modal").style.display="flex";
+modal.style.display="flex";
 setTimeout(startGame,100);
+return;
+}
+
+if(type==="code"){title.innerHTML="💻";body.innerHTML="HTML CSS JS";}
+if(type==="music"){
+title.innerHTML="🎵";
+body.innerHTML=`<audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>`;
+}
+
+modal.style.display="flex";
 }
 
 function closeModal(){
@@ -174,16 +269,15 @@ function startGame(){
 const canvas=document.getElementById("gameCanvas");
 const ctx=canvas.getContext("2d");
 
-let grid=15;
-let snake=[{x:10,y:10}];
-let food={x:5,y:5};
+let snake=[{x:150,y:150}];
+let food={x:60,y:60};
 let score=0;
 
 document.onkeydown=e=>{
-if(e.key==="ArrowUp" && dir!=="DOWN") dir="UP";
-if(e.key==="ArrowDown" && dir!=="UP") dir="DOWN";
-if(e.key==="ArrowLeft" && dir!=="RIGHT") dir="LEFT";
-if(e.key==="ArrowRight" && dir!=="LEFT") dir="RIGHT";
+if(e.key==="ArrowUp") dir="UP";
+if(e.key==="ArrowDown") dir="DOWN";
+if(e.key==="ArrowLeft") dir="LEFT";
+if(e.key==="ArrowRight") dir="RIGHT";
 };
 
 gameInterval=setInterval(()=>{
@@ -191,39 +285,35 @@ ctx.fillStyle="#000";
 ctx.fillRect(0,0,300,300);
 
 let head={...snake[0]};
-if(dir==="UP") head.y--;
-if(dir==="DOWN") head.y++;
-if(dir==="LEFT") head.x--;
-if(dir==="RIGHT") head.x++;
+if(dir==="UP") head.y-=15;
+if(dir==="DOWN") head.y+=15;
+if(dir==="LEFT") head.x-=15;
+if(dir==="RIGHT") head.x+=15;
 
 snake.unshift(head);
 
 if(head.x===food.x && head.y===food.y){
 score++;
 document.getElementById("score").innerText=score;
-food={
-x:Math.floor(Math.random()*20),
-y:Math.floor(Math.random()*20)
-};
+food={x:Math.floor(Math.random()*20)*15,y:Math.floor(Math.random()*20)*15};
 }else{
 snake.pop();
 }
 
 ctx.fillStyle="red";
-ctx.fillRect(food.x*grid,food.y*grid,grid,grid);
+ctx.fillRect(food.x,food.y,15,15);
 
 ctx.fillStyle="lime";
-snake.forEach(s=>ctx.fillRect(s.x*grid,s.y*grid,grid,grid));
+snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
 
-if(head.x<0||head.y<0||head.x>=20||head.y>=20){
+if(head.x<0||head.y<0||head.x>=300||head.y>=300){
 alert("Game Over");
 closeModal();
 }
-
 },120);
 }
 
-/* BACKGROUND FIX */
+/* BACKGROUND */
 const canvasBg=document.getElementById("bgCanvas");
 const ctxBg=canvasBg.getContext("2d");
 
@@ -235,27 +325,30 @@ resize();
 window.addEventListener("resize",resize);
 
 let p=[];
-for(let i=0;i<100;i++){
+for(let i=0;i<80;i++){
 p.push({x:Math.random()*canvasBg.width,y:Math.random()*canvasBg.height});
 }
 
 function draw(){
 ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height);
 ctxBg.fillStyle="#00bfff";
-
 p.forEach(a=>{
 ctxBg.fillRect(a.x,a.y,2,2);
-a.y+=0.5;
+a.y+=0.3;
 if(a.y>canvasBg.height){
 a.y=0;
 a.x=Math.random()*canvasBg.width;
 }
 });
-
 requestAnimationFrame(draw);
 }
 draw();
 
+/* CURSOR */
+document.addEventListener("mousemove",e=>{
+cursor-light.style.left=e.clientX+"px";
+cursor-light.style.top=e.clientY+"px";
+});
 </script>
 
 </body>
