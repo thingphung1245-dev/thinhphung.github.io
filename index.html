@@ -63,15 +63,69 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .fab:hover .fab-tooltip{opacity:1;}
 
 /* ===== MUSIC AUTOPLAY OVERLAY ===== */
-.autoplay-banner{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--modal-bg);border:1px solid var(--border-h);border-radius:14px;padding:12px 20px;display:flex;align-items:center;gap:12px;z-index:9998;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.3);font-size:14px;animation:slideDown .4s ease;max-width:90vw;}
+.autoplay-banner{position:fixed;top:74px;left:50%;transform:translateX(-50%);background:var(--modal-bg);border:1px solid var(--border-h);border-radius:14px;padding:12px 20px;display:flex;align-items:center;gap:12px;z-index:9998;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.3);font-size:14px;animation:slideDown .4s ease;max-width:90vw;}
 @keyframes slideDown{from{opacity:0;transform:translate(-50%,-20px);}to{opacity:1;transform:translate(-50%,0);}}
 .autoplay-banner.hide{animation:slideUp .3s ease forwards;}
 @keyframes slideUp{to{opacity:0;transform:translate(-50%,-20px);}}
 .banner-play{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;}
 .banner-dismiss{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;}
 
-main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 20px 80px;}
-.hero{text-align:center;padding:80px 0 60px;}
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:62px;
+  background:rgba(6,12,24,0.75);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  transition:background .35s,border-color .35s;
+}
+[data-theme="light"] .navbar{background:rgba(240,246,255,0.82);}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:16px;color:var(--text);}
+.nav-logo-icon{width:32px;height:32px;border-radius:9px;background:var(--blue-dim);border:1px solid var(--border-h);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:14px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{padding:7px 14px;border-radius:8px;font-size:14px;color:var(--muted);text-decoration:none;transition:all .2s;cursor:pointer;border:none;background:transparent;}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--blue-dim);}
+.nav-link.active{color:var(--blue);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-avail{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:20px;border:1px solid rgba(0,220,100,0.3);background:rgba(0,220,100,0.07);font-size:12px;color:#00dc64;font-weight:500;}
+.nav-avail::before{content:'';width:7px;height:7px;border-radius:50%;background:#00dc64;box-shadow:0 0 8px #00dc64;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.nav-ham{display:none;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;width:36px;height:36px;align-items:center;justify-content:center;cursor:pointer;font-size:16px;}
+.nav-mobile{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(6,12,24,0.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 20px 18px;z-index:499;flex-direction:column;gap:4px;}
+[data-theme="light"] .nav-mobile{background:rgba(240,246,255,0.97);}
+.nav-mobile.open{display:flex;}
+.nav-mobile .nav-link{width:100%;text-align:left;padding:11px 14px;}
+
+/* ===== FOOTER ===== */
+.site-footer{
+  position:relative;z-index:2;
+  background:rgba(0,0,0,0.3);
+  border-top:1px solid var(--border);
+  padding:40px 20px 28px;
+  margin-top:20px;
+  backdrop-filter:blur(8px);
+}
+[data-theme="light"] .site-footer{background:rgba(0,119,204,0.04);}
+.footer-inner{max-width:760px;margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:32px;}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.footer-brand-icon{width:36px;height:36px;border-radius:10px;background:var(--blue-dim);border:1px solid var(--border-h);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:16px;}
+.footer-brand-name{font-weight:700;font-size:16px;}
+.footer-desc{font-size:13px;color:var(--muted);max-width:240px;line-height:1.7;}
+.footer-links-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:600;}
+.footer-links-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color .2s;}
+.footer-links-col a:hover{color:var(--text);}
+.footer-divider{height:1px;background:var(--border);margin-bottom:20px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:12px;color:var(--muted);}
+.footer-socials{display:flex;gap:10px;}
+.fsoc{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:15px;transition:all .2s;}
+.fsoc:hover{background:var(--blue-dim);border-color:var(--border-h);color:var(--blue);transform:translateY(-2px);}
+.footer-heart{color:#ff6b8a;}
+
+main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 20px 40px;}
+.hero{text-align:center;padding:100px 0 60px;}
 .avatar-wrap{position:relative;display:inline-block;margin-bottom:28px;}
 .avatar-wrap::before{content:'';position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(var(--blue),transparent,var(--blue));animation:spin 4s linear infinite;z-index:-1;}
 .avatar-wrap::after{content:'';position:absolute;inset:2px;border-radius:50%;background:var(--bg);z-index:0;transition:background .35s;}
@@ -156,7 +210,65 @@ section{margin-bottom:28px;}
 .wave b:nth-child(4){height:12px;animation-delay:.1s;}
 @keyframes wv{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}
 
-@media(max-width:500px){.hobby-grid{grid-template-columns:1fr;}.card{padding:22px 18px;}.fab-group{bottom:20px;right:16px;}}
+/* ===== SECTION CONTENT STYLES ===== */
+/* About */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+.about-stat{background:rgba(0,191,255,0.05);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center;}
+.about-stat .num{font-size:28px;font-weight:700;color:var(--blue);display:block;}
+.about-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;}
+.about-info{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+.about-row{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);}
+.about-row i{color:var(--blue);width:18px;text-align:center;}
+.about-row span strong{color:var(--text);}
+/* Timeline */
+.timeline{position:relative;margin-top:4px;}
+.timeline::before{content:'';position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:var(--border);}
+.tl-item{display:flex;gap:18px;margin-bottom:24px;position:relative;}
+.tl-dot{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:11px;flex-shrink:0;z-index:1;}
+.tl-body{flex:1;padding-top:2px;}
+.tl-year{font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:4px;}
+.tl-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.tl-sub{font-size:13px;color:var(--muted);line-height:1.6;}
+/* Skills bars */
+.skill-bar-list{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+.skill-bar-item{}
+.skill-bar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.skill-bar-name{font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.skill-bar-name i{color:var(--blue);}
+.skill-bar-pct{font-size:12px;color:var(--blue);font-weight:600;}
+.skill-bar-track{height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;}
+.skill-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,rgba(0,191,255,0.5),var(--blue));width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.skill-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.skill-tool-tag{background:var(--blue-dim);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--blue);}
+/* Hobbies */
+.hobby-detail{margin-top:18px;display:flex;flex-direction:column;gap:12px;}
+.hobby-detail-item{display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(0,191,255,0.04);border:1px solid var(--border);border-radius:12px;}
+.hobby-detail-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.hobby-detail-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.hobby-detail-body p{font-size:13px;color:var(--muted);line-height:1.6;}
+/* Contact form */
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.cf-field{display:flex;flex-direction:column;gap:6px;}
+.cf-field.full{grid-column:1/-1;}
+.cf-label{font-size:12px;color:var(--muted);letter-spacing:.5px;}
+.cf-input,.cf-textarea{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--text);font-family:var(--font);width:100%;outline:none;transition:border-color .2s;}
+.cf-input:focus,.cf-textarea:focus{border-color:var(--border-h);}
+.cf-textarea{resize:vertical;min-height:90px;}
+.cf-btn{margin-top:4px;padding:11px 24px;background:var(--blue);border:none;border-radius:10px;color:#060c18;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;display:inline-flex;align-items:center;gap:8px;}
+.cf-btn:hover{opacity:.85;}
+.cf-sent{display:none;margin-top:10px;padding:10px 14px;background:rgba(0,220,100,0.08);border:1px solid rgba(0,220,100,0.3);border-radius:8px;color:#00dc64;font-size:13px;}
+/* Cert / card */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:6px;}
+.cert-card{background:rgba(0,191,255,0.04);border:1px solid var(--border);border-radius:12px;padding:16px;transition:all .2s;}
+.cert-card:hover{border-color:var(--border-h);transform:translateY(-2px);}
+.cert-icon{font-size:26px;margin-bottom:8px;color:var(--blue);}
+.cert-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.cert-issuer{font-size:11px;color:var(--muted);}
+.cert-year{font-size:10px;color:var(--blue);margin-top:6px;font-weight:600;}
+
+@media(max-width:540px){.about-grid{grid-template-columns:1fr 1fr;}.cf-grid{grid-template-columns:1fr;}.cf-field.full{grid-column:1;}}
+@media(max-width:380px){.about-grid{grid-template-columns:1fr;}}
+
 
 /* ===== INTRO SCREEN ===== */
 #intro{
@@ -250,6 +362,32 @@ section{margin-bottom:28px;}
 <canvas id="stars"></canvas>
 <div id="glow"></div>
 
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <a class="nav-logo" href="#top">
+    <div class="nav-logo-icon"><i class="fas fa-code"></i></div>
+    DVP
+  </a>
+  <div class="nav-links" id="nav-links-desktop">
+    <a class="nav-link active" onclick="scrollTo('top')">Trang chủ</a>
+    <a class="nav-link" onclick="scrollTo('about')">Về tôi</a>
+    <a class="nav-link" onclick="scrollTo('skills')">Kỹ năng</a>
+    <a class="nav-link" onclick="scrollTo('hobbies')">Sở thích</a>
+    <a class="nav-link" onclick="scrollTo('contact')">Liên hệ</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-avail">Sẵn sàng hợp tác</div>
+    <button class="nav-ham" id="navHam" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a class="nav-link" onclick="scrollTo('top');toggleMobileNav()">Trang chủ</a>
+  <a class="nav-link" onclick="scrollTo('about');toggleMobileNav()">Về tôi</a>
+  <a class="nav-link" onclick="scrollTo('skills');toggleMobileNav()">Kỹ năng</a>
+  <a class="nav-link" onclick="scrollTo('hobbies');toggleMobileNav()">Sở thích</a>
+  <a class="nav-link" onclick="scrollTo('contact');toggleMobileNav()">Liên hệ</a>
+</div>
+
 <!-- ===== INTRO ANIMATION SCREEN ===== -->
 <div id="intro">
   <div id="intro-bg-glow"></div>
@@ -287,7 +425,7 @@ section{margin-bottom:28px;}
   </button>
 </div>
 
-<main>
+<main id="top">
 <div class="hero">
   <div class="avatar-wrap">
     <img src="058563264cd7c2899bc6.jpg" alt="Đặng Văn Phụng" onerror="this.src='https://ui-avatars.com/api/?name=DVP&background=0d1a2e&color=00bfff&size=130'">
@@ -301,46 +439,226 @@ section{margin-bottom:28px;}
   </div>
 </div>
 
-<section><div class="card">
-  <div class="section-label"><i class="fas fa-user"></i> Về tôi</div>
-  <p style="font-size:15px;line-height:1.8;color:var(--muted);">Xin chào! Tôi là <strong style="color:var(--blue)">Đặng Văn Phụng</strong> — sinh viên CNTT năm nhất, đam mê lập trình và yêu thích cuộc sống giản dị. Tôi đang từng bước xây dựng kỹ năng để trở thành lập trình viên chuyên nghiệp.</p>
-</div></section>
-
-<section><div class="card">
-  <div class="section-label"><i class="fas fa-code"></i> Kỹ năng</div>
-  <div class="skill-grid">
-    <div class="skill-chip"><i class="fab fa-html5"></i>HTML</div>
-    <div class="skill-chip"><i class="fab fa-css3-alt"></i>CSS</div>
-    <div class="skill-chip"><i class="fab fa-js"></i>JavaScript</div>
-    <div class="skill-chip"><i class="fab fa-python"></i>Python</div>
-    <div class="skill-chip"><i class="fas fa-database"></i>SQL</div>
-    <div class="skill-chip"><i class="fab fa-git-alt"></i>Git</div>
+<section id="about">
+  <div class="card">
+    <div class="section-label"><i class="fas fa-user"></i> Về tôi</div>
+    <p style="font-size:15px;line-height:1.85;color:var(--muted);">Xin chào! Tôi là <strong style="color:var(--blue)">Đặng Văn Phụng</strong> — sinh viên CNTT năm nhất tại TP.HCM, đam mê lập trình web và công nghệ. Tôi luôn tìm cách học hỏi và áp dụng kiến thức vào các dự án thực tế, hướng đến việc trở thành một <strong style="color:var(--text)">Full-stack Developer</strong> chuyên nghiệp trong tương lai.</p>
+    <div class="about-grid">
+      <div class="about-stat"><span class="num">4+</span><div class="lbl">Năm học lập trình</div></div>
+      <div class="about-stat"><span class="num">1+</span><div class="lbl">Dự án cá nhân</div></div>
+      <div class="about-stat"><span class="num">6</span><div class="lbl">Kỹ năng công nghệ</div></div>
+      <div class="about-stat"><span class="num">∞</span><div class="lbl">Đam mê học hỏi</div></div>
+    </div>
+    <div class="about-info">
+      <div class="about-row"><i class="fas fa-graduation-cap"></i><span>Trường: <strong>Cao Đẳng Sài Gòn Teach (CĐSG)</strong></span></div>
+      <div class="about-row"><i class="fas fa-book-open"></i><span>Chuyên ngành: <strong>Công nghệ thông tin</strong></span></div>
+      <div class="about-row"><i class="fas fa-map-marker-alt"></i><span>Quê quán: <strong>Nghệ An — Nam Định</strong></span></div>
+      <div class="about-row"><i class="fas fa-birthday-cake"></i><span>Ngày sinh: <strong>13/08/2007</strong></span></div>
+      <div class="about-row"><i class="fas fa-language"></i><span>Ngôn ngữ: <strong>Tiếng Việt (bản ngữ) · Tiếng Anh (cơ bản)</strong></span></div>
+      <div class="about-row"><i class="fas fa-briefcase"></i><span>Trạng thái: <strong style="color:#00dc64;">Sẵn sàng hợp tác / part-time</strong></span></div>
+    </div>
   </div>
-</div></section>
 
-<section><div class="card">
-  <div class="section-label"><i class="fas fa-heart"></i> Sở thích</div>
-  <div class="hobby-grid">
-    <div class="hobby-card" onclick="openModal('game')"><span class="hicon">🎮</span><span>Chơi game</span></div>
-    <div class="hobby-card" onclick="openModal('code')"><span class="hicon">💻</span><span>Lập trình</span></div>
-    <div class="hobby-card" onclick="openModal('music')"><span class="hicon">🎵</span><span>Nghe nhạc</span></div>
+  <div class="card" style="margin-top:20px;">
+    <div class="section-label"><i class="fas fa-road"></i> Hành trình</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"><i class="fas fa-school"></i></div>
+        <div class="tl-body">
+          <div class="tl-year">2022 — 2025</div>
+          <div class="tl-title">Trung Cấp Nghề Công đoàn BD — Tốt Nghiệp </div>
+          <div class="tl-sub">Hoàn thành chương trình trung học phổ thông, bắt đầu tự học lập trình từ những dòng HTML đầu tiên.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><i class="fas fa-laptop-code"></i></div>
+        <div class="tl-body">
+          <div class="tl-year">2024</div>
+          <div class="tl-title">Tự học Web Development</div>
+          <div class="tl-sub">Bắt đầu hành trình lập trình web với HTML, CSS, JavaScript. Xây dựng dự án nhỏ để luyện tập.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><i class="fas fa-university"></i></div>
+        <div class="tl-body">
+          <div class="tl-year">2025 — Hiện tại</div>
+          <div class="tl-title">Sinh viên Cao Đẳng CNTT</div>
+          <div class="tl-sub">Nhập học CĐSG, học chuyên sâu về lập trình, cơ sở dữ liệu, giải thuật và phát triển phần mềm.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><i class="fas fa-rocket"></i></div>
+        <div class="tl-body">
+          <div class="tl-year">Tương lai</div>
+          <div class="tl-title">Full-stack Developer</div>
+          <div class="tl-sub">Mục tiêu trở thành lập trình viên full-stack, Kiếm được công viêc phù hợp cá nhân.</div>
+        </div>
+      </div>
+    </div>
   </div>
-</div></section>
+</section>
 
-<section><div class="card">
-  <div class="section-label"><i class="fas fa-paper-plane"></i> Liên hệ</div>
-  <div class="contact-row"><i class="fas fa-envelope"></i><span>thingphung1245@gmail.com</span></div>
-  <div class="social-row">
-    <a class="social-btn" href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-    <a class="social-btn" href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+<section id="skills">
+  <div class="card">
+    <div class="section-label"><i class="fas fa-code"></i> Kỹ năng lập trình</div>
+    <div class="skill-bar-list" id="skillBars">
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-html5"></i> HTML5</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-css3-alt"></i> CSS3 / Tailwind</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-js"></i> JavaScript</span><span class="skill-bar-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="65"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-python"></i> Python</span><span class="skill-bar-pct">55%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="55"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fas fa-database"></i> SQL / MySQL</span><span class="skill-bar-pct">50%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="50"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-git-alt"></i> Git / GitHub</span><span class="skill-bar-pct">60%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="60"></div></div></div>
+    </div>
+    <div class="skill-tools">
+      <span class="skill-tool-tag">VS Code</span>
+      <span class="skill-tool-tag">GitHub</span>
+      <span class="skill-tool-tag">Figma</span>
+      <span class="skill-tool-tag">Chrome DevTools</span>
+      <span class="skill-tool-tag">Postman</span>
+      <span class="skill-tool-tag">Linux cơ bản</span>
+    </div>
   </div>
-</div></section>
 
-<section><div class="card">
-  <div class="section-label"><i class="fas fa-map-marker-alt"></i> Vị trí</div>
-  <div class="map-wrap"><iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed" allowfullscreen loading="lazy"></iframe></div>
-</div></section>
+  <div class="card" style="margin-top:20px;">
+    <div class="section-label"><i class="fas fa-certificate"></i> Chứng chỉ & học tập</div>
+    <div class="cert-grid">
+      <div class="cert-card"><div class="cert-icon"><i class="fab fa-html5"></i></div><div class="cert-name">HTML & CSS cơ bản</div><div class="cert-issuer">freeCodeCamp</div><div class="cert-year">2024</div></div>
+      <div class="cert-card"><div class="cert-icon"><i class="fab fa-js"></i></div><div class="cert-name">JavaScript Algorithms</div><div class="cert-issuer">freeCodeCamp</div><div class="cert-year">2024</div></div>
+      <div class="cert-card"><div class="cert-icon"><i class="fab fa-python"></i></div><div class="cert-name">Python for Beginners</div><div class="cert-issuer">Coursera</div><div class="cert-year">2025</div></div>
+      <div class="cert-card"><div class="cert-icon"><i class="fas fa-database"></i></div><div class="cert-name">SQL Fundamentals</div><div class="cert-issuer">W3Schools</div><div class="cert-year">2025</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="hobbies">
+  <div class="card">
+    <div class="section-label"><i class="fas fa-heart"></i> Sở thích</div>
+    <div class="hobby-grid">
+      <div class="hobby-card" onclick="openModal('game')"><span class="hicon">🎮</span><span>Chơi game</span></div>
+      <div class="hobby-card" onclick="openModal('code')"><span class="hicon">💻</span><span>Lập trình</span></div>
+      <div class="hobby-card" onclick="openModal('music')"><span class="hicon">🎵</span><span>Nghe nhạc</span></div>
+    </div>
+    <div class="hobby-detail">
+      <div class="hobby-detail-item">
+        <div class="hobby-detail-icon">🎮</div>
+        <div class="hobby-detail-body">
+          <h4>Chơi game</h4>
+          <p>Yêu thích các tựa game nhập vai và chiến thuật. Game không chỉ là giải trí mà còn rèn luyện tư duy logic, phản xạ và kỹ năng teamwork. Các game yêu thích: Liên Minh Huyền Thoại, Minecraft, GTA V.</p>
+        </div>
+      </div>
+      <div class="hobby-detail-item">
+        <div class="hobby-detail-icon">💻</div>
+        <div class="hobby-detail-body">
+          <h4>Lập trình sáng tạo</h4>
+          <p>Thích xây dựng các ứng dụng web nhỏ, giao diện đẹp và các công cụ tự động hóa. Mỗi dòng code là một tác phẩm sáng tạo — đó là lý do tôi yêu lập trình.</p>
+        </div>
+      </div>
+      <div class="hobby-detail-item">
+        <div class="hobby-detail-icon">🎵</div>
+        <div class="hobby-detail-body">
+          <h4>Nghe nhạc</h4>
+          <p>Nhạc là người bạn đồng hành khi code. Tôi thường nghe Lo-fi, V-Pop, và nhạc Electronic để duy trì sự tập trung và sáng tạo. Click vào để mở playlist!</p>
+        </div>
+      </div>
+      <div class="hobby-detail-item">
+        <div class="hobby-detail-icon">📚</div>
+        <div class="hobby-detail-body">
+          <h4>Đọc sách & học online</h4>
+          <p>Thường xuyên đọc tài liệu kỹ thuật, xem tutorial trên YouTube và theo dõi các blog công nghệ để cập nhật xu hướng mới nhất trong ngành.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="card">
+    <div class="section-label"><i class="fas fa-paper-plane"></i> Liên hệ với tôi</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Bạn có dự án cần cộng tác, muốn kết nối hoặc chỉ đơn giản là muốn nói chuyện về công nghệ? Hãy liên hệ với tôi — tôi luôn sẵn sàng!</p>
+
+    <div class="cf-grid">
+      <div class="cf-field">
+        <label class="cf-label">Họ tên</label>
+        <input class="cf-input" id="cf-name" type="text" placeholder="Nguyễn Văn A">
+      </div>
+      <div class="cf-field">
+        <label class="cf-label">Email</label>
+        <input class="cf-input" id="cf-email" type="email" placeholder="email@example.com">
+      </div>
+      <div class="cf-field full">
+        <label class="cf-label">Chủ đề</label>
+        <input class="cf-input" id="cf-subject" type="text" placeholder="Muốn hợp tác dự án...">
+      </div>
+      <div class="cf-field full">
+        <label class="cf-label">Nội dung</label>
+        <textarea class="cf-textarea" id="cf-msg" placeholder="Xin chào Phụng, tôi muốn..."></textarea>
+      </div>
+      <div class="cf-field full">
+        <button class="cf-btn" onclick="sendContact()"><i class="fas fa-paper-plane"></i> Gửi tin nhắn</button>
+        <div class="cf-sent" id="cf-sent">✅ Cảm ơn! Tôi sẽ phản hồi sớm nhất có thể.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+      <div class="section-label" style="margin-bottom:14px;"><i class="fas fa-address-card"></i> Thông tin trực tiếp</div>
+      <div class="contact-row"><i class="fas fa-envelope"></i><span>thingphung1245@gmail.com</span></div>
+      <div class="contact-row"><i class="fas fa-map-marker-alt"></i><span>Tân Uyên, Bình Dương — TP.HCM</span></div>
+      <div class="contact-row"><i class="fas fa-clock"></i><span>Phản hồi trong vòng <strong style="color:var(--blue)">24 giờ</strong></span></div>
+    </div>
+    <div class="social-row" style="margin-top:16px;">
+      <a class="social-btn" href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+      <a class="social-btn" href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a class="social-btn" href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-map-marker-alt"></i> Vị trí</div>
+    <div class="map-wrap"><iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed" allowfullscreen loading="lazy"></iframe></div>
+  </div>
+</section>
 </main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-brand-icon"><i class="fas fa-code"></i></div>
+          <span class="footer-brand-name">Đặng Văn Phụng</span>
+        </div>
+        <p class="footer-desc">Sinh viên CNTT năm nhất, đam mê lập trình web và đang từng bước xây dựng sự nghiệp trong ngành công nghệ.</p>
+      </div>
+      <div class="footer-links-col">
+        <h4>Điều hướng</h4>
+        <a onclick="scrollTo('top')">Trang chủ</a>
+        <a onclick="scrollTo('about')">Về tôi</a>
+        <a onclick="scrollTo('skills')">Kỹ năng</a>
+        <a onclick="scrollTo('hobbies')">Sở thích</a>
+        <a onclick="scrollTo('contact')">Liên hệ</a>
+        <a onclick="scrollTo('contact')">SĐT : +84986465540</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>Liên kết</h4>
+        <a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook" style="width:16px"></i> Facebook</a>
+        <a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok" style="width:16px"></i> TikTok</a>
+        <a href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope" style="width:16px"></i> Email</a>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Đặng Văn Phụng · Made with <span class="footer-heart">♥</span> in TP.HCM</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://facebook.com/thinhphung07" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a class="fsoc" href="https://tiktok.com/@dvp.138" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a class="fsoc" href="mailto:thingphung1245@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <div id="modal" class="modal-bg" onclick="bgClose(event)">
   <div class="modal-box">
@@ -379,6 +697,68 @@ section{margin-bottom:28px;}
     setTimeout(()=>intro.remove(),800);
   },3500);
 })();
+
+/* ===== SKILL BARS ANIMATION ===== */
+const skillObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar=>{
+        bar.style.width=bar.dataset.w+'%';
+      });
+      skillObs.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+const skillSec=document.getElementById('skills');
+if(skillSec)skillObs.observe(skillSec);
+
+/* ===== CONTACT FORM ===== */
+function sendContact(){
+  const name=document.getElementById('cf-name').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  const msg=document.getElementById('cf-msg').value.trim();
+  if(!name||!email||!msg){alert('Vui lòng điền đầy đủ họ tên, email và nội dung!');return;}
+  const sub=document.getElementById('cf-subject').value||'Liên hệ từ trang portfolio';
+  window.location.href=`mailto:thingphung1245@gmail.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent('Từ: '+name+' ('+email+')\n\n'+msg)}`;
+  document.getElementById('cf-sent').style.display='block';
+  ['cf-name','cf-email','cf-subject','cf-msg'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ===== NAVBAR ===== */
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
+function toggleMobileNav(){
+  document.getElementById('navMobile').classList.toggle('open');
+}
+// Scroll spy — highlight active nav link
+const NAV_SECTIONS=['top','about','skills','hobbies','contact'];
+window.addEventListener('scroll',()=>{
+  const scrollY=window.scrollY+80;
+  let active='top';
+  NAV_SECTIONS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.offsetTop<=scrollY)active=id;
+  });
+  document.querySelectorAll('.nav-link').forEach((link,i)=>{
+    link.classList.toggle('active',NAV_SECTIONS[i]===active);
+  });
+  // Navbar shadow on scroll
+  document.getElementById('navbar').style.boxShadow=
+    window.scrollY>10?'0 4px 24px rgba(0,0,0,0.3)':'none';
+});
+// Mobile nav: close on outside click
+document.addEventListener('click',e=>{
+  const nm=document.getElementById('navMobile');
+  const ham=document.getElementById('navHam');
+  if(nm.classList.contains('open')&&!nm.contains(e.target)&&!ham.contains(e.target))
+    nm.classList.remove('open');
+});
+// Show nav-ham on mobile
+const mq=window.matchMedia('(max-width:640px)');
+function applyMQ(m){document.getElementById('navHam').style.display=m.matches?'flex':'none';}
+applyMQ(mq);mq.addEventListener('change',applyMQ);
 
 /* ===== STARS ===== */
 const sc=document.getElementById('stars'),sctx=sc.getContext('2d');let stars=[];
