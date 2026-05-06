@@ -400,34 +400,69 @@ function toggleTheme(){
   document.getElementById('themeIcon').className=isLight?'fas fa-moon':'fas fa-sun';
 }
 
-/* ===== MUSIC ENGINE ===== */
+/* ===== YOUTUBE MUSIC ENGINE ===== */
 const TRACKS=[
-  {name:'Chill Lofi Beats',    genre:'Lo-fi',      src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'},
-  {name:'Summer Afternoon',    genre:'Ambient',    src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'},
-  {name:'Night Drive',         genre:'Electronic', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'},
-  {name:'Coffee Shop Vibes',   genre:'Acoustic',   src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'},
-  {name:'Rainy Day',           genre:'Lo-fi',      src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'},
-  {name:'Deep Focus',          genre:'Ambient',    src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'},
-  {name:'Midnight Groove',     genre:'Jazz',       src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'},
-  {name:'Morning Sun',         genre:'Acoustic',   src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'},
-  {name:'City Lights',         genre:'Electronic', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'},
-  {name:'Peaceful Mind',       genre:'Ambient',    src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'},
-  {name:'Late Night Study',    genre:'Lo-fi',      src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'},
-  {name:'Pixel Dreams',        genre:'Chillwave',  src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'},
-  {name:'Ocean Breeze',        genre:'Ambient',    src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3'},
-  {name:'Neon Nights',         genre:'Synthwave',  src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3'},
-  {name:'Rooftop Sunset',      genre:'Lo-fi',      src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3'},
-  {name:'Forest Walk',         genre:'Nature',     src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3'},
-  {name:'Electric Soul',       genre:'Electronic', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3'},
+  {name:'Sơn Tùng M-TP - Chạy Ngay Đi',   genre:'V-Pop',    ytId:'_lfw4yTeLJQ'},
+  {name:'Sơn Tùng M-TP - Lạc Trôi',        genre:'V-Pop',    ytId:'lvnGJSoxvUQ'},
+  {name:'Sơn Tùng M-TP - Nơi Này Có Anh',  genre:'V-Pop',    ytId:'_WkyQ6QBTAM'},
+  {name:'Sơn Tùng M-TP - Muộn Rồi Mà Sao Còn', genre:'V-Pop', ytId:'r7QiNMBpHBk'},
+  {name:'Lofi Hip Hop Radio',               genre:'Lo-fi',    ytId:'jfKfPfyJRdk'},
+  {name:'Chill Lofi Beats Study',           genre:'Lo-fi',    ytId:'5qap5aO4i9A'},
 ];
 
-const aud=new Audio();aud.volume=0.5;let curIdx=-1,playing=false;
+// Hidden YouTube iframe container
+const ytWrap=document.createElement('div');
+ytWrap.style.cssText='position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
+ytWrap.innerHTML='<div id="yt-player"></div>';
+document.body.appendChild(ytWrap);
 
-function fmt(s){if(isNaN(s)||!isFinite(s))return'0:00';const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)+'').padStart(2,'0');}
+// Load YouTube IFrame API
+const ytScript=document.createElement('script');
+ytScript.src='https://www.youtube.com/iframe_api';
+document.head.appendChild(ytScript);
+
+let ytPlayer=null,ytReady=false,curIdx=-1,playing=false;
+let progTimer=null;
+
+window.onYouTubeIframeAPIReady=function(){
+  ytPlayer=new YT.Player('yt-player',{
+    height:'1',width:'1',
+    playerVars:{autoplay:0,controls:0,rel:0,modestbranding:1},
+    events:{
+      onReady:()=>{ytReady=true;},
+      onStateChange:(e)=>{
+        if(e.data===YT.PlayerState.PLAYING){playing=true;startProgTimer();}
+        else if(e.data===YT.PlayerState.PAUSED){playing=false;stopProgTimer();}
+        else if(e.data===YT.PlayerState.ENDED){stopProgTimer();nextT();}
+        updateFabIcon();
+        const pi=document.getElementById('pp-icon');
+        if(pi)pi.className=playing?'fas fa-pause':'fas fa-play';
+      }
+    }
+  });
+};
+
+function fmt(s){if(isNaN(s)||!isFinite(s)||s<0)return'0:00';const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)+'').padStart(2,'0');}
+
+function startProgTimer(){
+  stopProgTimer();
+  progTimer=setInterval(()=>{
+    if(!ytPlayer||!ytPlayer.getDuration)return;
+    const cur=ytPlayer.getCurrentTime()||0;
+    const dur=ytPlayer.getDuration()||0;
+    const pct=dur?cur/dur*100:0;
+    const bar=document.getElementById('prog-bar');if(bar)bar.style.width=pct+'%';
+    const tm=document.getElementById('np-time');if(tm)tm.textContent=fmt(cur)+' / '+fmt(dur);
+  },500);
+}
+function stopProgTimer(){if(progTimer){clearInterval(progTimer);progTimer=null;}}
 
 function playTrack(i){
+  if(!ytReady){setTimeout(()=>playTrack(i),400);return;}
   document.querySelectorAll('.track').forEach(el=>el.classList.remove('playing'));
-  curIdx=i;aud.src=TRACKS[i].src;aud.play();playing=true;
+  curIdx=i;
+  ytPlayer.loadVideoById(TRACKS[i].ytId);
+  playing=true;
   const tr=document.getElementById('tr-'+i);if(tr)tr.classList.add('playing');
   const nn=document.getElementById('np-name');if(nn)nn.textContent=TRACKS[i].name;
   const np=document.getElementById('np-box');if(np)np.style.display='block';
@@ -437,22 +472,20 @@ function playTrack(i){
 
 function togglePlay(){
   if(curIdx<0){playTrack(0);return;}
-  if(playing){aud.pause();playing=false;const pi=document.getElementById('pp-icon');if(pi)pi.className='fas fa-play';}
-  else{aud.play();playing=true;const pi=document.getElementById('pp-icon');if(pi)pi.className='fas fa-pause';}
-  updateFabIcon();
+  if(!ytReady)return;
+  if(playing){ytPlayer.pauseVideo();}
+  else{ytPlayer.playVideo();}
 }
 
 function prevT(){playTrack((curIdx-1+TRACKS.length)%TRACKS.length);}
 function nextT(){playTrack((curIdx+1)%TRACKS.length);}
 
-function seekProg(e){if(!aud.duration)return;const r=e.currentTarget.getBoundingClientRect();aud.currentTime=(e.clientX-r.left)/r.width*aud.duration;}
-
-aud.addEventListener('timeupdate',()=>{
-  const pct=aud.duration?aud.currentTime/aud.duration*100:0;
-  const bar=document.getElementById('prog-bar');if(bar)bar.style.width=pct+'%';
-  const tm=document.getElementById('np-time');if(tm)tm.textContent=fmt(aud.currentTime)+' / '+fmt(aud.duration);
-});
-aud.addEventListener('ended',nextT);
+function seekProg(e){
+  if(!ytReady||!ytPlayer.getDuration)return;
+  const r=e.currentTarget.getBoundingClientRect();
+  const pct=(e.clientX-r.left)/r.width;
+  ytPlayer.seekTo(pct*ytPlayer.getDuration(),true);
+}
 
 /* FAB music control */
 function updateFabIcon(){
@@ -473,7 +506,6 @@ function dismissBanner(){
   b.classList.add('hide');
   setTimeout(()=>b.style.display='none',400);
 }
-/* Show banner on load */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
     const b=document.getElementById('autoBanner');
@@ -490,9 +522,10 @@ function buildMusicHTML(){
         <div class="track-name">${t.name}</div>
         <span class="track-genre">${t.genre}</span>
       </div>
+      <a href="https://youtu.be/${t.ytId}" target="_blank" onclick="event.stopPropagation()" style="color:rgba(0,191,255,0.4);font-size:12px;text-decoration:none;flex-shrink:0;" title="Mở YouTube"><i class="fab fa-youtube"></i></a>
     </div>`).join('');
   return `
-    <p class="music-count">${TRACKS.length} bài hát</p>
+    <p class="music-count">${TRACKS.length} bài hát · YouTube</p>
     ${list}
     <div class="np" id="np-box" style="display:${curIdx>=0?'block':'none'}">
       <div class="np-label"><i class="fas fa-music"></i> Đang phát <div class="wave"><b></b><b></b><b></b><b></b></div></div>
@@ -504,7 +537,8 @@ function buildMusicHTML(){
         <div class="prog" onclick="seekProg(event)"><div class="prog-bar" id="prog-bar"></div></div>
       </div>
       <div class="np-time" id="np-time">0:00 / 0:00</div>
-    </div>`;
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center;">⚠️ Một số bài có thể bị chặn tại khu vực của bạn do bản quyền YouTube</p>`;
 }
 
 /* ===== MODAL ===== */
