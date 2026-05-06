@@ -8,7 +8,6 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
-/* ===== DARK THEME (default) ===== */
 :root,[data-theme="dark"]{
   --blue:#00bfff;
   --blue-dim:rgba(0,191,255,0.12);
@@ -29,7 +28,6 @@
   --fab-shadow:rgba(0,191,255,0.25);
 }
 
-/* ===== LIGHT THEME ===== */
 [data-theme="light"]{
   --blue:#0077cc;
   --blue-dim:rgba(0,119,204,0.1);
@@ -49,12 +47,240 @@
   --fab-shadow:rgba(0,119,204,0.2);
 }
 
-html{scroll-behavior:smooth;}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .35s,color .35s;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .35s,color .35s;max-width:100vw;}
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--stars-opacity);transition:opacity .35s;}
 #glow{position:fixed;width:400px;height:400px;background:radial-gradient(circle,rgba(0,191,255,0.08) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;opacity:var(--glow-opacity);transition:opacity .35s;}
 
-/* ===== FAB BUTTONS (Theme + Music) ===== */
+/* ========== SCROLL REVEAL ANIMATIONS ========== */
+/* Base state — hidden */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.reveal-left{
+  transform:translateX(-50px) translateY(0);
+}
+.reveal.reveal-right{
+  transform:translateX(50px) translateY(0);
+}
+.reveal.reveal-scale{
+  transform:scale(.92) translateY(20px);
+}
+.reveal.reveal-fade{
+  transform:none;
+}
+
+/* Visible state */
+.reveal.visible{
+  opacity:1;
+  transform:none !important;
+}
+
+/* Stagger children */
+.stagger > *{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+.stagger.visible > *:nth-child(1){transition-delay:.05s;}
+.stagger.visible > *:nth-child(2){transition-delay:.12s;}
+.stagger.visible > *:nth-child(3){transition-delay:.19s;}
+.stagger.visible > *:nth-child(4){transition-delay:.26s;}
+.stagger.visible > *:nth-child(5){transition-delay:.33s;}
+.stagger.visible > *:nth-child(6){transition-delay:.40s;}
+.stagger.visible > *{
+  opacity:1;
+  transform:none;
+}
+
+/* Section label line sweep */
+.section-label .label-line{
+  width:0;
+  transition:width 1s cubic-bezier(.22,1,.36,1) .3s;
+}
+.visible-label .section-label .label-line,
+.section-label.label-animate .label-line{width:100%;}
+
+/* Card hover shimmer */
+.card{
+  position:relative;
+  overflow:hidden;
+}
+.card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(0,191,255,0.04) 50%,transparent 60%);
+  transform:translateX(-100%);
+  transition:transform .6s ease;
+  pointer-events:none;
+  border-radius:18px;
+}
+.card:hover::after{
+  transform:translateX(100%);
+}
+
+/* Timeline item stagger */
+.tl-item{
+  opacity:0;
+  transform:translateX(-30px);
+  transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+}
+.tl-item.tl-visible{
+  opacity:1;
+  transform:none;
+}
+.tl-item:nth-child(1).tl-visible{transition-delay:.05s;}
+.tl-item:nth-child(2).tl-visible{transition-delay:.15s;}
+.tl-item:nth-child(3).tl-visible{transition-delay:.25s;}
+.tl-item:nth-child(4).tl-visible{transition-delay:.35s;}
+
+/* Hobby card stagger pop */
+.hobby-card{
+  opacity:0;
+  transform:scale(.85) translateY(20px);
+  transition:opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1), background .25s, border-color .25s, box-shadow .25s;
+}
+.hobby-card.hc-visible{
+  opacity:1;
+  transform:none;
+}
+.hobby-card:nth-child(1).hc-visible{transition-delay:.05s;}
+.hobby-card:nth-child(2).hc-visible{transition-delay:.14s;}
+.hobby-card:nth-child(3).hc-visible{transition-delay:.23s;}
+
+/* Stat counter reveal */
+.about-stat{
+  opacity:0;
+  transform:translateY(24px) scale(.95);
+  transition:opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1);
+}
+.about-stat.stat-visible{
+  opacity:1;
+  transform:none;
+}
+.about-stat:nth-child(1).stat-visible{transition-delay:.0s;}
+.about-stat:nth-child(2).stat-visible{transition-delay:.1s;}
+.about-stat:nth-child(3).stat-visible{transition-delay:.2s;}
+.about-stat:nth-child(4).stat-visible{transition-delay:.3s;}
+
+/* About row slide */
+.about-row{
+  opacity:0;
+  transform:translateX(-24px);
+  transition:opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+}
+.about-row.ar-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Cert card stagger */
+.cert-card{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1), border-color .2s, transform .2s;
+}
+.cert-card.cc-visible{
+  opacity:1;
+  transform:none;
+}
+.cert-card:nth-child(1).cc-visible{transition-delay:.0s;}
+.cert-card:nth-child(2).cc-visible{transition-delay:.1s;}
+.cert-card:nth-child(3).cc-visible{transition-delay:.2s;}
+.cert-card:nth-child(4).cc-visible{transition-delay:.3s;}
+
+/* Tool tag cascade */
+.skill-tool-tag{
+  opacity:0;
+  transform:translateY(12px) scale(.9);
+  transition:opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1);
+  display:inline-block;
+}
+.skill-tool-tag.tt-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Hobby detail items */
+.hobby-detail-item{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+}
+.hobby-detail-item.hd-visible{
+  opacity:1;
+  transform:none;
+}
+.hobby-detail-item:nth-child(1).hd-visible{transition-delay:.05s;}
+.hobby-detail-item:nth-child(2).hd-visible{transition-delay:.13s;}
+.hobby-detail-item:nth-child(3).hd-visible{transition-delay:.21s;}
+.hobby-detail-item:nth-child(4).hd-visible{transition-delay:.29s;}
+
+/* Contact row */
+.contact-row{
+  opacity:0;
+  transform:translateX(-20px);
+  transition:opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+}
+.contact-row.cr-visible{
+  opacity:1;
+  transform:none;
+}
+.contact-row:nth-child(1).cr-visible{transition-delay:.0s;}
+.contact-row:nth-child(2).cr-visible{transition-delay:.08s;}
+.contact-row:nth-child(3).cr-visible{transition-delay:.16s;}
+
+/* Social btn */
+.social-btn{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .45s cubic-bezier(.22,1,.36,1), transform .45s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s, color .2s;
+}
+.social-btn.sb-visible{
+  opacity:1;
+  transform:none;
+}
+.social-btn:nth-child(1).sb-visible{transition-delay:.0s;}
+.social-btn:nth-child(2).sb-visible{transition-delay:.08s;}
+.social-btn:nth-child(3).sb-visible{transition-delay:.16s;}
+
+/* Map */
+.map-wrap{
+  opacity:0;
+  transform:scale(.97);
+  transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+}
+.map-wrap.mw-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Section label icon bounce on reveal */
+@keyframes iconPop{
+  0%{transform:scale(0) rotate(-20deg);}
+  70%{transform:scale(1.2) rotate(5deg);}
+  100%{transform:scale(1) rotate(0);}
+}
+.section-label i.icon-popped{
+  animation:iconPop .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Glow pulse on section reveal */
+@keyframes sectionGlow{
+  0%{box-shadow:0 0 0 rgba(0,191,255,0);}
+  50%{box-shadow:0 0 40px rgba(0,191,255,0.12);}
+  100%{box-shadow:0 0 30px rgba(0,191,255,0.07);}
+}
+.card.card-revealed{
+  animation:sectionGlow .8s ease both;
+}
+
+/* ===== FAB BUTTONS ===== */
 .fab-group{position:fixed;bottom:28px;right:24px;display:flex;flex-direction:column;gap:12px;z-index:100;}
 .fab{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fab-border);background:var(--card);backdrop-filter:blur(12px);color:var(--blue);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;box-shadow:0 4px 20px var(--fab-shadow);}
 .fab:hover{transform:scale(1.12);box-shadow:0 6px 28px var(--fab-shadow);background:var(--blue-dim);}
@@ -71,15 +297,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .banner-dismiss{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;}
 
 /* ===== NAVBAR ===== */
-.navbar{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:62px;
-  background:rgba(6,12,24,0.75);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-  transition:background .35s,border-color .35s;
-}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:62px;background:rgba(6,12,24,0.75);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);transition:background .35s,border-color .35s;}
 [data-theme="light"] .navbar{background:rgba(240,246,255,0.82);}
 .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:16px;color:var(--text);}
 .nav-logo-icon{width:32px;height:32px;border-radius:9px;background:var(--blue-dim);border:1px solid var(--border-h);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:14px;}
@@ -98,14 +316,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .nav-mobile .nav-link{width:100%;text-align:left;padding:11px 14px;}
 
 /* ===== FOOTER ===== */
-.site-footer{
-  position:relative;z-index:2;
-  background:rgba(0,0,0,0.3);
-  border-top:1px solid var(--border);
-  padding:40px 20px 28px;
-  margin-top:20px;
-  backdrop-filter:blur(8px);
-}
+.site-footer{position:relative;z-index:2;background:rgba(0,0,0,0.3);border-top:1px solid var(--border);padding:40px 20px 28px;margin-top:20px;backdrop-filter:blur(8px);}
 [data-theme="light"] .site-footer{background:rgba(0,119,204,0.04);}
 .footer-inner{max-width:760px;margin:0 auto;}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:32px;}
@@ -114,7 +325,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .footer-brand-name{font-weight:700;font-size:16px;}
 .footer-desc{font-size:13px;color:var(--muted);max-width:240px;line-height:1.7;}
 .footer-links-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:600;}
-.footer-links-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color .2s;}
+.footer-links-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color .2s;cursor:pointer;}
 .footer-links-col a:hover{color:var(--text);}
 .footer-divider{height:1px;background:var(--border);margin-bottom:20px;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
@@ -123,29 +334,48 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .fsoc{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:15px;transition:all .2s;}
 .fsoc:hover{background:var(--blue-dim);border-color:var(--border-h);color:var(--blue);transform:translateY(-2px);}
 .footer-heart{color:#ff6b8a;}
+.footer-links-row{display:flex;gap:40px;}
 
 main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 20px 40px;}
+
+/* ===== HERO ===== */
 .hero{text-align:center;padding:100px 0 60px;}
-.avatar-wrap{position:relative;display:inline-block;margin-bottom:28px;}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:28px;
+  opacity:0;transform:scale(.7);
+  animation:avatarIn .9s cubic-bezier(.22,1,.36,1) .2s forwards;
+}
+@keyframes avatarIn{to{opacity:1;transform:scale(1);}}
 .avatar-wrap::before{content:'';position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(var(--blue),transparent,var(--blue));animation:spin 4s linear infinite;z-index:-1;}
 .avatar-wrap::after{content:'';position:absolute;inset:2px;border-radius:50%;background:var(--bg);z-index:0;transition:background .35s;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .avatar-wrap img{position:relative;z-index:1;width:130px;height:130px;border-radius:50%;object-fit:cover;display:block;}
-.hero-name{font-size:clamp(28px,6vw,42px);font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;background:linear-gradient(135deg,var(--text) 40%,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-role{font-size:15px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;font-weight:500;opacity:.85;}
-.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.hero-name{font-size:clamp(28px,6vw,42px);font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;background:linear-gradient(135deg,var(--text) 40%,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0;transform:translateY(20px);
+  animation:heroTextIn .8s cubic-bezier(.22,1,.36,1) .5s forwards;
+}
+@keyframes heroTextIn{to{opacity:1;transform:none;}}
+.hero-role{font-size:15px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;font-weight:500;opacity:0;
+  animation:heroTextIn .8s cubic-bezier(.22,1,.36,1) .65s forwards;
+}
+.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;
+  opacity:0;transform:translateY(16px);
+  animation:heroTextIn .8s cubic-bezier(.22,1,.36,1) .8s forwards;
+}
 .tag{background:var(--blue-dim);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--blue);}
+
 section{margin-bottom:28px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 30px;transition:border-color .25s,box-shadow .25s,background .35s;backdrop-filter:blur(8px);}
 .card:hover{border-color:var(--border-h);box-shadow:0 0 30px rgba(0,191,255,0.07);}
 .section-label{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:18px;}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);transition:transform .6s cubic-bezier(.22,1,.36,1);transform-origin:left;transform:scaleX(0);}
+.card.card-revealed .section-label::after{transform:scaleX(1);}
+
 .skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;}
 .skill-chip{background:rgba(0,191,255,0.06);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;font-size:12px;color:var(--muted);transition:all .2s;cursor:default;}
 .skill-chip:hover{background:var(--blue-dim);border-color:var(--border-h);color:var(--blue);transform:translateY(-2px);}
 .skill-chip i{display:block;font-size:22px;margin-bottom:6px;color:var(--blue);}
 .hobby-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.hobby-card{background:var(--hobby-bg);border:1px solid var(--border);border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .25s;}
+.hobby-card{background:var(--hobby-bg);border:1px solid var(--border);border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;}
 .hobby-card:hover{background:var(--blue-dim);border-color:var(--border-h);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,191,255,0.12);}
 .hobby-card .hicon{font-size:30px;margin-bottom:10px;display:block;}
 .hobby-card span{font-size:13px;color:var(--muted);}
@@ -154,7 +384,7 @@ section{margin-bottom:28px;}
 .contact-row:last-child{border-bottom:none;}
 .contact-row i{color:var(--blue);font-size:18px;width:24px;}
 .social-row{display:flex;gap:12px;margin-top:20px;}
-.social-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--border);border-radius:10px;background:rgba(0,0,0,0.1);color:var(--muted);text-decoration:none;font-size:13px;transition:all .2s;}
+.social-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--border);border-radius:10px;background:rgba(0,0,0,0.1);color:var(--muted);text-decoration:none;font-size:13px;}
 .social-btn:hover{background:var(--blue-dim);border-color:var(--border-h);color:var(--blue);transform:translateY(-2px);}
 .social-btn i{font-size:18px;}
 .map-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-top:4px;}
@@ -189,8 +419,6 @@ section{margin-bottom:28px;}
 .track-info{flex:1;min-width:0;}
 .track-name{font-size:13px;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}
 .track-genre{font-size:10px;background:rgba(0,191,255,0.08);border:1px solid rgba(0,191,255,0.2);border-radius:4px;padding:1px 6px;color:rgba(0,191,255,0.85);}
-
-/* NOW PLAYING */
 .np{margin-top:16px;padding:14px;background:rgba(0,0,0,0.4);border-radius:12px;border:1px solid var(--border-h);}
 .np-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
 .np-name{font-size:14px;font-weight:500;margin-bottom:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}
@@ -210,7 +438,6 @@ section{margin-bottom:28px;}
 .wave b:nth-child(4){height:12px;animation-delay:.1s;}
 @keyframes wv{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}
 
-/* ===== SECTION CONTENT STYLES ===== */
 /* About */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
 .about-stat{background:rgba(0,191,255,0.05);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center;}
@@ -220,6 +447,7 @@ section{margin-bottom:28px;}
 .about-row{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);}
 .about-row i{color:var(--blue);width:18px;text-align:center;}
 .about-row span strong{color:var(--text);}
+
 /* Timeline */
 .timeline{position:relative;margin-top:4px;}
 .timeline::before{content:'';position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:var(--border);}
@@ -229,6 +457,7 @@ section{margin-bottom:28px;}
 .tl-year{font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:4px;}
 .tl-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;}
 .tl-sub{font-size:13px;color:var(--muted);line-height:1.6;}
+
 /* Skills bars */
 .skill-bar-list{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
 .skill-bar-item{}
@@ -240,12 +469,14 @@ section{margin-bottom:28px;}
 .skill-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,rgba(0,191,255,0.5),var(--blue));width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
 .skill-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
 .skill-tool-tag{background:var(--blue-dim);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--blue);}
+
 /* Hobbies */
 .hobby-detail{margin-top:18px;display:flex;flex-direction:column;gap:12px;}
 .hobby-detail-item{display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(0,191,255,0.04);border:1px solid var(--border);border-radius:12px;}
 .hobby-detail-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
 .hobby-detail-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
 .hobby-detail-body p{font-size:13px;color:var(--muted);line-height:1.6;}
+
 /* Contact form */
 .cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
 .cf-field{display:flex;flex-direction:column;gap:6px;}
@@ -257,7 +488,8 @@ section{margin-bottom:28px;}
 .cf-btn{margin-top:4px;padding:11px 24px;background:var(--blue);border:none;border-radius:10px;color:#060c18;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;display:inline-flex;align-items:center;gap:8px;}
 .cf-btn:hover{opacity:.85;}
 .cf-sent{display:none;margin-top:10px;padding:10px 14px;background:rgba(0,220,100,0.08);border:1px solid rgba(0,220,100,0.3);border-radius:8px;color:#00dc64;font-size:13px;}
-/* Cert / card */
+
+/* Cert */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:6px;}
 .cert-card{background:rgba(0,191,255,0.04);border:1px solid var(--border);border-radius:12px;padding:16px;transition:all .2s;}
 .cert-card:hover{border-color:var(--border-h);transform:translateY(-2px);}
@@ -266,107 +498,174 @@ section{margin-bottom:28px;}
 .cert-issuer{font-size:11px;color:var(--muted);}
 .cert-year{font-size:10px;color:var(--blue);margin-top:6px;font-weight:600;}
 
-@media(max-width:540px){.about-grid{grid-template-columns:1fr 1fr;}.cf-grid{grid-template-columns:1fr;}.cf-field.full{grid-column:1;}}
-@media(max-width:380px){.about-grid{grid-template-columns:1fr;}}
+/* ===== RESPONSIVE — MOBILE FIRST ===== */
+@media(max-width:768px){
+  /* Navbar */
+  .navbar{padding:0 16px;}
+  .nav-avail{display:none;}
 
+  /* Main padding */
+  main{padding:0 12px 40px;}
 
-/* ===== INTRO SCREEN ===== */
-#intro{
-  position:fixed;inset:0;z-index:99999;
-  background:#020810;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
-  overflow:hidden;
-  transition:opacity .7s ease, visibility .7s ease;
+  /* Hero */
+  .hero{padding:80px 0 40px;}
+
+  /* Cards */
+  .card{padding:20px 18px;}
+
+  /* About grid — 2 cols on tablet/phone */
+  .about-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .about-stat .num{font-size:22px;}
+
+  /* Timeline */
+  .timeline::before{left:12px;}
+  .tl-dot{width:24px;height:24px;font-size:10px;}
+  .tl-item{gap:12px;}
+
+  /* Skills */
+  .skill-bar-list{gap:12px;}
+
+  /* Cert grid */
+  .cert-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .cert-card{padding:12px;}
+  .cert-icon{font-size:22px;}
+
+  /* Hobby grid */
+  .hobby-grid{grid-template-columns:repeat(3,1fr);gap:10px;}
+  .hobby-card{padding:16px 10px;}
+  .hobby-card .hicon{font-size:24px;}
+
+  /* Contact form */
+  .cf-grid{grid-template-columns:1fr;}
+  .cf-field.full{grid-column:1;}
+
+  /* Social buttons */
+  .social-row{flex-wrap:wrap;gap:8px;}
+  .social-btn{font-size:12px;padding:8px 14px;}
+
+  /* Map */
+  .map-wrap iframe{height:240px;}
+
+  /* Footer */
+  .footer-top{flex-direction:column;gap:20px;}
+  .footer-links-row{gap:32px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:10px;}
+
+  /* FAB */
+  .fab-group{bottom:18px;right:14px;}
+  .fab{width:42px;height:42px;font-size:16px;}
+
+  /* Modal */
+  .modal-box{padding:20px 16px;}
 }
+
+@media(max-width:480px){
+  /* Navbar */
+  .navbar{padding:0 12px;}
+  .nav-logo span{display:none;}
+
+  /* Hero */
+  .hero{padding:76px 0 32px;}
+  .hero-tags{gap:7px;}
+  .tag{font-size:11px;padding:5px 10px;}
+
+  /* About grid — still 2 cols */
+  .about-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .about-stat{padding:12px 10px;}
+  .about-stat .num{font-size:20px;}
+  .about-stat .lbl{font-size:11px;}
+
+  /* About rows */
+  .about-row{font-size:13px;}
+
+  /* Cert grid — 1 col on small phones */
+  .cert-grid{grid-template-columns:1fr;}
+
+  /* Hobby grid */
+  .hobby-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .hobby-card{padding:14px 8px;}
+  .hobby-card .hicon{font-size:22px;margin-bottom:6px;}
+  .hobby-card span{font-size:11px;}
+
+  /* Hobby detail */
+  .hobby-detail-item{flex-direction:column;gap:8px;}
+  .hobby-detail-icon{font-size:20px;margin-top:0;}
+
+  /* Section label text */
+  .section-label{font-size:10px;letter-spacing:2px;}
+
+  /* Skills */
+  .skill-bar-name{font-size:12px;}
+  .skill-bar-pct{font-size:11px;}
+
+  /* Timeline */
+  .tl-title{font-size:13px;}
+  .tl-sub{font-size:12px;}
+
+  /* Contact */
+  .contact-row{font-size:13px;}
+
+  /* Social buttons — stack nicely */
+  .social-row{gap:7px;}
+  .social-btn{flex:1;min-width:calc(50% - 7px);justify-content:center;font-size:12px;padding:9px 10px;}
+
+  /* Footer */
+  .footer-desc{max-width:100%;}
+  .footer-copy{font-size:11px;}
+  .footer-links-row{gap:24px;}
+
+  /* Map */
+  .map-wrap iframe{height:200px;}
+
+  /* Card */
+  .card{padding:18px 14px;border-radius:14px;}
+
+  /* FAB tooltip — hide on mobile to prevent overflow */
+  .fab-tooltip{display:none;}
+}
+
+@media(max-width:360px){
+  .about-grid{grid-template-columns:1fr 1fr;}
+  .hobby-grid{grid-template-columns:repeat(3,1fr);}
+  .hero-name{font-size:26px;}
+  .social-btn{font-size:11px;padding:8px 8px;}
+  main{padding:0 10px 40px;}
+  .card{padding:16px 12px;}
+  .footer-links-row{flex-direction:column;gap:16px;}
+}
+
+/* ===== INTRO ===== */
+#intro{position:fixed;inset:0;z-index:99999;background:#020810;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;overflow:hidden;transition:opacity .7s ease, visibility .7s ease;}
 #intro.fade-out{opacity:0;visibility:hidden;}
-#intro-bg-glow{
-  position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 60% 50% at 50% 55%, rgba(0,191,255,0.09) 0%, transparent 70%);
-}
-#intro-icons{
-  display:flex;gap:18px;margin-bottom:40px;
-  opacity:0;transform:translateY(18px);
-  transition:opacity .6s ease, transform .6s ease;
-}
+#intro-bg-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 55%, rgba(0,191,255,0.09) 0%, transparent 70%);}
+#intro-icons{display:flex;gap:18px;margin-bottom:40px;opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
 #intro-icons.show{opacity:1;transform:translateY(0);}
-.iicon{
-  width:52px;height:52px;border-radius:14px;
-  border:1.5px solid rgba(0,191,255,0.3);
-  background:rgba(0,191,255,0.06);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;color:#00bfff;
-  box-shadow:0 0 18px rgba(0,191,255,0.1);
-}
+.iicon{width:52px;height:52px;border-radius:14px;border:1.5px solid rgba(0,191,255,0.3);background:rgba(0,191,255,0.06);display:flex;align-items:center;justify-content:center;font-size:20px;color:#00bfff;box-shadow:0 0 18px rgba(0,191,255,0.1);}
 #intro-text{text-align:center;margin-bottom:36px;}
-#intro-line1{
-  font-size:clamp(13px,2.5vw,16px);
-  letter-spacing:4px;color:rgba(255,255,255,0.5);
-  font-weight:400;margin-bottom:10px;
-  opacity:0;transform:translateY(12px);
-  transition:opacity .5s ease .1s, transform .5s ease .1s;
-}
+#intro-line1{font-size:clamp(13px,2.5vw,16px);letter-spacing:4px;color:rgba(255,255,255,0.5);font-weight:400;margin-bottom:10px;opacity:0;transform:translateY(12px);transition:opacity .5s ease .1s, transform .5s ease .1s;}
 #intro-line1.show{opacity:1;transform:translateY(0);}
-#intro-line2{
-  font-size:clamp(28px,6vw,52px);
-  font-weight:800;letter-spacing:2px;
-  color:#fff;
-  text-shadow:0 0 40px rgba(0,191,255,0.4), 0 0 80px rgba(0,191,255,0.15);
-  opacity:0;transform:translateY(16px) scale(.97);
-  transition:opacity .6s ease .25s, transform .6s ease .25s;
-  font-family:'Segoe UI',system-ui,sans-serif;
-  white-space:nowrap;
-}
+#intro-line2{font-size:clamp(28px,6vw,52px);font-weight:800;letter-spacing:2px;color:#fff;text-shadow:0 0 40px rgba(0,191,255,0.4), 0 0 80px rgba(0,191,255,0.15);opacity:0;transform:translateY(16px) scale(.97);transition:opacity .6s ease .25s, transform .6s ease .25s;font-family:'Segoe UI',system-ui,sans-serif;white-space:nowrap;}
 #intro-line2.show{opacity:1;transform:translateY(0) scale(1);}
-#intro-cursor-wrap{
-  margin-top:18px;
-  display:inline-flex;align-items:center;gap:0;
-  background:rgba(0,191,255,0.07);
-  border:1px solid rgba(0,191,255,0.25);
-  border-radius:8px;padding:7px 16px;
-  font-size:14px;color:rgba(0,191,255,0.85);
-  letter-spacing:1px;
-  opacity:0;transition:opacity .5s ease .5s;
-}
+#intro-cursor-wrap{margin-top:18px;display:inline-flex;align-items:center;gap:0;background:rgba(0,191,255,0.07);border:1px solid rgba(0,191,255,0.25);border-radius:8px;padding:7px 16px;font-size:14px;color:rgba(0,191,255,0.85);letter-spacing:1px;opacity:0;transition:opacity .5s ease .5s;}
 #intro-cursor-wrap.show{opacity:1;}
 #intro-cur{color:#00bfff;animation:blink .75s step-end infinite;margin-left:1px;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-#intro-bar{
-  width:min(220px, 55vw);height:3px;
-  background:rgba(255,255,255,0.08);border-radius:2px;
-  overflow:hidden;margin-bottom:0;
-  opacity:0;transition:opacity .4s ease .6s;
-}
+#intro-bar{width:min(220px, 55vw);height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;margin-bottom:0;opacity:0;transition:opacity .4s ease .6s;}
 #intro-bar.show{opacity:1;}
-#intro-bar-fill{
-  height:100%;width:0%;border-radius:2px;
-  background:linear-gradient(90deg,rgba(0,191,255,0.4),#00bfff);
-  transition:width 2.2s cubic-bezier(.4,0,.2,1);
-}
-#intro-dot{
-  width:10px;height:10px;border-radius:50%;
-  background:#00bfff;margin-top:28px;
-  box-shadow:0 0 14px rgba(0,191,255,0.8),0 0 30px rgba(0,191,255,0.4);
-  opacity:0;transform:scale(0);
-  transition:opacity .4s ease .2s, transform .4s ease .2s;
-}
+#intro-bar-fill{height:100%;width:0%;border-radius:2px;background:linear-gradient(90deg,rgba(0,191,255,0.4),#00bfff);transition:width 2.2s cubic-bezier(.4,0,.2,1);}
+#intro-dot{width:10px;height:10px;border-radius:50%;background:#00bfff;margin-top:28px;box-shadow:0 0 14px rgba(0,191,255,0.8),0 0 30px rgba(0,191,255,0.4);opacity:0;transform:scale(0);transition:opacity .4s ease .2s, transform .4s ease .2s;}
 #intro-dot.show{opacity:1;transform:scale(1);}
-/* scan line effect */
-#intro::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
-  z-index:1;
-}
+#intro::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);z-index:1;}
 </style>
 </head>
 <body>
 <canvas id="stars"></canvas>
 <div id="glow"></div>
 
-<!-- ===== NAVBAR ===== -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <a class="nav-logo" href="#top">
-    <div class="nav-logo-icon"><i class="fas fa-code"></i></div>
-    DVP
+    <div class="nav-logo-icon"><i class="fas fa-code"></i></div>DVP
   </a>
   <div class="nav-links" id="nav-links-desktop">
     <a class="nav-link active" onclick="scrollTo('top')">Trang chủ</a>
@@ -388,7 +687,7 @@ section{margin-bottom:28px;}
   <a class="nav-link" onclick="scrollTo('contact');toggleMobileNav()">Liên hệ</a>
 </div>
 
-<!-- ===== INTRO ANIMATION SCREEN ===== -->
+<!-- INTRO -->
 <div id="intro">
   <div id="intro-bg-glow"></div>
   <div id="intro-icons">
@@ -405,21 +704,21 @@ section{margin-bottom:28px;}
   <div id="intro-dot"></div>
 </div>
 
-<!-- AUTOPLAY MUSIC BANNER -->
-<div class="autoplay-banner" id="autoBanner">
+<!-- AUTOPLAY BANNER -->
+<div class="autoplay-banner" id="autoBanner" style="display:none;">
   <span>🎵</span>
   <span style="color:var(--text);">Bật nhạc nền tự động?</span>
   <button class="banner-play" onclick="startAutoMusic()">▶ Bật nhạc</button>
   <button class="banner-dismiss" onclick="dismissBanner()">Không</button>
 </div>
 
-<!-- FAB BUTTONS -->
+<!-- FAB -->
 <div class="fab-group">
-  <button class="fab" id="themeBtn" onclick="toggleTheme()" title="Chuyển giao diện">
+  <button class="fab" id="themeBtn" onclick="toggleTheme()">
     <span class="fab-tooltip">Chế độ sáng/tối</span>
     <i class="fas fa-moon" id="themeIcon"></i>
   </button>
-  <button class="fab music-fab" id="musicFab" onclick="toggleFabMusic()" title="Nhạc nền">
+  <button class="fab music-fab" id="musicFab" onclick="toggleFabMusic()">
     <span class="fab-tooltip">Bật/tắt nhạc</span>
     <i class="fas fa-music" id="musicIcon"></i>
   </button>
@@ -440,16 +739,16 @@ section{margin-bottom:28px;}
 </div>
 
 <section id="about">
-  <div class="card">
+  <div class="card reveal">
     <div class="section-label"><i class="fas fa-user"></i> Về tôi</div>
     <p style="font-size:15px;line-height:1.85;color:var(--muted);">Xin chào! Tôi là <strong style="color:var(--blue)">Đặng Văn Phụng</strong> — sinh viên CNTT năm nhất tại TP.HCM, đam mê lập trình web và công nghệ. Tôi luôn tìm cách học hỏi và áp dụng kiến thức vào các dự án thực tế, hướng đến việc trở thành một <strong style="color:var(--text)">Full-stack Developer</strong> chuyên nghiệp trong tương lai.</p>
-    <div class="about-grid">
+    <div class="about-grid" id="about-stats-grid">
       <div class="about-stat"><span class="num">4+</span><div class="lbl">Năm học lập trình</div></div>
       <div class="about-stat"><span class="num">1+</span><div class="lbl">Dự án cá nhân</div></div>
       <div class="about-stat"><span class="num">6</span><div class="lbl">Kỹ năng công nghệ</div></div>
       <div class="about-stat"><span class="num">∞</span><div class="lbl">Đam mê học hỏi</div></div>
     </div>
-    <div class="about-info">
+    <div class="about-info" id="about-rows">
       <div class="about-row"><i class="fas fa-graduation-cap"></i><span>Trường: <strong>Cao Đẳng Sài Gòn Teach (CĐSG)</strong></span></div>
       <div class="about-row"><i class="fas fa-book-open"></i><span>Chuyên ngành: <strong>Công nghệ thông tin</strong></span></div>
       <div class="about-row"><i class="fas fa-map-marker-alt"></i><span>Quê quán: <strong>Nghệ An — Nam Định</strong></span></div>
@@ -459,14 +758,14 @@ section{margin-bottom:28px;}
     </div>
   </div>
 
-  <div class="card" style="margin-top:20px;">
+  <div class="card reveal" style="margin-top:20px;transition-delay:.1s;">
     <div class="section-label"><i class="fas fa-road"></i> Hành trình</div>
-    <div class="timeline">
+    <div class="timeline" id="timeline-wrap">
       <div class="tl-item">
         <div class="tl-dot"><i class="fas fa-school"></i></div>
         <div class="tl-body">
           <div class="tl-year">2022 — 2025</div>
-          <div class="tl-title">Trung Cấp Nghề Công đoàn BD — Tốt Nghiệp </div>
+          <div class="tl-title">Trung Cấp Nghề Công đoàn BD — Tốt Nghiệp</div>
           <div class="tl-sub">Hoàn thành chương trình trung học phổ thông, bắt đầu tự học lập trình từ những dòng HTML đầu tiên.</div>
         </div>
       </div>
@@ -491,7 +790,7 @@ section{margin-bottom:28px;}
         <div class="tl-body">
           <div class="tl-year">Tương lai</div>
           <div class="tl-title">Full-stack Developer</div>
-          <div class="tl-sub">Mục tiêu trở thành lập trình viên full-stack, Kiếm được công viêc phù hợp cá nhân.</div>
+          <div class="tl-sub">Mục tiêu trở thành lập trình viên full-stack, kiếm được công việc phù hợp cá nhân.</div>
         </div>
       </div>
     </div>
@@ -499,7 +798,7 @@ section{margin-bottom:28px;}
 </section>
 
 <section id="skills">
-  <div class="card">
+  <div class="card reveal">
     <div class="section-label"><i class="fas fa-code"></i> Kỹ năng lập trình</div>
     <div class="skill-bar-list" id="skillBars">
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-html5"></i> HTML5</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
@@ -509,7 +808,7 @@ section{margin-bottom:28px;}
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fas fa-database"></i> SQL / MySQL</span><span class="skill-bar-pct">50%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="50"></div></div></div>
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name"><i class="fab fa-git-alt"></i> Git / GitHub</span><span class="skill-bar-pct">60%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="60"></div></div></div>
     </div>
-    <div class="skill-tools">
+    <div class="skill-tools" id="skill-tools-wrap">
       <span class="skill-tool-tag">VS Code</span>
       <span class="skill-tool-tag">GitHub</span>
       <span class="skill-tool-tag">Figma</span>
@@ -519,9 +818,9 @@ section{margin-bottom:28px;}
     </div>
   </div>
 
-  <div class="card" style="margin-top:20px;">
+  <div class="card reveal" style="margin-top:20px;transition-delay:.1s;">
     <div class="section-label"><i class="fas fa-certificate"></i> Chứng chỉ & học tập</div>
-    <div class="cert-grid">
+    <div class="cert-grid" id="cert-grid">
       <div class="cert-card"><div class="cert-icon"><i class="fab fa-html5"></i></div><div class="cert-name">HTML & CSS cơ bản</div><div class="cert-issuer">freeCodeCamp</div><div class="cert-year">2024</div></div>
       <div class="cert-card"><div class="cert-icon"><i class="fab fa-js"></i></div><div class="cert-name">JavaScript Algorithms</div><div class="cert-issuer">freeCodeCamp</div><div class="cert-year">2024</div></div>
       <div class="cert-card"><div class="cert-icon"><i class="fab fa-python"></i></div><div class="cert-name">Python for Beginners</div><div class="cert-issuer">Coursera</div><div class="cert-year">2025</div></div>
@@ -531,14 +830,14 @@ section{margin-bottom:28px;}
 </section>
 
 <section id="hobbies">
-  <div class="card">
+  <div class="card reveal">
     <div class="section-label"><i class="fas fa-heart"></i> Sở thích</div>
-    <div class="hobby-grid">
+    <div class="hobby-grid" id="hobby-grid">
       <div class="hobby-card" onclick="openModal('game')"><span class="hicon">🎮</span><span>Chơi game</span></div>
       <div class="hobby-card" onclick="openModal('code')"><span class="hicon">💻</span><span>Lập trình</span></div>
       <div class="hobby-card" onclick="openModal('music')"><span class="hicon">🎵</span><span>Nghe nhạc</span></div>
     </div>
-    <div class="hobby-detail">
+    <div class="hobby-detail" id="hobby-detail">
       <div class="hobby-detail-item">
         <div class="hobby-detail-icon">🎮</div>
         <div class="hobby-detail-body">
@@ -572,40 +871,26 @@ section{margin-bottom:28px;}
 </section>
 
 <section id="contact">
-  <div class="card">
+  <div class="card reveal">
     <div class="section-label"><i class="fas fa-paper-plane"></i> Liên hệ với tôi</div>
     <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Bạn có dự án cần cộng tác, muốn kết nối hoặc chỉ đơn giản là muốn nói chuyện về công nghệ? Hãy liên hệ với tôi — tôi luôn sẵn sàng!</p>
-
     <div class="cf-grid">
-      <div class="cf-field">
-        <label class="cf-label">Họ tên</label>
-        <input class="cf-input" id="cf-name" type="text" placeholder="Nguyễn Văn A">
-      </div>
-      <div class="cf-field">
-        <label class="cf-label">Email</label>
-        <input class="cf-input" id="cf-email" type="email" placeholder="email@example.com">
-      </div>
-      <div class="cf-field full">
-        <label class="cf-label">Chủ đề</label>
-        <input class="cf-input" id="cf-subject" type="text" placeholder="Muốn hợp tác dự án...">
-      </div>
-      <div class="cf-field full">
-        <label class="cf-label">Nội dung</label>
-        <textarea class="cf-textarea" id="cf-msg" placeholder="Xin chào Phụng, tôi muốn..."></textarea>
-      </div>
+      <div class="cf-field"><label class="cf-label">Họ tên</label><input class="cf-input" id="cf-name" type="text" placeholder="Nguyễn Văn A"></div>
+      <div class="cf-field"><label class="cf-label">Email</label><input class="cf-input" id="cf-email" type="email" placeholder="email@example.com"></div>
+      <div class="cf-field full"><label class="cf-label">Chủ đề</label><input class="cf-input" id="cf-subject" type="text" placeholder="Muốn hợp tác dự án..."></div>
+      <div class="cf-field full"><label class="cf-label">Nội dung</label><textarea class="cf-textarea" id="cf-msg" placeholder="Xin chào Phụng, tôi muốn..."></textarea></div>
       <div class="cf-field full">
         <button class="cf-btn" onclick="sendContact()"><i class="fas fa-paper-plane"></i> Gửi tin nhắn</button>
         <div class="cf-sent" id="cf-sent">✅ Cảm ơn! Tôi sẽ phản hồi sớm nhất có thể.</div>
       </div>
     </div>
-
     <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
       <div class="section-label" style="margin-bottom:14px;"><i class="fas fa-address-card"></i> Thông tin trực tiếp</div>
       <div class="contact-row"><i class="fas fa-envelope"></i><span>thingphung1245@gmail.com</span></div>
       <div class="contact-row"><i class="fas fa-map-marker-alt"></i><span>Tân Uyên, Bình Dương — TP.HCM</span></div>
       <div class="contact-row"><i class="fas fa-clock"></i><span>Phản hồi trong vòng <strong style="color:var(--blue)">24 giờ</strong></span></div>
     </div>
-    <div class="social-row" style="margin-top:16px;">
+    <div class="social-row" id="social-row">
       <a class="social-btn" href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
       <a class="social-btn" href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
       <a class="social-btn" href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope"></i> Email</a>
@@ -614,14 +899,14 @@ section{margin-bottom:28px;}
 </section>
 
 <section>
-  <div class="card">
+  <div class="card reveal">
     <div class="section-label"><i class="fas fa-map-marker-alt"></i> Vị trí</div>
     <div class="map-wrap"><iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed" allowfullscreen loading="lazy"></iframe></div>
   </div>
 </section>
 </main>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-top">
@@ -632,34 +917,37 @@ section{margin-bottom:28px;}
         </div>
         <p class="footer-desc">Sinh viên CNTT năm nhất, đam mê lập trình web và đang từng bước xây dựng sự nghiệp trong ngành công nghệ.</p>
       </div>
-      <div class="footer-links-col">
-        <h4>Điều hướng</h4>
-        <a onclick="scrollTo('top')">Trang chủ</a>
-        <a onclick="scrollTo('about')">Về tôi</a>
-        <a onclick="scrollTo('skills')">Kỹ năng</a>
-        <a onclick="scrollTo('hobbies')">Sở thích</a>
-        <a onclick="scrollTo('contact')">Liên hệ</a>
-        <a onclick="scrollTo('contact')">SĐT : +84986465540</a>
-      </div>
-      <div class="footer-links-col">
-        <h4>Liên kết</h4>
-        <a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook" style="width:16px"></i> Facebook</a>
-        <a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok" style="width:16px"></i> TikTok</a>
-        <a href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope" style="width:16px"></i> Email</a>
+      <div class="footer-links-row">
+        <div class="footer-links-col">
+          <h4>Điều hướng</h4>
+          <a onclick="scrollTo('top')">Trang chủ</a>
+          <a onclick="scrollTo('about')">Về tôi</a>
+          <a onclick="scrollTo('skills')">Kỹ năng</a>
+          <a onclick="scrollTo('hobbies')">Sở thích</a>
+          <a onclick="scrollTo('contact')">Liên hệ</a>
+          <a onclick="scrollTo('contact')">SĐT : +84986465540</a>
+        </div>
+        <div class="footer-links-col">
+          <h4>Liên kết</h4>
+          <a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook" style="width:16px"></i> Facebook</a>
+          <a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok" style="width:16px"></i> TikTok</a>
+          <a href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope" style="width:16px"></i> Email</a>
+        </div>
       </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2025 Đặng Văn Phụng · Made with <span class="footer-heart">♥</span> in TP.HCM</p>
       <div class="footer-socials">
-        <a class="fsoc" href="https://facebook.com/thinhphung07" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-        <a class="fsoc" href="https://tiktok.com/@dvp.138" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a class="fsoc" href="mailto:thingphung1245@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <a class="fsoc" href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a class="fsoc" href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a class="fsoc" href="mailto:thingphung1245@gmail.com"><i class="fas fa-envelope"></i></a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- MODAL -->
 <div id="modal" class="modal-bg" onclick="bgClose(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
@@ -669,7 +957,7 @@ section{margin-bottom:28px;}
 </div>
 
 <script>
-/* ===== INTRO ANIMATION ===== */
+/* ===== INTRO ===== */
 (function(){
   const intro=document.getElementById('intro');
   const icons=document.getElementById('intro-icons');
@@ -679,26 +967,168 @@ section{margin-bottom:28px;}
   const bar=document.getElementById('intro-bar');
   const barFill=document.getElementById('intro-bar-fill');
   const dot=document.getElementById('intro-dot');
-
-  // Sequence: icons → line1 → line2 → url → bar fill → dot → fade out
-  setTimeout(()=>{ icons.classList.add('show'); },100);
-  setTimeout(()=>{ line1.classList.add('show'); },300);
-  setTimeout(()=>{ line2.classList.add('show'); },520);
-  setTimeout(()=>{ urlWrap.classList.add('show'); },820);
-  setTimeout(()=>{ bar.classList.add('show'); setTimeout(()=>barFill.style.width='100%',50); },900);
-  setTimeout(()=>{ dot.classList.add('show'); },1000);
-  // Fade out entire intro
-  setTimeout(()=>{
-    dot.style.transition='opacity .3s ease, transform .5s ease';
-    dot.style.transform='scale(20)';dot.style.opacity='0';
-  },3200);
-  setTimeout(()=>{
-    intro.classList.add('fade-out');
-    setTimeout(()=>intro.remove(),800);
-  },3500);
+  setTimeout(()=>icons.classList.add('show'),100);
+  setTimeout(()=>line1.classList.add('show'),300);
+  setTimeout(()=>line2.classList.add('show'),520);
+  setTimeout(()=>urlWrap.classList.add('show'),820);
+  setTimeout(()=>{bar.classList.add('show');setTimeout(()=>barFill.style.width='100%',50);},900);
+  setTimeout(()=>dot.classList.add('show'),1000);
+  setTimeout(()=>{dot.style.transition='opacity .3s ease, transform .5s ease';dot.style.transform='scale(20)';dot.style.opacity='0';},3200);
+  setTimeout(()=>{intro.classList.add('fade-out');setTimeout(()=>intro.remove(),800);},3500);
 })();
 
-/* ===== SKILL BARS ANIMATION ===== */
+/* ===== SCROLL REVEAL ENGINE ===== */
+function initScrollReveal(){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add('visible','card-revealed');
+      // animate section-label line
+      const labelLine = el.querySelector('.section-label::after');
+      // Animate child groups
+      animateChildren(el);
+      io.unobserve(el);
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Timeline items
+  const tlObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const wrap = e.target;
+      wrap.querySelectorAll('.tl-item').forEach((item,i)=>{
+        setTimeout(()=>item.classList.add('tl-visible'), i*120);
+      });
+      tlObs.unobserve(wrap);
+    });
+  },{threshold:0.1});
+  const tlWrap = document.getElementById('timeline-wrap');
+  if(tlWrap) tlObs.observe(tlWrap);
+
+  // About stats
+  const statObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.about-stat').forEach(s=>s.classList.add('stat-visible'));
+      statObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  const sg = document.getElementById('about-stats-grid');
+  if(sg) statObs.observe(sg);
+
+  // About rows
+  const rowObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.about-row').forEach((r,i)=>{
+        setTimeout(()=>r.classList.add('ar-visible'), i*70);
+      });
+      rowObs.unobserve(e.target);
+    });
+  },{threshold:0.05});
+  const ar = document.getElementById('about-rows');
+  if(ar) rowObs.observe(ar);
+
+  // Hobby cards
+  const hcObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.hobby-card').forEach(c=>c.classList.add('hc-visible'));
+      hcObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  const hg = document.getElementById('hobby-grid');
+  if(hg) hcObs.observe(hg);
+
+  // Hobby detail items
+  const hdObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.hobby-detail-item').forEach(i=>i.classList.add('hd-visible'));
+      hdObs.unobserve(e.target);
+    });
+  },{threshold:0.05});
+  const hd = document.getElementById('hobby-detail');
+  if(hd) hdObs.observe(hd);
+
+  // Cert cards
+  const ccObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.cert-card').forEach(c=>c.classList.add('cc-visible'));
+      ccObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  const cg = document.getElementById('cert-grid');
+  if(cg) ccObs.observe(cg);
+
+  // Tool tags
+  const ttObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.skill-tool-tag').forEach((t,i)=>{
+        setTimeout(()=>t.classList.add('tt-visible'), i*55);
+      });
+      ttObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  const stw = document.getElementById('skill-tools-wrap');
+  if(stw) ttObs.observe(stw);
+
+  // Contact rows
+  const crObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.contact-row').forEach(r=>r.classList.add('cr-visible'));
+      crObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('#contact .contact-row').forEach(r=>{
+    // parent observe
+  });
+  // observe entire contact section card
+  const contactCard = document.querySelector('#contact .card');
+  if(contactCard){
+    const crO2 = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting)return;
+        e.target.querySelectorAll('.contact-row').forEach((r,i)=>{
+          setTimeout(()=>r.classList.add('cr-visible'), i*80);
+        });
+        crO2.unobserve(e.target);
+      });
+    },{threshold:0.08});
+    crO2.observe(contactCard);
+  }
+
+  // Social btns
+  const sbObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.social-btn').forEach(b=>b.classList.add('sb-visible'));
+      sbObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  const sr = document.getElementById('social-row');
+  if(sr) sbObs.observe(sr);
+
+  // Map wrap
+  const mwObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.classList.add('mw-visible');
+      mwObs.unobserve(e.target);
+    });
+  },{threshold:0.05});
+  document.querySelectorAll('.map-wrap').forEach(m=>mwObs.observe(m));
+}
+
+function animateChildren(el){}
+
+// Skill bars observer
 const skillObs=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -711,6 +1141,11 @@ const skillObs=new IntersectionObserver((entries)=>{
 },{threshold:.2});
 const skillSec=document.getElementById('skills');
 if(skillSec)skillObs.observe(skillSec);
+
+// Start reveal engine after intro disappears
+setTimeout(initScrollReveal, 3800);
+// Also init immediately for elements already in view after intro
+window.addEventListener('load',()=>setTimeout(initScrollReveal,3800));
 
 /* ===== CONTACT FORM ===== */
 function sendContact(){
@@ -725,37 +1160,20 @@ function sendContact(){
 }
 
 /* ===== NAVBAR ===== */
-function scrollTo(id){
-  const el=document.getElementById(id);
-  if(el)el.scrollIntoView({behavior:'smooth'});
-}
-function toggleMobileNav(){
-  document.getElementById('navMobile').classList.toggle('open');
-}
-// Scroll spy — highlight active nav link
+function scrollTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+function toggleMobileNav(){document.getElementById('navMobile').classList.toggle('open');}
 const NAV_SECTIONS=['top','about','skills','hobbies','contact'];
 window.addEventListener('scroll',()=>{
   const scrollY=window.scrollY+80;
   let active='top';
-  NAV_SECTIONS.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el&&el.offsetTop<=scrollY)active=id;
-  });
-  document.querySelectorAll('.nav-link').forEach((link,i)=>{
-    link.classList.toggle('active',NAV_SECTIONS[i]===active);
-  });
-  // Navbar shadow on scroll
-  document.getElementById('navbar').style.boxShadow=
-    window.scrollY>10?'0 4px 24px rgba(0,0,0,0.3)':'none';
+  NAV_SECTIONS.forEach(id=>{const el=document.getElementById(id);if(el&&el.offsetTop<=scrollY)active=id;});
+  document.querySelectorAll('.nav-link').forEach((link,i)=>{link.classList.toggle('active',NAV_SECTIONS[i]===active);});
+  document.getElementById('navbar').style.boxShadow=window.scrollY>10?'0 4px 24px rgba(0,0,0,0.3)':'none';
 });
-// Mobile nav: close on outside click
 document.addEventListener('click',e=>{
-  const nm=document.getElementById('navMobile');
-  const ham=document.getElementById('navHam');
-  if(nm.classList.contains('open')&&!nm.contains(e.target)&&!ham.contains(e.target))
-    nm.classList.remove('open');
+  const nm=document.getElementById('navMobile');const ham=document.getElementById('navHam');
+  if(nm.classList.contains('open')&&!nm.contains(e.target)&&!ham.contains(e.target))nm.classList.remove('open');
 });
-// Show nav-ham on mobile
 const mq=window.matchMedia('(max-width:640px)');
 function applyMQ(m){document.getElementById('navHam').style.display=m.matches?'flex':'none';}
 applyMQ(mq);mq.addEventListener('change',applyMQ);
@@ -772,175 +1190,58 @@ const FULL='Đặng Văn Phụng';let ti=0,del=false;
 function type(){const el=document.getElementById('typed-name');if(!del){el.textContent=FULL.slice(0,++ti);if(ti===FULL.length){del=true;setTimeout(type,2200);return;}}else{el.textContent=FULL.slice(0,--ti);if(ti===0){del=false;setTimeout(type,600);return;}}setTimeout(type,del?60:100);}
 type();
 
-/* ===== THEME TOGGLE ===== */
+/* ===== THEME ===== */
 function toggleTheme(){
-  const html=document.documentElement;
-  const isLight=html.dataset.theme==='light';
+  const html=document.documentElement;const isLight=html.dataset.theme==='light';
   html.dataset.theme=isLight?'dark':'light';
   document.getElementById('themeIcon').className=isLight?'fas fa-moon':'fas fa-sun';
 }
 
 /* ===== YOUTUBE MUSIC ENGINE ===== */
 const TRACKS=[
-  {name:'Sơn Tùng M-TP - Chạy Ngay Đi',   genre:'V-Pop',    ytId:'_lfw4yTeLJQ'},
-  {name:'Sơn Tùng M-TP - Lạc Trôi',        genre:'V-Pop',    ytId:'lvnGJSoxvUQ'},
-  {name:'Sơn Tùng M-TP - Nơi Này Có Anh',  genre:'V-Pop',    ytId:'_WkyQ6QBTAM'},
-  {name:'Sơn Tùng M-TP - Muộn Rồi Mà Sao Còn', genre:'V-Pop', ytId:'r7QiNMBpHBk'},
-  {name:'Lofi Hip Hop Radio',               genre:'Lo-fi',    ytId:'jfKfPfyJRdk'},
-  {name:'Chill Lofi Beats Study',           genre:'Lo-fi',    ytId:'5qap5aO4i9A'},
+  {name:'Sơn Tùng M-TP - Chạy Ngay Đi',genre:'V-Pop',ytId:'_lfw4yTeLJQ'},
+  {name:'Sơn Tùng M-TP - Lạc Trôi',genre:'V-Pop',ytId:'lvnGJSoxvUQ'},
+  {name:'Sơn Tùng M-TP - Nơi Này Có Anh',genre:'V-Pop',ytId:'_WkyQ6QBTAM'},
+  {name:'Sơn Tùng M-TP - Muộn Rồi Mà Sao Còn',genre:'V-Pop',ytId:'r7QiNMBpHBk'},
+  {name:'Lofi Hip Hop Radio',genre:'Lo-fi',ytId:'jfKfPfyJRdk'},
+  {name:'Chill Lofi Beats Study',genre:'Lo-fi',ytId:'5qap5aO4i9A'},
 ];
-
-// Hidden YouTube iframe container
 const ytWrap=document.createElement('div');
 ytWrap.style.cssText='position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
 ytWrap.innerHTML='<div id="yt-player"></div>';
 document.body.appendChild(ytWrap);
-
-// Load YouTube IFrame API
 const ytScript=document.createElement('script');
 ytScript.src='https://www.youtube.com/iframe_api';
 document.head.appendChild(ytScript);
-
-let ytPlayer=null,ytReady=false,curIdx=-1,playing=false;
-let progTimer=null;
-
+let ytPlayer=null,ytReady=false,curIdx=-1,playing=false,progTimer=null;
 window.onYouTubeIframeAPIReady=function(){
-  ytPlayer=new YT.Player('yt-player',{
-    height:'1',width:'1',
-    playerVars:{autoplay:0,controls:0,rel:0,modestbranding:1},
-    events:{
-      onReady:()=>{ytReady=true;},
-      onStateChange:(e)=>{
-        if(e.data===YT.PlayerState.PLAYING){playing=true;startProgTimer();}
-        else if(e.data===YT.PlayerState.PAUSED){playing=false;stopProgTimer();}
-        else if(e.data===YT.PlayerState.ENDED){stopProgTimer();nextT();}
-        updateFabIcon();
-        const pi=document.getElementById('pp-icon');
-        if(pi)pi.className=playing?'fas fa-pause':'fas fa-play';
-      }
-    }
-  });
+  ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',playerVars:{autoplay:0,controls:0,rel:0,modestbranding:1},events:{onReady:()=>{ytReady=true;},onStateChange:(e)=>{if(e.data===YT.PlayerState.PLAYING){playing=true;startProgTimer();}else if(e.data===YT.PlayerState.PAUSED){playing=false;stopProgTimer();}else if(e.data===YT.PlayerState.ENDED){stopProgTimer();nextT();}updateFabIcon();const pi=document.getElementById('pp-icon');if(pi)pi.className=playing?'fas fa-pause':'fas fa-play';}}});
 };
-
 function fmt(s){if(isNaN(s)||!isFinite(s)||s<0)return'0:00';const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)+'').padStart(2,'0');}
-
-function startProgTimer(){
-  stopProgTimer();
-  progTimer=setInterval(()=>{
-    if(!ytPlayer||!ytPlayer.getDuration)return;
-    const cur=ytPlayer.getCurrentTime()||0;
-    const dur=ytPlayer.getDuration()||0;
-    const pct=dur?cur/dur*100:0;
-    const bar=document.getElementById('prog-bar');if(bar)bar.style.width=pct+'%';
-    const tm=document.getElementById('np-time');if(tm)tm.textContent=fmt(cur)+' / '+fmt(dur);
-  },500);
-}
+function startProgTimer(){stopProgTimer();progTimer=setInterval(()=>{if(!ytPlayer||!ytPlayer.getDuration)return;const cur=ytPlayer.getCurrentTime()||0;const dur=ytPlayer.getDuration()||0;const pct=dur?cur/dur*100:0;const bar=document.getElementById('prog-bar');if(bar)bar.style.width=pct+'%';const tm=document.getElementById('np-time');if(tm)tm.textContent=fmt(cur)+' / '+fmt(dur);},500);}
 function stopProgTimer(){if(progTimer){clearInterval(progTimer);progTimer=null;}}
-
-function playTrack(i){
-  if(!ytReady){setTimeout(()=>playTrack(i),400);return;}
-  document.querySelectorAll('.track').forEach(el=>el.classList.remove('playing'));
-  curIdx=i;
-  ytPlayer.loadVideoById(TRACKS[i].ytId);
-  playing=true;
-  const tr=document.getElementById('tr-'+i);if(tr)tr.classList.add('playing');
-  const nn=document.getElementById('np-name');if(nn)nn.textContent=TRACKS[i].name;
-  const np=document.getElementById('np-box');if(np)np.style.display='block';
-  const pi=document.getElementById('pp-icon');if(pi)pi.className='fas fa-pause';
-  updateFabIcon();
-}
-
-function togglePlay(){
-  if(curIdx<0){playTrack(0);return;}
-  if(!ytReady)return;
-  if(playing){ytPlayer.pauseVideo();}
-  else{ytPlayer.playVideo();}
-}
-
+function playTrack(i){if(!ytReady){setTimeout(()=>playTrack(i),400);return;}document.querySelectorAll('.track').forEach(el=>el.classList.remove('playing'));curIdx=i;ytPlayer.loadVideoById(TRACKS[i].ytId);playing=true;const tr=document.getElementById('tr-'+i);if(tr)tr.classList.add('playing');const nn=document.getElementById('np-name');if(nn)nn.textContent=TRACKS[i].name;const np=document.getElementById('np-box');if(np)np.style.display='block';const pi=document.getElementById('pp-icon');if(pi)pi.className='fas fa-pause';updateFabIcon();}
+function togglePlay(){if(curIdx<0){playTrack(0);return;}if(!ytReady)return;if(playing){ytPlayer.pauseVideo();}else{ytPlayer.playVideo();}}
 function prevT(){playTrack((curIdx-1+TRACKS.length)%TRACKS.length);}
 function nextT(){playTrack((curIdx+1)%TRACKS.length);}
-
-function seekProg(e){
-  if(!ytReady||!ytPlayer.getDuration)return;
-  const r=e.currentTarget.getBoundingClientRect();
-  const pct=(e.clientX-r.left)/r.width;
-  ytPlayer.seekTo(pct*ytPlayer.getDuration(),true);
-}
-
-/* FAB music control */
-function updateFabIcon(){
-  const icon=document.getElementById('musicIcon');
-  if(icon)icon.className=playing?'fas fa-pause':'fas fa-music';
-}
-function toggleFabMusic(){
-  if(curIdx<0){playTrack(0);}else{togglePlay();}
-}
-
-/* ===== AUTOPLAY BANNER ===== */
-function startAutoMusic(){
-  dismissBanner();
-  playTrack(0);
-}
-function dismissBanner(){
-  const b=document.getElementById('autoBanner');
-  b.classList.add('hide');
-  setTimeout(()=>b.style.display='none',400);
-}
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    const b=document.getElementById('autoBanner');
-    if(b)b.style.display='flex';
-  },800);
-});
-
-/* ===== MUSIC HTML ===== */
+function seekProg(e){if(!ytReady||!ytPlayer.getDuration)return;const r=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-r.left)/r.width;ytPlayer.seekTo(pct*ytPlayer.getDuration(),true);}
+function updateFabIcon(){const icon=document.getElementById('musicIcon');if(icon)icon.className=playing?'fas fa-pause':'fas fa-music';}
+function toggleFabMusic(){if(curIdx<0){playTrack(0);}else{togglePlay();}}
+function startAutoMusic(){dismissBanner();playTrack(0);}
+function dismissBanner(){const b=document.getElementById('autoBanner');b.classList.add('hide');setTimeout(()=>b.style.display='none',400);}
+window.addEventListener('load',()=>setTimeout(()=>{const b=document.getElementById('autoBanner');if(b)b.style.display='flex';},4500));
 function buildMusicHTML(){
-  const list=TRACKS.map((t,i)=>`
-    <div class="track" id="tr-${i}" onclick="playTrack(${i})">
-      <div class="trn"><span class="ni">${i+1}</span><i class="fas fa-play pi"></i></div>
-      <div class="track-info">
-        <div class="track-name">${t.name}</div>
-        <span class="track-genre">${t.genre}</span>
-      </div>
-      <a href="https://youtu.be/${t.ytId}" target="_blank" onclick="event.stopPropagation()" style="color:rgba(0,191,255,0.4);font-size:12px;text-decoration:none;flex-shrink:0;" title="Mở YouTube"><i class="fab fa-youtube"></i></a>
-    </div>`).join('');
-  return `
-    <p class="music-count">${TRACKS.length} bài hát · YouTube</p>
-    ${list}
-    <div class="np" id="np-box" style="display:${curIdx>=0?'block':'none'}">
-      <div class="np-label"><i class="fas fa-music"></i> Đang phát <div class="wave"><b></b><b></b><b></b><b></b></div></div>
-      <div class="np-name" id="np-name">${curIdx>=0?TRACKS[curIdx].name:'—'}</div>
-      <div class="np-row">
-        <button class="npb" onclick="prevT()"><i class="fas fa-step-backward"></i></button>
-        <button class="npb pp" onclick="togglePlay()"><i class="${playing?'fas fa-pause':'fas fa-play'}" id="pp-icon"></i></button>
-        <button class="npb" onclick="nextT()"><i class="fas fa-step-forward"></i></button>
-        <div class="prog" onclick="seekProg(event)"><div class="prog-bar" id="prog-bar"></div></div>
-      </div>
-      <div class="np-time" id="np-time">0:00 / 0:00</div>
-    </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center;">⚠️ Một số bài có thể bị chặn tại khu vực của bạn do bản quyền YouTube</p>`;
+  const list=TRACKS.map((t,i)=>`<div class="track" id="tr-${i}" onclick="playTrack(${i})"><div class="trn"><span class="ni">${i+1}</span><i class="fas fa-play pi"></i></div><div class="track-info"><div class="track-name">${t.name}</div><span class="track-genre">${t.genre}</span></div><a href="https://youtu.be/${t.ytId}" target="_blank" onclick="event.stopPropagation()" style="color:rgba(0,191,255,0.4);font-size:12px;text-decoration:none;flex-shrink:0;" title="Mở YouTube"><i class="fab fa-youtube"></i></a></div>`).join('');
+  return `<p class="music-count">${TRACKS.length} bài hát · YouTube</p>${list}<div class="np" id="np-box" style="display:${curIdx>=0?'block':'none'}"><div class="np-label"><i class="fas fa-music"></i> Đang phát <div class="wave"><b></b><b></b><b></b><b></b></div></div><div class="np-name" id="np-name">${curIdx>=0?TRACKS[curIdx].name:'—'}</div><div class="np-row"><button class="npb" onclick="prevT()"><i class="fas fa-step-backward"></i></button><button class="npb pp" onclick="togglePlay()"><i class="${playing?'fas fa-pause':'fas fa-play'}" id="pp-icon"></i></button><button class="npb" onclick="nextT()"><i class="fas fa-step-forward"></i></button><div class="prog" onclick="seekProg(event)"><div class="prog-bar" id="prog-bar"></div></div></div><div class="np-time" id="np-time">0:00 / 0:00</div></div><p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center;">⚠️ Một số bài có thể bị chặn tại khu vực của bạn do bản quyền YouTube</p>`;
 }
 
 /* ===== MODAL ===== */
 let gameIv=null;
 function openModal(t){
-  const m=document.getElementById('modal');
-  const title=document.getElementById('modal-title');
-  const body=document.getElementById('modal-body');
-  if(t==='game'){
-    title.innerHTML='🐍 Snake Game';
-    body.innerHTML=`<div class="score-row">Điểm: <span id="score">0</span></div><canvas id="gameCanvas" width="300" height="300" style="background:#060c18;"></canvas><p class="game-hint">↑↓←→ để điều khiển</p>`;
-    m.classList.add('open');setTimeout(startSnake,50);return;
-  }
-  if(t==='code'){
-    title.innerHTML='💻 Lập trình';
-    body.innerHTML=`<div style="display:flex;gap:10px;flex-wrap:wrap;">${['HTML','CSS','JavaScript','Python'].map(s=>`<span class="tag">${s}</span>`).join('')}</div><p style="margin-top:16px;font-size:14px;color:var(--muted);line-height:1.7;">Tôi yêu thích tạo ra những thứ trên internet. Hiện đang học web từ cơ bản đến nâng cao và tìm hiểu về lập trình back-end.</p>`;
-  }
-  if(t==='music'){
-    title.innerHTML='🎵 Nghe nhạc';
-    body.innerHTML=buildMusicHTML();
-    if(curIdx>=0){const tr=document.getElementById('tr-'+curIdx);if(tr)tr.classList.add('playing');}
-  }
+  const m=document.getElementById('modal'),title=document.getElementById('modal-title'),body=document.getElementById('modal-body');
+  if(t==='game'){title.innerHTML='🐍 Snake Game';body.innerHTML=`<div class="score-row">Điểm: <span id="score">0</span></div><canvas id="gameCanvas" width="300" height="300" style="background:#060c18;"></canvas><p class="game-hint">↑↓←→ để điều khiển</p>`;m.classList.add('open');setTimeout(startSnake,50);return;}
+  if(t==='code'){title.innerHTML='💻 Lập trình';body.innerHTML=`<div style="display:flex;gap:10px;flex-wrap:wrap;">${['HTML','CSS','JavaScript','Python'].map(s=>`<span class="tag">${s}</span>`).join('')}</div><p style="margin-top:16px;font-size:14px;color:var(--muted);line-height:1.7;">Tôi yêu thích tạo ra những thứ trên internet. Hiện đang học web từ cơ bản đến nâng cao và tìm hiểu về lập trình back-end.</p>`;}
+  if(t==='music'){title.innerHTML='🎵 Nghe nhạc';body.innerHTML=buildMusicHTML();if(curIdx>=0){const tr=document.getElementById('tr-'+curIdx);if(tr)tr.classList.add('playing');}}
   m.classList.add('open');
 }
 function bgClose(e){if(e.target===document.getElementById('modal'))closeModal();}
