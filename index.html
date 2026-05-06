@@ -2,339 +2,631 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Dangvanphungprogame</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đặng Văn Phụng</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --blue:#00bfff;
+  --blue-dim:rgba(0,191,255,0.12);
+  --blue-glow:rgba(0,191,255,0.35);
+  --bg:#060c18;
+  --bg2:#0d1a2e;
+  --bg3:#0a1428;
+  --card:rgba(255,255,255,0.04);
+  --border:rgba(0,191,255,0.18);
+  --border-h:rgba(0,191,255,0.5);
+  --text:#e8f4ff;
+  --muted:#7fa8c8;
+  --font:'Segoe UI',system-ui,sans-serif;
+}
+
+html{scroll-behavior:smooth;}
 
 body{
- background: linear-gradient(-45deg,#020b1c,#0a1f44,#001f3f,#000);
- background-size: 400% 400%;
- animation: gradientMove 12s ease infinite;
- color:white;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-@keyframes gradientMove{
- 0%{background-position:0% 50%;}
- 50%{background-position:100% 50%;}
- 100%{background-position:0% 50%;}
+/* STARS BG */
+#stars{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
 }
 
-/* BACKGROUND */
-#bgCanvas{
- position:fixed;
- width:100%;
- height:100%;
- z-index:-2;
- pointer-events:none;
+/* CURSOR GLOW */
+#glow{
+  position:fixed;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(0,191,255,0.08) 0%,transparent 70%);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:1;
+  transition:opacity .3s;
 }
 
-#cursor-light{
- position:fixed;
- width:300px;height:300px;
- background: radial-gradient(circle, rgba(0,191,255,0.25), transparent 70%);
- pointer-events:none;
- transform:translate(-50%,-50%);
- z-index:-1;
+/* LAYOUT */
+main{
+  position:relative;z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  padding:0 20px 80px;
 }
 
-/* FIX CLICK */
-.header,.section,.card,.box,.social{
- position:relative;
- z-index:10;
+/* HERO */
+.hero{
+  text-align:center;
+  padding:80px 0 60px;
+  position:relative;
 }
 
-.header{text-align:center;padding:60px 20px;}
-.header img{
- width:140px;border-radius:50%;
- border:3px solid #00bfff;
- box-shadow:0 0 25px #00bfff;
+.avatar-wrap{
+  position:relative;
+  display:inline-block;
+  margin-bottom:28px;
 }
 
-#name{
- color:#00bfff;
- border-right:3px solid #00bfff;
- animation: blink 0.7s infinite;
+.avatar-wrap::before{
+  content:'';
+  position:absolute;inset:-6px;
+  border-radius:50%;
+  background:conic-gradient(var(--blue),transparent,var(--blue));
+  animation:spin 4s linear infinite;
+  z-index:-1;
 }
 
-@keyframes blink{50%{border-color:transparent;}}
+.avatar-wrap::after{
+  content:'';
+  position:absolute;inset:2px;
+  border-radius:50%;
+  background:var(--bg);
+  z-index:0;
+}
 
-.section{padding:40px 20px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.avatar-wrap img{
+  position:relative;z-index:1;
+  width:130px;height:130px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+}
+
+.hero-name{
+  font-size:clamp(28px,6vw,42px);
+  font-weight:700;
+  letter-spacing:-0.5px;
+  margin-bottom:8px;
+  background:linear-gradient(135deg,#fff 40%,var(--blue));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-role{
+  font-size:15px;
+  color:var(--blue);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:500;
+  opacity:.85;
+}
+
+.hero-tags{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.tag{
+  background:var(--blue-dim);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--blue);
+}
+
+/* SECTION */
+section{margin-bottom:28px;}
 
 .card{
- max-width:900px;margin:20px auto;padding:30px;
- border-radius:20px;
- background:rgba(255,255,255,0.05);
- backdrop-filter: blur(10px);
- border:1px solid rgba(0,191,255,0.3);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px 30px;
+  transition:border-color .25s, box-shadow .25s;
+  backdrop-filter:blur(8px);
 }
 
-.hobby{display:flex;flex-direction:column;align-items:center;gap:20px;}
-
-.box{
- width:80%;max-width:300px;padding:20px;
- border-radius:15px;text-align:center;
- background:rgba(255,255,255,0.05);
- border:1px solid #00bfff;
- cursor:pointer;
+.card:hover{
+  border-color:var(--border-h);
+  box-shadow:0 0 30px rgba(0,191,255,0.07);
 }
 
-.box:hover{transform:scale(1.1);box-shadow:0 0 30px #00bfff;}
+.section-label{
+  display:flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--blue);font-weight:600;
+  margin-bottom:18px;
+}
 
-.social{text-align:center;}
-.social a{color:#ccc;font-size:28px;margin:0 10px;}
-.social a:hover{color:#00bfff;}
+.section-label::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* ABOUT GRID */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+
+.info-row{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;color:var(--muted);
+}
+
+.info-row strong{color:var(--text);font-weight:500;}
+
+.info-row i{color:var(--blue);font-size:16px;width:18px;text-align:center;}
+
+/* SKILLS */
+.skill-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;
+}
+
+.skill-chip{
+  background:rgba(0,191,255,0.06);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 8px;
+  text-align:center;
+  font-size:12px;color:var(--muted);
+  transition:all .2s;
+  cursor:default;
+}
+
+.skill-chip:hover{
+  background:var(--blue-dim);
+  border-color:var(--border-h);
+  color:var(--blue);
+  transform:translateY(-2px);
+}
+
+.skill-chip i{display:block;font-size:22px;margin-bottom:6px;color:var(--blue);}
+
+/* HOBBIES */
+.hobby-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+
+.hobby-card{
+  background:rgba(0,0,0,0.2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:22px 16px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .25s;
+}
+
+.hobby-card:hover{
+  background:var(--blue-dim);
+  border-color:var(--border-h);
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,191,255,0.12);
+}
+
+.hobby-card .hicon{
+  font-size:30px;
+  margin-bottom:10px;
+  display:block;
+}
+
+.hobby-card span{
+  font-size:13px;color:var(--muted);
+}
+
+.hobby-card:hover span{color:var(--text);}
+
+/* CONTACT */
+.contact-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:14px;
+}
+
+.contact-row:last-child{border-bottom:none;}
+.contact-row i{color:var(--blue);font-size:18px;width:24px;}
+
+.contact-row a{color:var(--blue);text-decoration:none;transition:opacity .2s;}
+.contact-row a:hover{opacity:.7;}
+
+.social-row{
+  display:flex;gap:12px;
+  margin-top:20px;
+}
+
+.social-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(0,0,0,0.2);
+  color:var(--muted);
+  text-decoration:none;
+  font-size:13px;
+  transition:all .2s;
+}
+
+.social-btn:hover{
+  background:var(--blue-dim);
+  border-color:var(--border-h);
+  color:var(--blue);
+  transform:translateY(-2px);
+}
+
+.social-btn i{font-size:18px;}
+
+/* MAP */
+.map-wrap{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  margin-top:4px;
+}
+
+.map-wrap iframe{
+  display:block;width:100%;height:320px;border:none;
+  filter:invert(0.9) hue-rotate(185deg) saturate(0.7);
+}
 
 /* MODAL */
-.modal{
- display:none;
- position:fixed;
- width:100%;height:100%;
- top:0;left:0;
- background:rgba(0,0,0,0.85);
- justify-content:center;
- align-items:center;
- z-index:999999;
+.modal-bg{
+  display:none;
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(4,10,22,0.9);
+  backdrop-filter:blur(8px);
+  justify-content:center;align-items:center;
+  padding:20px;
 }
 
-.modal-content{
- background:#111;
- padding:20px;
- border-radius:15px;
+.modal-bg.open{display:flex;}
+
+.modal-box{
+  background:#0d1a2e;
+  border:1px solid var(--border-h);
+  border-radius:20px;
+  width:100%;max-width:400px;
+  padding:28px;
+  position:relative;
+  animation:popIn .25s ease;
 }
 
-.close{float:right;cursor:pointer;}
+@keyframes popIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);
+  color:var(--muted);
+  border-radius:8px;
+  width:32px;height:32px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+  transition:all .2s;
+}
+
+.modal-close:hover{background:rgba(255,0,80,0.2);border-color:rgba(255,0,80,0.4);color:#ff5050;}
+
+.modal-title{
+  font-size:18px;font-weight:600;
+  margin-bottom:20px;
+}
+
+/* SNAKE */
+#gameCanvas{
+  display:block;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin:0 auto 12px;
+}
+
+.score-row{
+  text-align:center;
+  font-size:13px;color:var(--muted);
+  margin-bottom:14px;
+}
+
+.score-row span{color:var(--blue);font-weight:600;font-size:18px;}
+
+.game-hint{
+  font-size:12px;color:var(--muted);text-align:center;
+  padding:8px;background:rgba(0,0,0,0.3);border-radius:8px;
+}
+
+/* MUSIC */
+.track{
+  display:flex;align-items:center;gap:12px;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:8px;
+  background:rgba(0,0,0,0.2);
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.track-num{color:var(--blue);font-size:12px;font-weight:600;width:18px;text-align:center;}
+
+.track-info{flex:1;}
+.track-info p{font-size:13px;margin-bottom:2px;}
+.track-info span{font-size:11px;color:var(--muted);}
+
+audio{width:100%;margin-top:6px;height:28px;}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  .about-grid{grid-template-columns:1fr;}
+  .hobby-grid{grid-template-columns:1fr;}
+  .card{padding:22px 18px;}
+}
 </style>
 </head>
-
 <body>
 
-<canvas id="bgCanvas"></canvas>
-<div id="cursor-light"></div>
+<canvas id="stars"></canvas>
+<div id="glow"></div>
 
-<div class="header">
- <img src="058563264cd7c2899bc6.jpg">
- <h1 id="name"></h1>
- <p>Sinh viên CNTT - Part Time</p>
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar-wrap">
+    <img src="058563264cd7c2899bc6.jpg" alt="Đặng Văn Phụng" onerror="this.src='https://ui-avatars.com/api/?name=DVP&background=0d1a2e&color=00bfff&size=130'">
+  </div>
+  <h1 class="hero-name" id="typed-name"></h1>
+  <p class="hero-role">Sinh viên CNTT &nbsp;·&nbsp; Part-time</p>
+  <div class="hero-tags">
+    <span class="tag"><i class="fas fa-map-marker-alt"></i> TP.HCM</span>
+    <span class="tag"><i class="fas fa-birthday-cake"></i> 13/08/2007</span>
+    <span class="tag"><i class="fas fa-home"></i> Nghệ An - Nam Định</span>
+  </div>
 </div>
 
-<div class="section">
- <div class="card">
- <h2>📝 Một chút về tôi</h2>
- <p>Xin chào, tôi là Đặng Văn Phụng.</p>
- <p>Tôi thích lập trình và cuộc sống đơn giản.</p>
- <p>Hiện tại tôi đang học CNTT năm nhất.</p>
- <p>📅 13 / 08 / 2007</p>
- <p>📍 TP.HCM</p>
- <p>🏠 Nghệ An - Nam Định</p>
- </div>
-</div>
+<!-- ABOUT -->
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-user"></i> Về tôi</div>
+    <p style="font-size:15px;line-height:1.8;color:#b8d4e8;margin-bottom:0;">
+      Xin chào! Tôi là <strong style="color:var(--blue)">Đặng Văn Phụng</strong> — sinh viên CNTT năm nhất, đam mê lập trình và yêu thích cuộc sống giản dị. Tôi đang từng bước xây dựng kỹ năng để trở thành lập trình viên chuyên nghiệp.
+    </p>
+  </div>
+</section>
 
-<div class="section">
- <div class="card">
- <h2>Sở thích</h2>
- <div class="hobby">
- <div class="box" onclick="openModal('game')">🎮 Chơi game</div>
- <div class="box" onclick="openModal('code')">💻 Lập trình</div>
- <div class="box" onclick="openModal('music')">🎵 Nghe nhạc</div>
- </div>
- </div>
-</div>
+<!-- SKILLS -->
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-code"></i> Kỹ năng</div>
+    <div class="skill-grid">
+      <div class="skill-chip"><i class="fab fa-html5"></i>HTML</div>
+      <div class="skill-chip"><i class="fab fa-css3-alt"></i>CSS</div>
+      <div class="skill-chip"><i class="fab fa-js"></i>JavaScript</div>
+      <div class="skill-chip"><i class="fab fa-python"></i>Python</div>
+      <div class="skill-chip"><i class="fas fa-database"></i>SQL</div>
+      <div class="skill-chip"><i class="fab fa-git-alt"></i>Git</div>
+    </div>
+  </div>
+</section>
 
-<div class="section">
- <div class="card">
- <h2>📬 Liên hệ</h2>
- <p>📧 thingphung1245@gmail.com</p>
- <div class="social">
- <a href="https://facebook.com/thinhphung07" target="_blank"><i class="fab fa-facebook"></i></a>
- <a href="https://tiktok.com/@dvp.138" target="_blank"><i class="fab fa-tiktok"></i></a>
- </div>
- </div>
-</div>
+<!-- HOBBIES -->
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-heart"></i> Sở thích</div>
+    <div class="hobby-grid">
+      <div class="hobby-card" onclick="openModal('game')">
+        <span class="hicon">🎮</span>
+        <span>Chơi game</span>
+      </div>
+      <div class="hobby-card" onclick="openModal('code')">
+        <span class="hicon">💻</span>
+        <span>Lập trình</span>
+      </div>
+      <div class="hobby-card" onclick="openModal('music')">
+        <span class="hicon">🎵</span>
+        <span>Nghe nhạc</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="section">
- <div class="card">
- <h2>📍 Vị trí</h2>
- <iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed" width="100%" height="350"></iframe>
- </div>
-</div>
+<!-- CONTACT -->
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-paper-plane"></i> Liên hệ</div>
+    <div class="contact-row">
+      <i class="fas fa-envelope"></i>
+      <span>thingphung1245@gmail.com</span>
+    </div>
+    <div class="social-row">
+      <a class="social-btn" href="https://facebook.com/thinhphung07" target="_blank">
+        <i class="fab fa-facebook"></i> Facebook
+      </a>
+      <a class="social-btn" href="https://tiktok.com/@dvp.138" target="_blank">
+        <i class="fab fa-tiktok"></i> TikTok
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section>
+  <div class="card">
+    <div class="section-label"><i class="fas fa-map-marker-alt"></i> Vị trí</div>
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps?q=10.997778,106.751056&z=15&output=embed" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <!-- MODAL -->
-<div id="modal" class="modal">
- <div class="modal-content">
- <span class="close" onclick="closeModal()">X</span>
- <h2 id="modal-title"></h2>
- <div id="modal-body"></div>
- </div>
+<div id="modal" class="modal-bg" onclick="bgClose(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
+  </div>
 </div>
 
 <script>
-/* TEXT */
-const text="Đặng Văn Phụng";
-let i=0,isDeleting=false;
-function typeEffect(){
- let el=document.getElementById("name");
- el.innerHTML=text.substring(0,i);
- i += isDeleting?-1:1;
- if(i===text.length) isDeleting=true;
- if(i===0) isDeleting=false;
- setTimeout(typeEffect,100);
+/* STARS */
+const sc=document.getElementById('stars');
+const sctx=sc.getContext('2d');
+let stars=[];
+
+function initStars(){
+  sc.width=innerWidth;sc.height=innerHeight;
+  stars=[];
+  for(let i=0;i<120;i++){
+    stars.push({
+      x:Math.random()*sc.width,y:Math.random()*sc.height,
+      r:Math.random()*1.4+0.2,
+      a:Math.random(),da:0.003+Math.random()*0.005
+    });
+  }
 }
-typeEffect();
 
-/* GAME */
-let gameInterval;
-let gameRunning=false;
-
-function openModal(type){
- const modal=document.getElementById("modal");
- const title=document.getElementById("modal-title");
- const body=document.getElementById("modal-body");
-
- if(type==="game"){
-  title.innerHTML="🐍 Snake Game";
-  body.innerHTML = `
-    <canvas id="gameCanvas" width="300" height="300"></canvas>
-    <p>Điểm: <span id="score">0</span></p>
-  `;
-  modal.style.display="flex";
-  setTimeout(startGame,50);
-  return;
- }
-
- if(type==="code"){
-  title.innerHTML="💻";
-  body.innerHTML="HTML CSS JS";
- }
-
- if(type==="music"){
-  title.innerHTML="🎵 Nghe nhạc";
-  body.innerHTML = `
-    <h3>🎶 Danh sách nhạc</h3>
-
-    <p>1. Nhạc Chill 1</p>
-    <audio controls>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-    </audio>
-
-    <p>2. Nhạc Chill 2</p>
-    <audio controls>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
-    </audio>
-
-    <p>3. Nhạc Chill 3</p>
-    <audio controls>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
-    </audio>
-  `;
- }
-
- modal.style.display="flex";
+function drawStars(){
+  sctx.clearRect(0,0,sc.width,sc.height);
+  stars.forEach(s=>{
+    s.a+=s.da;
+    if(s.a>1||s.a<0) s.da*=-1;
+    sctx.globalAlpha=s.a*0.7;
+    sctx.fillStyle='#00bfff';
+    sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fill();
+  });
+  sctx.globalAlpha=1;
+  requestAnimationFrame(drawStars);
 }
+initStars();drawStars();
+window.addEventListener('resize',initStars);
+
+/* GLOW */
+document.addEventListener('mousemove',e=>{
+  const g=document.getElementById('glow');
+  g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';
+});
+
+/* TYPEWRITER */
+const FULL='Đặng Văn Phụng';
+let ti=0,del=false;
+function type(){
+  const el=document.getElementById('typed-name');
+  if(!del){el.textContent=FULL.slice(0,++ti);if(ti===FULL.length){del=true;setTimeout(type,2200);return;}}
+  else{el.textContent=FULL.slice(0,--ti);if(ti===0){del=false;setTimeout(type,600);return;}}
+  setTimeout(type,del?60:100);
+}
+type();
+
+/* MODAL */
+let gameIv=null;
+
+function openModal(t){
+  const m=document.getElementById('modal');
+  const title=document.getElementById('modal-title');
+  const body=document.getElementById('modal-body');
+
+  if(t==='game'){
+    title.innerHTML='🐍 Snake Game';
+    body.innerHTML=`
+      <div class="score-row">Điểm: <span id="score">0</span></div>
+      <canvas id="gameCanvas" width="300" height="300" style="background:#060c18;"></canvas>
+      <p class="game-hint">↑↓←→ để điều khiển</p>
+    `;
+    m.classList.add('open');
+    setTimeout(startSnake,50);return;
+  }
+  if(t==='code'){
+    title.innerHTML='💻 Lập trình';
+    body.innerHTML=`
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        ${['HTML','CSS','JavaScript','Python'].map(s=>`<span class="tag" style="font-size:13px;">${s}</span>`).join('')}
+      </div>
+      <p style="margin-top:16px;font-size:14px;color:#7fa8c8;line-height:1.7;">
+        Tôi yêu thích tạo ra những thứ trên internet. Hiện đang học web từ cơ bản đến nâng cao và tìm hiểu về lập trình back-end.
+      </p>
+    `;
+  }
+  if(t==='music'){
+    title.innerHTML='🎵 Nghe nhạc';
+    body.innerHTML=`
+      ${[['Chill Vibes 1','Ambient','SoundHelix-Song-1.mp3'],['Chill Vibes 2','Lo-fi','SoundHelix-Song-2.mp3'],['Chill Vibes 3','Electronic','SoundHelix-Song-3.mp3']].map((t,i)=>`
+      <div class="track">
+        <span class="track-num">${i+1}</span>
+        <div class="track-info">
+          <p>${t[0]}</p>
+          <span>${t[1]}</span>
+          <audio controls><source src="https://www.soundhelix.com/examples/mp3/${t[2]}"></audio>
+        </div>
+      </div>`).join('')}
+    `;
+  }
+  m.classList.add('open');
+}
+
+function bgClose(e){if(e.target===document.getElementById('modal')) closeModal();}
 
 function closeModal(){
- document.getElementById("modal").style.display="none";
- clearInterval(gameInterval);
- gameRunning=false;
+  document.getElementById('modal').classList.remove('open');
+  if(gameIv){clearInterval(gameIv);gameIv=null;}
 }
 
-/* SNAKE GAME */
-function startGame(){
- if(gameRunning) return;
- gameRunning=true;
+/* SNAKE */
+function startSnake(){
+  const cv=document.getElementById('gameCanvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const S=15,W=300;
+  let snake=[{x:150,y:150}],dir='RIGHT',score=0;
+  let food={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};
 
- const canvas=document.getElementById("gameCanvas");
- if(!canvas) return;
+  const dirs={ArrowUp:'UP',ArrowDown:'DOWN',ArrowLeft:'LEFT',ArrowRight:'RIGHT'};
+  const opp={UP:'DOWN',DOWN:'UP',LEFT:'RIGHT',RIGHT:'LEFT'};
+  document.onkeydown=e=>{const nd=dirs[e.key];if(nd&&nd!==opp[dir])dir=nd;};
 
- const ctx=canvas.getContext("2d");
+  gameIv=setInterval(()=>{
+    ctx.fillStyle='#060c18';ctx.fillRect(0,0,W,W);
+    const h={...snake[0]};
+    if(dir==='UP')h.y-=S;if(dir==='DOWN')h.y+=S;
+    if(dir==='LEFT')h.x-=S;if(dir==='RIGHT')h.x+=S;
+    snake.unshift(h);
+    if(h.x===food.x&&h.y===food.y){
+      score++;document.getElementById('score').textContent=score;
+      food={x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};
+    }else snake.pop();
 
- let snake=[{x:150,y:150}];
- let dir="RIGHT";
- let score=0;
+    ctx.fillStyle='rgba(0,191,255,0.15)';ctx.fillRect(food.x,food.y,S,S);
+    ctx.fillStyle='#00bfff';ctx.beginPath();ctx.roundRect(food.x+2,food.y+2,S-4,S-4,3);ctx.fill();
 
- document.onkeydown=function(e){
-  if(e.key==="ArrowUp" && dir!=="DOWN") dir="UP";
-  if(e.key==="ArrowDown" && dir!=="UP") dir="DOWN";
-  if(e.key==="ArrowLeft" && dir!=="RIGHT") dir="LEFT";
-  if(e.key==="ArrowRight" && dir!=="LEFT") dir="RIGHT";
- };
+    snake.forEach((s,i)=>{
+      ctx.fillStyle=i===0?'#00bfff':'rgba(0,191,255,0.6)';
+      ctx.beginPath();ctx.roundRect(s.x+1,s.y+1,S-2,S-2,3);ctx.fill();
+    });
 
- let food={
-  x:Math.floor(Math.random()*20)*15,
-  y:Math.floor(Math.random()*20)*15
- };
-
- gameInterval=setInterval(()=>{
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,300,300);
-
-  let head={...snake[0]};
-
-  if(dir==="UP") head.y-=15;
-  if(dir==="DOWN") head.y+=15;
-  if(dir==="LEFT") head.x-=15;
-  if(dir==="RIGHT") head.x+=15;
-
-  snake.unshift(head);
-
-  if(head.x===food.x && head.y===food.y){
-   score++;
-   document.getElementById("score").innerText=score;
-   food={
-    x:Math.floor(Math.random()*20)*15,
-    y:Math.floor(Math.random()*20)*15
-   };
-  }else{
-   snake.pop();
-  }
-
-  ctx.fillStyle="red";
-  ctx.fillRect(food.x,food.y,15,15);
-
-  ctx.fillStyle="lime";
-  snake.forEach(s=>ctx.fillRect(s.x,s.y,15,15));
-
-  if(head.x<0||head.y<0||head.x>=300||head.y>=300||
-     snake.slice(1).some(s=>s.x===head.x&&s.y===head.y)){
-   clearInterval(gameInterval);
-   alert("Game Over: "+score);
-   closeModal();
-  }
-
- },120);
+    if(h.x<0||h.y<0||h.x>=W||h.y>=W||snake.slice(1).some(s=>s.x===h.x&&s.y===h.y)){
+      clearInterval(gameIv);gameIv=null;
+      ctx.fillStyle='rgba(4,10,22,0.8)';ctx.fillRect(0,0,W,W);
+      ctx.fillStyle='#00bfff';ctx.font='bold 18px Segoe UI';ctx.textAlign='center';
+      ctx.fillText('Game Over',150,135);
+      ctx.fillStyle='#7fa8c8';ctx.font='14px Segoe UI';
+      ctx.fillText('Điểm: '+score,150,160);
+    }
+  },130);
 }
-
-/* BACKGROUND */
-const canvasBg=document.getElementById("bgCanvas");
-const ctxBg=canvasBg.getContext("2d");
-canvasBg.width=innerWidth;
-canvasBg.height=innerHeight;
-
-let p=[];
-for(let i=0;i<80;i++){
- p.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight});
-}
-
-function draw(){
- ctxBg.clearRect(0,0,innerWidth,innerHeight);
- ctxBg.fillStyle="#00bfff";
- p.forEach(a=>{
-  ctxBg.fillRect(a.x,a.y,2,2);
-  a.y+=0.3;
-  if(a.y>innerHeight)a.y=0;
- });
- requestAnimationFrame(draw);
-}
-draw();
-
-/* CURSOR */
-document.addEventListener("mousemove",e=>{
- document.getElementById("cursor-light").style.left=e.clientX+"px";
- document.getElementById("cursor-light").style.top=e.clientY+"px";
-});
 </script>
-
 </body>
 </html>
