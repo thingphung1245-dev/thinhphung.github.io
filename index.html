@@ -402,6 +402,134 @@ section{margin-bottom:28px;}
 /* Flappy Bird */
 #flappyCanvas{display:block;border-radius:10px;border:1px solid var(--border);margin:0 auto;cursor:pointer;}
 
+/* =====================================================
+   MOBILE GAME CONTROLS
+   ===================================================== */
+.mobile-controls{
+  display:none;
+  margin-top:12px;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:none;
+}
+/* Show on touch devices */
+@media (pointer: coarse) {
+  .mobile-controls{display:block;}
+  .game-hint{display:none;}
+}
+
+/* D-PAD for Snake */
+.dpad{
+  display:grid;
+  grid-template-columns:repeat(3,52px);
+  grid-template-rows:repeat(3,52px);
+  gap:5px;
+  margin:0 auto;
+  width:fit-content;
+}
+.dpad-btn{
+  width:52px;height:52px;
+  border-radius:12px;
+  border:1.5px solid var(--border-h);
+  background:rgba(0,191,255,0.08);
+  color:var(--blue);
+  font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:all .1s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  font-family:var(--font);
+}
+.dpad-btn:active{
+  background:rgba(0,191,255,0.28);
+  border-color:var(--blue);
+  transform:scale(0.92);
+}
+.dpad-center{
+  background:rgba(0,191,255,0.04);
+  border-color:rgba(0,191,255,0.1);
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
+}
+.dpad-empty{visibility:hidden;}
+
+/* Tetris controls */
+.tetris-mobile-controls{
+  display:grid;
+  grid-template-columns:repeat(5,52px);
+  gap:6px;
+  margin:0 auto;
+  width:fit-content;
+  margin-top:10px;
+}
+.tmb{
+  width:52px;height:52px;
+  border-radius:12px;
+  border:1.5px solid var(--border-h);
+  background:rgba(0,191,255,0.08);
+  color:var(--blue);
+  font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:all .1s;
+  font-family:var(--font);
+  flex-direction:column;
+  gap:1px;
+}
+.tmb:active{background:rgba(0,191,255,0.28);border-color:var(--blue);transform:scale(0.92);}
+.tmb span{font-size:9px;color:var(--muted);letter-spacing:.5px;}
+.tmb.drop{background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.4);color:#ffd700;}
+.tmb.rotate{background:rgba(200,85,247,0.1);border-color:rgba(200,85,247,0.4);color:#c855f7;}
+
+/* Flappy / Dino big jump button */
+.jump-btn-wrap{margin-top:10px;display:flex;justify-content:center;}
+.jump-btn{
+  width:120px;height:56px;
+  border-radius:16px;
+  border:2px solid var(--blue);
+  background:rgba(0,191,255,0.12);
+  color:var(--blue);
+  font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  font-weight:700;
+  font-family:var(--font);
+  transition:all .1s;
+}
+.jump-btn:active{background:rgba(0,191,255,0.3);transform:scale(0.95);}
+.jump-btn span{font-size:13px;}
+
+/* 2048 arrow controls */
+.g2048-controls{
+  display:grid;
+  grid-template-columns:repeat(3,52px);
+  grid-template-rows:repeat(3,52px);
+  gap:5px;
+  margin:10px auto 0;
+  width:fit-content;
+}
+.g2048-btn{
+  width:52px;height:52px;
+  border-radius:12px;
+  border:1.5px solid var(--border-h);
+  background:rgba(0,191,255,0.08);
+  color:var(--blue);
+  font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:all .1s;
+}
+.g2048-btn:active{background:rgba(0,191,255,0.28);border-color:var(--blue);transform:scale(0.92);}
+
 /* About */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
 .about-stat{background:rgba(0,191,255,0.05);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center;}
@@ -567,6 +695,13 @@ section{margin-bottom:28px;}
   .game-hub{grid-template-columns:repeat(2,1fr);}
   .memory-grid{grid-template-columns:repeat(4,1fr);gap:6px;max-width:280px;}
   .mem-card{font-size:18px;}
+  /* Smaller dpad on small phones */
+  .dpad{grid-template-columns:repeat(3,46px);grid-template-rows:repeat(3,46px);gap:4px;}
+  .dpad-btn{width:46px;height:46px;font-size:18px;}
+  .tetris-mobile-controls{grid-template-columns:repeat(5,46px);gap:4px;}
+  .tmb{width:46px;height:46px;font-size:16px;}
+  .g2048-controls{grid-template-columns:repeat(3,46px);grid-template-rows:repeat(3,46px);gap:4px;}
+  .g2048-btn{width:46px;height:46px;font-size:18px;}
 }
 
 @media(max-width:360px){
@@ -1207,6 +1342,20 @@ function buildGameHub(){
       <div class="gs-item"><span class="gs-label">Tốc độ</span><span class="gs-val" id="snake-speed">1x</span></div>
     </div>
     <canvas id="gameCanvas" width="300" height="300" style="background:#060c18;"></canvas>
+    <!-- Mobile D-Pad -->
+    <div class="mobile-controls">
+      <div class="dpad">
+        <div class="dpad-empty"></div>
+        <button class="dpad-btn" ontouchstart="snakeMobileDir('UP')" onmousedown="snakeMobileDir('UP')">▲</button>
+        <div class="dpad-empty"></div>
+        <button class="dpad-btn" ontouchstart="snakeMobileDir('LEFT')" onmousedown="snakeMobileDir('LEFT')">◀</button>
+        <button class="dpad-btn dpad-center" ontouchstart="snakePause()" onmousedown="snakePause()">⏸</button>
+        <button class="dpad-btn" ontouchstart="snakeMobileDir('RIGHT')" onmousedown="snakeMobileDir('RIGHT')">▶</button>
+        <div class="dpad-empty"></div>
+        <button class="dpad-btn" ontouchstart="snakeMobileDir('DOWN')" onmousedown="snakeMobileDir('DOWN')">▼</button>
+        <div class="dpad-empty"></div>
+      </div>
+    </div>
     <div class="game-btn-row">
       <button class="game-btn primary" onclick="restartSnake()">↺ Chơi lại</button>
       <button class="game-btn" onclick="snakePause()">⏸ Tạm dừng</button>
@@ -1231,6 +1380,16 @@ function buildGameHub(){
         <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.8;">
           ← → Di chuyển<br>↑ Xoay<br>↓ Nhanh<br>Space Rơi ngay
         </div>
+      </div>
+    </div>
+    <!-- Mobile Tetris Controls -->
+    <div class="mobile-controls">
+      <div class="tetris-mobile-controls">
+        <button class="tmb" ontouchstart="tetMobile('left')" onmousedown="tetMobile('left')">◀<span>Di chuyển</span></button>
+        <button class="tmb rotate" ontouchstart="tetMobile('rotate')" onmousedown="tetMobile('rotate')">↻<span>Xoay</span></button>
+        <button class="tmb" ontouchstart="tetMobile('right')" onmousedown="tetMobile('right')">▶<span>Di chuyển</span></button>
+        <button class="tmb" ontouchstart="tetMobile('down')" onmousedown="tetMobile('down')">▼<span>Nhanh</span></button>
+        <button class="tmb drop" ontouchstart="tetMobile('drop')" onmousedown="tetMobile('drop')">⬇<span>Rơi ngay</span></button>
       </div>
     </div>
     <div class="game-btn-row">
@@ -1260,6 +1419,12 @@ function buildGameHub(){
       <div class="gs-item"><span class="gs-label">Kỷ lục</span><span class="gs-val" id="flappy-best">0</span></div>
     </div>
     <canvas id="flappyCanvas" width="300" height="320" style="background:#060c18;"></canvas>
+    <!-- Mobile jump button -->
+    <div class="mobile-controls">
+      <div class="jump-btn-wrap">
+        <button class="jump-btn" ontouchstart="flappyTap()" onmousedown="flappyTap()">🐦 <span>NHẢY!</span></button>
+      </div>
+    </div>
     <div class="game-btn-row">
       <button class="game-btn primary" onclick="flappyTap()">🐦 Nhảy / Bắt đầu</button>
     </div>
@@ -1273,6 +1438,12 @@ function buildGameHub(){
       <div class="gs-item"><span class="gs-label">Kỷ lục</span><span class="gs-val" id="dino-best">0</span></div>
     </div>
     <canvas id="dinoCanvas" width="300" height="160" style="background:#060c18;border-radius:10px;border:1px solid var(--border);display:block;margin:0 auto;cursor:pointer;"></canvas>
+    <!-- Mobile jump button -->
+    <div class="mobile-controls">
+      <div class="jump-btn-wrap">
+        <button class="jump-btn" ontouchstart="dinoJump()" onmousedown="dinoJump()">🦕 <span>NHẢY!</span></button>
+      </div>
+    </div>
     <div class="game-btn-row">
       <button class="game-btn primary" onclick="dinoJump()">🦕 Nhảy / Bắt đầu</button>
     </div>
@@ -1286,6 +1457,20 @@ function buildGameHub(){
       <div class="gs-item"><span class="gs-label">Tốt nhất</span><span class="gs-val" id="g2048-best">0</span></div>
     </div>
     <div id="grid2048" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:300px;margin:0 auto;padding:8px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border);"></div>
+    <!-- Mobile 2048 D-Pad -->
+    <div class="mobile-controls">
+      <div class="g2048-controls">
+        <div style="visibility:hidden;"></div>
+        <button class="g2048-btn" ontouchstart="move2048('up')" onmousedown="move2048('up')">▲</button>
+        <div style="visibility:hidden;"></div>
+        <button class="g2048-btn" ontouchstart="move2048('left')" onmousedown="move2048('left')">◀</button>
+        <button class="g2048-btn" style="background:rgba(0,191,255,0.04);border-color:rgba(0,191,255,0.1);color:var(--muted);font-size:12px;font-weight:700;" ontouchstart="restart2048()" onmousedown="restart2048()">↺</button>
+        <button class="g2048-btn" ontouchstart="move2048('right')" onmousedown="move2048('right')">▶</button>
+        <div style="visibility:hidden;"></div>
+        <button class="g2048-btn" ontouchstart="move2048('down')" onmousedown="move2048('down')">▼</button>
+        <div style="visibility:hidden;"></div>
+      </div>
+    </div>
     <div class="game-btn-row">
       <button class="game-btn primary" onclick="restart2048()">↺ Chơi lại</button>
     </div>
@@ -1294,21 +1479,14 @@ function buildGameHub(){
 }
 
 function switchGame(name){
-  // Stop previous game loops
   stopAllGames();
   activeGame = name;
-
-  // Update hub cards
   document.querySelectorAll('.game-hub-card').forEach(c=>c.classList.remove('active-game'));
   const ghc = document.getElementById('ghc-'+name);
   if(ghc) ghc.classList.add('active-game');
-
-  // Show panel
   document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active-panel'));
   const panel = document.getElementById('gp-'+name);
   if(panel) panel.classList.add('active-panel');
-
-  // Init game
   setTimeout(()=>{
     if(name==='snake') startSnake();
     else if(name==='tetris') startTetris();
@@ -1329,12 +1507,18 @@ function stopAllGames(){
 }
 
 /* =================== SNAKE =================== */
-let snakeBest=0,snakePaused=false;
+let snakeBest=0,snakePaused=false,snakeNextDir='RIGHT';
+function snakeMobileDir(dir){
+  const opp={UP:'DOWN',DOWN:'UP',LEFT:'RIGHT',RIGHT:'LEFT'};
+  // Get current dir from closure — stored on window for access
+  if(window._snakeDir && dir!==opp[window._snakeDir]) snakeNextDir=dir;
+  else if(!window._snakeDir) snakeNextDir=dir;
+}
 function startSnake(){
   const cv=document.getElementById('gameCanvas');if(!cv)return;
   const ctx=cv.getContext('2d');const S=15,W=300;
   let snake=[{x:150,y:150}],dir='RIGHT',nextDir='RIGHT',score=0,speed=130;
-  let food=rndFood();snakePaused=false;
+  let food=rndFood();snakePaused=false;snakeNextDir='RIGHT';window._snakeDir='RIGHT';
   function rndFood(){return{x:Math.floor(Math.random()*20)*S,y:Math.floor(Math.random()*20)*S};}
   document.onkeydown=e=>{
     const map={ArrowUp:'UP',ArrowDown:'DOWN',ArrowLeft:'LEFT',ArrowRight:'RIGHT',w:'UP',s:'DOWN',a:'LEFT',d:'RIGHT'};
@@ -1343,9 +1527,23 @@ function startSnake(){
     const nd=map[e.key];if(nd&&nd!==opp[dir])nextDir=nd;
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();
   };
+  // Canvas swipe support
+  let touchSX,touchSY;
+  cv.addEventListener('touchstart',e=>{touchSX=e.touches[0].clientX;touchSY=e.touches[0].clientY;e.preventDefault();},{passive:false});
+  cv.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-touchSX,dy=e.changedTouches[0].clientY-touchSY;
+    const opp={UP:'DOWN',DOWN:'UP',LEFT:'RIGHT',RIGHT:'LEFT'};
+    let nd=null;
+    if(Math.abs(dx)>Math.abs(dy)){nd=dx>0?'RIGHT':'LEFT';}else{nd=dy>0?'DOWN':'UP';}
+    if(nd&&nd!==opp[dir])nextDir=nd;
+    e.preventDefault();
+  },{passive:false});
   function tick(){
     if(snakePaused){draw();return;}
-    dir=nextDir;
+    // Apply mobile d-pad direction
+    const opp={UP:'DOWN',DOWN:'UP',LEFT:'RIGHT',RIGHT:'LEFT'};
+    if(snakeNextDir!==opp[dir])nextDir=snakeNextDir;
+    dir=nextDir;window._snakeDir=dir;
     ctx.fillStyle='#060c18';ctx.fillRect(0,0,W,W);
     const h={...snake[0]};
     if(dir==='UP')h.y-=S;if(dir==='DOWN')h.y+=S;if(dir==='LEFT')h.x-=S;if(dir==='RIGHT')h.x+=S;
@@ -1356,17 +1554,14 @@ function startSnake(){
   }
   function draw(){
     ctx.fillStyle='#060c18';ctx.fillRect(0,0,W,W);
-    // Grid dots
     ctx.fillStyle='rgba(0,191,255,0.04)';
     for(let x=0;x<W;x+=S)for(let y=0;y<W;y+=S){ctx.fillRect(x+S/2-1,y+S/2-1,2,2);}
-    // Food glow
     ctx.shadowColor='#00bfff';ctx.shadowBlur=10;
     ctx.fillStyle='#00bfff';ctx.beginPath();ctx.roundRect(food.x+2,food.y+2,S-4,S-4,4);ctx.fill();
     ctx.shadowBlur=0;
-    // Snake
     snake.forEach((s,i)=>{
       const alpha=i===0?1:Math.max(0.25,1-i*0.04);
-      ctx.fillStyle=i===0?`rgba(0,191,255,${alpha})`:`rgba(0,191,255,${alpha})`;
+      ctx.fillStyle=`rgba(0,191,255,${alpha})`;
       ctx.beginPath();ctx.roundRect(s.x+1,s.y+1,S-2,S-2,i===0?4:3);ctx.fill();
     });
     if(snakePaused){ctx.fillStyle='rgba(4,10,22,0.7)';ctx.fillRect(0,0,W,W);ctx.fillStyle='#00bfff';ctx.font='bold 16px Segoe UI';ctx.textAlign='center';ctx.fillText('⏸ TẠM DỪNG',150,145);ctx.fillStyle='#7fa8c8';ctx.font='12px Segoe UI';ctx.fillText('Space để tiếp tục',150,168);}
@@ -1400,6 +1595,14 @@ function newTetBoard(){return Array.from({length:TROWS},()=>Array(TCOLS).fill(0)
 function randPiece(){const p=TPIECES[Math.floor(Math.random()*TPIECES.length)];return{shape:p.shape.map(r=>[...r]),color:p.color,x:Math.floor(TCOLS/2)-Math.floor(p.shape[0].length/2),y:0};}
 function tetCollide(board,piece,dx=0,dy=0){for(let r=0;r<piece.shape.length;r++){for(let c=0;c<piece.shape[r].length;c++){if(!piece.shape[r][c])continue;const nx=piece.x+c+dx,ny=piece.y+r+dy;if(nx<0||nx>=TCOLS||ny>=TROWS)return true;if(ny>=0&&board[ny][nx])return true;}}return false;}
 function tetRotate(shape){return shape[0].map((_,c)=>shape.map(r=>r[c]).reverse());}
+function tetMobile(action){
+  if(tetOver||tetPaused)return;
+  if(action==='left')if(!tetCollide(tetBoard,tetPiece,-1,0)){tetPiece.x--;drawTetris();}
+  if(action==='right')if(!tetCollide(tetBoard,tetPiece,1,0)){tetPiece.x++;drawTetris();}
+  if(action==='down')if(!tetCollide(tetBoard,tetPiece,0,1)){tetPiece.y++;drawTetris();}
+  if(action==='rotate'){const rot={...tetPiece,shape:tetRotate(tetPiece.shape)};if(!tetCollide(tetBoard,rot)){tetPiece.shape=rot.shape;drawTetris();}}
+  if(action==='drop'){while(!tetCollide(tetBoard,tetPiece,0,1))tetPiece.y++;placePiece();}
+}
 function startTetris(){
   tetBoard=newTetBoard();tetScore=0;tetLevel=1;tetLines=0;tetPaused=false;tetOver=false;
   tetPiece=randPiece();tetNext=randPiece();
@@ -1428,7 +1631,6 @@ function startTetris(){
 }
 function placePiece(){
   tetPiece.shape.forEach((row,r)=>row.forEach((v,c)=>{if(v&&tetPiece.y+r>=0)tetBoard[tetPiece.y+r][tetPiece.x+c]=tetPiece.color;}));
-  // Clear lines
   let cleared=0;
   for(let r=TROWS-1;r>=0;r--){if(tetBoard[r].every(v=>v)){tetBoard.splice(r,1);tetBoard.unshift(Array(TCOLS).fill(0));cleared++;r++;}}
   if(cleared){const pts=[0,100,300,500,800];tetScore+=pts[cleared]*tetLevel;tetLines+=cleared;tetLevel=Math.floor(tetLines/10)+1;document.getElementById('tet-score').textContent=tetScore;document.getElementById('tet-level').textContent=tetLevel;document.getElementById('tet-lines').textContent=tetLines;if(tetrisIv){clearInterval(tetrisIv);tetrisIv=setInterval(()=>{if(tetPaused||tetOver){drawTetris();return;}if(!tetCollide(tetBoard,tetPiece,0,1)){tetPiece.y++;}else{placePiece();}drawTetris();},Math.max(100,600-tetLevel*60));}}
@@ -1440,16 +1642,12 @@ function drawTetris(){
   const cv=document.getElementById('tetrisCanvas');if(!cv)return;
   const ctx=cv.getContext('2d');
   ctx.fillStyle='#060c18';ctx.fillRect(0,0,TCOLS*TS,TROWS*TS);
-  // Grid
   ctx.strokeStyle='rgba(0,191,255,0.05)';ctx.lineWidth=0.5;
   for(let r=0;r<TROWS;r++){for(let c=0;c<TCOLS;c++){ctx.strokeRect(c*TS,r*TS,TS,TS);}}
-  // Board cells
   tetBoard.forEach((row,r)=>row.forEach((v,c)=>{if(v){ctx.fillStyle=v;ctx.fillRect(c*TS+1,r*TS+1,TS-2,TS-2);ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(c*TS+1,r*TS+1,TS-2,4);}}));
-  // Ghost piece
   let ghost={...tetPiece,shape:tetPiece.shape.map(r=>[...r])};
   while(!tetCollide(tetBoard,ghost,0,1))ghost.y++;
   ghost.shape.forEach((row,r)=>row.forEach((v,c)=>{if(v){ctx.fillStyle='rgba(0,191,255,0.12)';ctx.fillRect((ghost.x+c)*TS+1,(ghost.y+r)*TS+1,TS-2,TS-2);}}));
-  // Current piece
   tetPiece.shape.forEach((row,r)=>row.forEach((v,c)=>{if(v&&tetPiece.y+r>=0){ctx.fillStyle=tetPiece.color;ctx.fillRect((tetPiece.x+c)*TS+1,(tetPiece.y+r)*TS+1,TS-2,TS-2);ctx.fillStyle='rgba(255,255,255,0.2)';ctx.fillRect((tetPiece.x+c)*TS+1,(tetPiece.y+r)*TS+1,TS-2,4);}}));
   if(tetOver){ctx.fillStyle='rgba(4,10,22,0.85)';ctx.fillRect(0,0,TCOLS*TS,TROWS*TS);ctx.fillStyle='#00bfff';ctx.font='bold 16px Segoe UI';ctx.textAlign='center';ctx.fillText('GAME OVER',TCOLS*TS/2,TROWS*TS/2-20);ctx.fillStyle='#7fa8c8';ctx.font='12px Segoe UI';ctx.fillText('Điểm: '+tetScore,TCOLS*TS/2,TROWS*TS/2+10);}
   if(tetPaused&&!tetOver){ctx.fillStyle='rgba(4,10,22,0.7)';ctx.fillRect(0,0,TCOLS*TS,TROWS*TS);ctx.fillStyle='#00bfff';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.fillText('⏸ TẠM DỪNG',TCOLS*TS/2,TROWS*TS/2);}
@@ -1514,6 +1712,7 @@ function startFlappy(){
   const W=300,H=320,GAP=90,PIPE_W=40,GRAVITY=0.35,JUMP=-7;
   fBird={x:60,y:H/2,vy:0,r:12};fPipes=[];fScore=0;flappyState='idle';
   cv.onclick=()=>flappyTap();
+  cv.addEventListener('touchstart',e=>{e.preventDefault();flappyTap();},{passive:false});
 
   function reset(){fBird={x:60,y:H/2,vy:0,r:12};fPipes=[];fScore=0;flappyState='running';document.getElementById('flappy-score').textContent=0;}
 
@@ -1521,17 +1720,15 @@ function startFlappy(){
   function frame(){
     flappyAF=requestAnimationFrame(frame);
     ctx.fillStyle='#060c18';ctx.fillRect(0,0,W,H);
-    // Stars bg
     ctx.fillStyle='rgba(0,191,255,0.3)';
     for(let i=0;i<15;i++){const sx=(i*73+frameCount*0.3)%W,sy=i*21%H;ctx.beginPath();ctx.arc(sx,sy,1,0,Math.PI*2);ctx.fill();}
 
     if(flappyState==='idle'){
-      // Draw bird
       ctx.fillStyle='#ffd700';ctx.beginPath();ctx.arc(fBird.x,fBird.y+Math.sin(frameCount*0.08)*4,fBird.r,0,Math.PI*2);ctx.fill();
       ctx.fillStyle='#060c18';ctx.beginPath();ctx.arc(fBird.x+5,fBird.y+Math.sin(frameCount*0.08)*4-3,3,0,Math.PI*2);ctx.fill();
       ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(fBird.x+6,fBird.y+Math.sin(frameCount*0.08)*4-4,1.5,0,Math.PI*2);ctx.fill();
       ctx.fillStyle='#00bfff';ctx.font='bold 16px Segoe UI';ctx.textAlign='center';ctx.fillText('Tap để bắt đầu!',W/2,H-60);
-      ctx.fillStyle='#7fa8c8';ctx.font='12px Segoe UI';ctx.fillText('Space hoặc Click',W/2,H-38);
+      ctx.fillStyle='#7fa8c8';ctx.font='12px Segoe UI';ctx.fillText('Nhấn nút NHẢY bên dưới',W/2,H-38);
       frameCount++;return;
     }
     if(flappyState==='dead'){
@@ -1539,39 +1736,32 @@ function startFlappy(){
       ctx.fillStyle='#ff4466';ctx.font='bold 22px Segoe UI';ctx.textAlign='center';ctx.fillText('💀 GAME OVER',W/2,H/2-24);
       ctx.fillStyle='#00bfff';ctx.font='bold 16px Segoe UI';ctx.fillText('Điểm: '+fScore,W/2,H/2+8);
       ctx.fillStyle='#7fa8c8';ctx.font='12px Segoe UI';ctx.fillText('Kỷ lục: '+flappyBest,W/2,H/2+30);
-      ctx.fillStyle='rgba(0,191,255,0.6)';ctx.fillText('Tap để chơi lại',W/2,H/2+55);
+      ctx.fillStyle='rgba(0,191,255,0.6)';ctx.fillText('Tap NHẢY để chơi lại',W/2,H/2+55);
       frameCount++;return;
     }
 
     frameCount++;
     fBird.vy+=GRAVITY;fBird.y+=fBird.vy;
 
-    // Pipes
     if(frameCount%90===0){
       const top=40+Math.random()*(H-GAP-80);
       fPipes.push({x:W,topH:top,scored:false});
     }
     fPipes.forEach(p=>{
       p.x-=2.5;
-      // Draw pipes
       ctx.fillStyle='#00dc64';
       ctx.fillRect(p.x,0,PIPE_W,p.topH);
       ctx.fillRect(p.x,p.topH+GAP,PIPE_W,H-p.topH-GAP);
-      // Pipe cap
       ctx.fillStyle='#00b050';
       ctx.fillRect(p.x-3,p.topH-12,PIPE_W+6,12);
       ctx.fillRect(p.x-3,p.topH+GAP,PIPE_W+6,12);
-      // Score
       if(!p.scored&&p.x+PIPE_W<fBird.x){p.scored=true;fScore++;flappyBest=Math.max(flappyBest,fScore);document.getElementById('flappy-score').textContent=fScore;document.getElementById('flappy-best').textContent=flappyBest;}
-      // Collision
       if(fBird.x+fBird.r>p.x&&fBird.x-fBird.r<p.x+PIPE_W){if(fBird.y-fBird.r<p.topH||fBird.y+fBird.r>p.topH+GAP)flappyState='dead';}
     });
     fPipes=fPipes.filter(p=>p.x>-PIPE_W);
 
-    // Ground / ceiling
     if(fBird.y+fBird.r>H||fBird.y-fBird.r<0)flappyState='dead';
 
-    // Draw bird
     ctx.fillStyle='#ffd700';ctx.beginPath();ctx.arc(fBird.x,fBird.y,fBird.r,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#ff8c00';
     const angle=Math.max(-0.5,Math.min(1.2,fBird.vy*0.1));
@@ -1581,7 +1771,6 @@ function startFlappy(){
     ctx.fillStyle='#060c18';ctx.beginPath();ctx.arc(fBird.x+5,fBird.y-3,3,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(fBird.x+6,fBird.y-4,1.5,0,Math.PI*2);ctx.fill();
 
-    // HUD
     ctx.fillStyle='rgba(0,191,255,0.9)';ctx.font='bold 20px Segoe UI';ctx.textAlign='center';ctx.fillText(fScore,W/2,32);
   }
   if(flappyAF)cancelAnimationFrame(flappyAF);
@@ -1601,13 +1790,12 @@ function startDino(){
   const ctx=cv.getContext('2d');const W=300,H=160,GROUND=130;
   dino={x:40,y:GROUND-30,w:28,h:30,vy:0,jumping:false};cacti=[];dinoScore2=0;dinoState='idle';dinoFrame=0;
   cv.onclick=()=>dinoJump();
+  cv.addEventListener('touchstart',e=>{e.preventDefault();dinoJump();},{passive:false});
 
   function frame(){
     dinoAF=requestAnimationFrame(frame);
     ctx.fillStyle='#060c18';ctx.fillRect(0,0,W,H);
-    // Ground
     ctx.fillStyle='rgba(0,191,255,0.2)';ctx.fillRect(0,GROUND,W,1);
-    // Moving ground dots
     ctx.fillStyle='rgba(0,191,255,0.15)';
     for(let i=0;i<8;i++){const gx=(i*40-dinoFrame*2)%W;ctx.fillRect(gx,GROUND+4,20,2);}
 
@@ -1622,7 +1810,7 @@ function startDino(){
       ctx.fillStyle='rgba(4,10,22,0.75)';ctx.fillRect(0,0,W,H);
       ctx.fillStyle='#ff4466';ctx.font='bold 16px Segoe UI';ctx.textAlign='center';ctx.fillText('💥 GAME OVER',W/2,55);
       ctx.fillStyle='#00bfff';ctx.font='13px Segoe UI';ctx.fillText('Điểm: '+Math.floor(dinoScore2)+'  Kỷ lục: '+Math.floor(dinoBest),W/2,78);
-      ctx.fillStyle='#7fa8c8';ctx.font='11px Segoe UI';ctx.fillText('Tap để chơi lại',W/2,100);
+      ctx.fillStyle='#7fa8c8';ctx.font='11px Segoe UI';ctx.fillText('Tap NHẢY để chơi lại',W/2,100);
       return;
     }
 
@@ -1630,36 +1818,28 @@ function startDino(){
     document.getElementById('dino-score').textContent=Math.floor(dinoScore2);
     if(dinoScore2>dinoBest){dinoBest=dinoScore2;document.getElementById('dino-best').textContent=Math.floor(dinoBest);}
 
-    // Physics
     if(dino.jumping){dino.vy+=0.55;dino.y+=dino.vy;if(dino.y>=GROUND-dino.h){dino.y=GROUND-dino.h;dino.jumping=false;dino.vy=0;}}
 
-    // Cacti
     const spd=2.5+dinoScore2*0.008;
     if(dinoFrame%(Math.max(45,90-Math.floor(dinoScore2/5)))===0){cacti.push({x:W,w:14+Math.random()*10,h:24+Math.random()*20});}
     cacti.forEach(c=>{c.x-=spd;});
     cacti=cacti.filter(c=>c.x>-30);
 
-    // Collision
     cacti.forEach(c=>{if(dino.x+dino.w-6>c.x&&dino.x+6<c.x+c.w&&dino.y+dino.h-4>GROUND-c.h)dinoState='dead';});
 
     cacti.forEach(c=>drawCactus(ctx,c));
     drawDino(ctx,dino,dinoFrame);
-    // Score HUD
     ctx.fillStyle='rgba(0,191,255,0.7)';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(Math.floor(dinoScore2),W-10,18);
   }
   if(dinoAF)cancelAnimationFrame(dinoAF);
   frame();
 }
 function drawDino(ctx,d,frame,dead=false){
-  // Body
   ctx.fillStyle=dead?'#ff4466':'#00bfff';
   ctx.fillRect(d.x,d.y,d.w,d.h);
-  // Head
   ctx.fillRect(d.x+d.w-10,d.y-12,18,14);
-  // Eye
   ctx.fillStyle='#060c18';ctx.fillRect(d.x+d.w+3,d.y-10,4,4);
   ctx.fillStyle='#fff';ctx.fillRect(d.x+d.w+4,d.y-9,2,2);
-  // Legs
   const legOff=d.jumping?0:(frame%14<7?4:0);
   ctx.fillStyle=dead?'#ff4466':'#00bfff';
   ctx.fillRect(d.x+4,d.y+d.h,8,8+legOff);
@@ -1688,7 +1868,6 @@ function start2048(){board2048=newBoard2048();score2048=0;addRandom(board2048);a
     const moves={ArrowLeft:()=>move2048('left'),ArrowRight:()=>move2048('right'),ArrowUp:()=>move2048('up'),ArrowDown:()=>move2048('down')};
     if(moves[e.key]){e.preventDefault();moves[e.key]();}
   };
-  // Touch swipe
   const cv=document.getElementById('grid2048');let tx,ty;
   cv.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
   cv.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>Math.abs(dy)){move2048(dx>0?'right':'left');}else{move2048(dy>0?'down':'up');}},{passive:true});
